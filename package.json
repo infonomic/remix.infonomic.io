@@ -4,6 +4,7 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
+    "prepare": "husky install .husky",
     "build": "run-s build:*",
     "build:css": "postcss shared/css/tailwind.css shared/css/app.css app/routes/**/*.css app/modules/**/*.css --env production --dir app/styles --base ./",
     "build:remix": "remix build",
@@ -72,6 +73,8 @@
     "zod-form-data": "^1.2.4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
     "@faker-js/faker": "^7.6.0",
     "@playwright/test": "^1.29.0",
     "@remix-run/dev": "^1.7.4",
@@ -102,6 +105,7 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "happy-dom": "^6.0.4",
+    "husky": "^8.0.2",
     "msw": "^0.47.3",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.19",

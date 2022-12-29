@@ -22,7 +22,8 @@ module.exports = {
     "vitest.config.ts",
     "remix.config.js",
     "prettier.config.js",
-    "makeSessionSecret.js"
+    "makeSessionSecret.js",
+    "commitlint.config.js"
   ],
   extends: [
     "@remix-run/eslint-config",

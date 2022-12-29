@@ -20,7 +20,8 @@
     "vitest.config.ts",
     "remix.config.js",
     "prettier.config.js",
-    "makeSessionSecret.js"
+    "makeSessionSecret.js",
+    "commitlint.config.js"
   ],
   "compilerOptions": {
     "lib": [

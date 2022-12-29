@@ -215,6 +215,30 @@ Feedback, thoughts and suggestions are most welcome. Issues and even PRs would b
 
 We've created [TODO list](TODO.md).
 
+We use a husky task and [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for our commit messages. 
+
+[@commitlint/cli @commitlint/config-conventional](https://github.com/conventional-changelog/commitlint) are included in the dev dependencies of this project.
+
+Common commit message types according to [commitlint-config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional#type-enum) (based on the Angular convention) can be:
+
+- build
+- chore
+- ci
+- docs
+- feat
+- fix
+- perf
+- refactor
+- revert
+- style
+- test
+
+To prepare husky and the conventional commit task for development run the following:
+
+`npm run prepare` - will prepare local husky tasks.
+
+`npx husky add .husky/commit-msg 'npx commitlint --edit $1'` - will add the commit message task.
+
 Hope some of this is of help to those of you just getting started with Remix and headless UI component systems (as we are).
 
 <p>&nbsp;</p>
