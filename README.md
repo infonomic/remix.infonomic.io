@@ -201,7 +201,7 @@ We've included the [eslint-config-airbnb-typescript](https://github.com/iamturns
 
 ### Tests
 
-We removed Cypress and have configured [Playwright](https://playwright.dev/) for end-to-end tests. Vitest is still enabled - which explains the test, tests, tests-examples directories. We'll follow [Kent Dodd's lead here](https://github.com/epicweb-dev/rocket-rental) and er... em... we're going to write some tests ¯\\_(ツ)_/¯
+We removed Cypress and have configured [Playwright](https://playwright.dev/) for end-to-end tests. Vitest is still enabled - which explains the test, tests, tests-examples directories. We'll follow [Kent Dodd's lead here](https://github.com/epicweb-dev/rocket-rental) and er... em... we're going to write some tests.<br> ¯\\_(ツ)_/¯
 
 Also high on our TODO list
 
@@ -211,9 +211,7 @@ The Docker image that came with the quick-start app for deployment to Fly.io (an
 
 ## Contributions
 
-Feedback, thoughts and suggestions are most welcome. Issues and even PRs would be super too! 
-
-We've created [TODO list](TODO.md).
+Feedback, thoughts and suggestions are most welcome. Issues and even PRs would be super too! We've created [TODO list](TODO.md).
 
 We use a husky task and [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for our commit messages. 
 
@@ -236,6 +234,8 @@ Common commit message types according to [commitlint-config-conventional](https:
 To prepare husky and the conventional commit task for development run the following:
 
 `npm run prepare` - will prepare local husky tasks.
+
+Note that the `.husky/commit-msg` task should already be present when you clone this repo. If it's not, you can add it with the following:
 
 `npx husky add .husky/commit-msg 'npx commitlint --edit $1'` - will add the commit message task.
 
