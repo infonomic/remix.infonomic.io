@@ -29,10 +29,7 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 // ThemeProvider
-function ThemeProvider({
-  children,
-  specifiedTheme,
-}: {
+function ThemeProvider({ children, specifiedTheme }: {
   children: ReactNode,
   specifiedTheme: Theme | null;
 }) {
