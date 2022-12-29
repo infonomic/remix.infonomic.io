@@ -26,7 +26,7 @@ The quick-start [Indie stack example](https://github.com/remix-run/indie-stack) 
 6. Run `npm run setup` to initialize the local SQLite database and seed users.
 7. Run `npm run dev` to start your local development environment.
 8. Run `rm -rf build` and `npm run build`  and `npm run start` to run a production build.
-9. If you'd like to deploy the application to [Fly.io](https://fly.io) - follow the instructions below in the original README. Be sure to rename the application (and unique Fly.io app code) in the `name` section of `package.json`.
+9. If you'd like to deploy the application to [Fly.io](https://fly.io) - follow the instructions below in the original README. Be sure to rename the application (and unique Fly.io app code) in the `name` section of `package.json` and the `app` section of `fly.toml`.
 
 ## Approach
 
