@@ -5,7 +5,7 @@
   The material-tailwind project is a great effort, but its theming 
   configuration adds another layer to the project. The goal of this 
   project is to take only headless, or lightly css- or tailwind-styled 
-  components, and build a base level UI-kit that can be used here and
+  components, and build a base-level UI-kit that can be used here and
   on other projects with minimum dependencies. 
 */
 import React from 'react'

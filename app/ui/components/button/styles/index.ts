@@ -1,13 +1,3 @@
-/** 
-  Note: This is a modified version of the Material Tailwind button found here...
-  https://github.com/creativetimofficial/material-tailwind It will be further
-  updated / refactored to remove most of that project's code.
-  The material-tailwind project is a great effort, but its theming 
-  configuration adds another layer to the project. The goal of this 
-  project is to take only headless, or lightly css- or tailwind-styled 
-  components, and build a base level UI-kit that can be used here and re-used 
-  on other projects with minimum dependencies. 
-*/
 import buttonFilled from './button-filled'
 import buttonGradient from './button-gradient'
 import buttonOutlined from './button-outlined'

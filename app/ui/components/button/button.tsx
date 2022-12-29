@@ -1,10 +1,13 @@
 /** 
-  Note: Styles and types for button are based on the button component 
-  at https://github.com/creativetimofficial/material-tailwind 
+  Note: Styles and types for the button component have been
+  adapted from  the button component at 
+  https://github.com/creativetimofficial/material-tailwind 
   The material-tailwind project is a great effort, but its theming 
   configuration adds another layer to the project. The goal of this 
   project is to take only headless, or lightly css- or tailwind-styled 
-  components built using https://www.radix-ui.com/ primitives.
+  components, and build a base-level UI-kit that can be used here and
+  on other projects with minimum dependencies (optionally built 
+    using https://www.radix-ui.com/ primitives).
 */
 import React from 'react'
 
@@ -45,17 +48,6 @@ interface ButtonProps extends PrimitiveButtonProps {
   className?: className;
   children: children;
 }
-
-// export interface ButtonProps extends React.ComponentProps<'button'> {
-//   variant?: variant;
-//   size?: size;
-//   intent?: intent;
-//   fullWidth?: fullWidth;
-//   ripple?: ripple;
-//   className?: className;
-//   asChild?: boolean;
-//   children: children;
-// }
 
 const Button = React.forwardRef<ButtonElement, ButtonProps>(
   ({ variant, size, intent, fullWidth, ripple, className, children, ...rest }, ref) => {
