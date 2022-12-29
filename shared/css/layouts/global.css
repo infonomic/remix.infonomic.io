@@ -1,0 +1,13 @@
+[href='#main-content'] {
+  position: absolute;
+  top: 0;
+  right: 100%;
+  margin: 1rem;
+  padding: 1%;
+}
+
+[href='#main-content']:active, [href='#main-content']:focus {
+  background: blue;
+  color: #fff;
+  right: auto;
+}

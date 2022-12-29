@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    image: remix:web-1.0.0
+    container_name: remix
+    environment:
+      # DATABASE_URL: ${DATABASE_URL}
+      SESSION_SECRET: ${SESSION_SECRET}
+    ports:
+      - 80:8080

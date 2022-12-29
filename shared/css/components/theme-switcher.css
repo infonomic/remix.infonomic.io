@@ -1,0 +1,67 @@
+.theme-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  background-color: transparent;
+  outline: 0;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  @apply text-slate-900;
+  width: 32px;
+  max-width: 32px;
+  min-width: 32px;
+  padding: 4px;
+  border-radius: 4px;
+  border: dashed 0.5px transparent;
+}
+
+.theme-switch:active,
+.theme-switch:focus {
+  @apply border-slate-900;
+  outline: none !important;
+  border-style: dashed;
+  border-width: 0.5px;
+  border-radius: 4px;
+}
+
+.dark .theme-switch:active,
+.dark .theme-switch:focus {
+  @apply border-slate-200;
+}
+
+
+.theme-switch .moon,
+.theme-switch .light {
+  transition: all .2s ease-in-out;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.theme-switch .moon.shown,
+.theme-switch .light.shown {
+  opacity: 1;
+  animation-name: spin;
+  animation-duration: 0.3s;
+  transform-origin: 46% 46%;
+}
+
+.theme-switch .moon.hidden,
+.theme-switch .light.hidden {
+  opacity: 0;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

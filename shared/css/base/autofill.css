@@ -1,0 +1,50 @@
+/* input:-webkit-autofill, input:autofill,
+input:-webkit-autofill:hover, input:autofill:hover,
+input:-webkit-autofill:focus, input:autofill:focus,
+textarea:-webkit-autofill, textarea:autofill,
+textarea:-webkit-autofill:hover,textarea:autofill:hover,
+textarea:-webkit-autofill:focus,textarea:autofill:focus,
+select:-webkit-autofill, select:autofill,
+select:-webkit-autofill:hover,select:autofill:hover,
+select:-webkit-autofill:focus, select:autofill:focus {
+  border: none;
+  -webkit-text-fill-color: #ffb74d !important;
+  -webkit-box-shadow: none !important;
+  transition: background-color 5000s ease-in-out 0s;
+} */
+
+input:autofill,
+input:autofill:hover,
+input:autofill:focus,
+textarea:autofill,
+textarea:autofill:hover,
+textarea:autofill:focus,
+select:autofill,
+select:autofill:hover,
+select:autofill:focus {
+  border: 1px solid #d89d3d !important;
+  -webkit-text-fill-color: black !important;
+  -webkit-box-shadow: 0 0 0px 1000px #fff2dc inset !important;
+  box-shadow: 0 0 0px 1000px #fff2dc inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+  color: black !important;
+  background-color: rgb(250, 217, 167) !important;
+}
+
+.dark input:autofill,
+.dark input:autofill:hover,
+.dark input:autofill:focus,
+.dark textarea:autofill,
+.dark textarea:autofill:hover,
+.dark textarea:autofill:focus,
+.dark select:autofill,
+.dark select:autofill:hover,
+.dark select:autofill:focus {
+  border: 1px solid #253341 !important;
+  -webkit-text-fill-color: white !important;
+  -webkit-box-shadow: 0 0 0px 1000px #253341 inset !important;
+  box-shadow: 0 0 0px 1000px #253341 inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+  color: white !important;
+  background-color: rgba(100,100,100, 0.5) !important;
+}

@@ -1,0 +1,43 @@
+import { forwardRef } from 'react'
+import type { ReactNode } from 'react'
+
+import { Link } from '@remix-run/react'
+
+import cx from 'classnames'
+
+import { ThemeSwitch } from '~/ui/components/theme-switch'
+import AppBar from '~/ui/layouts/app-bar'
+import { PublicFooter } from '~/ui/layouts/public-footer'
+
+interface PublicLayoutProps {
+  children?: ReactNode;
+  className?: string;
+}
+
+export type Ref = HTMLDivElement;
+
+const PublicLayout = forwardRef<Ref, PublicLayoutProps>(({ children, className, ...other }, ref) => {
+
+  return (
+    <div
+      className={cx('layout-container flex flex-col min-h-screen', className)}
+      ref={ref}
+      {...other} >
+      <a href="#main-content">Skip to main content</a>
+      <AppBar>
+        <Link to={{ pathname: '/' }} className="font-medium">
+          Home
+        </Link>
+        <ThemeSwitch style={{ marginLeft: 'auto' }} />
+      </AppBar>
+      <main id="main-content" className="flex flex-col flex-1 pt-[52px]">
+        {children}
+      </main>
+      <PublicFooter />
+    </div>
+  )
+})
+
+PublicLayout.displayName = 'PublicLayout'
+
+export default PublicLayout

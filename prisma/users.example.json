@@ -1,0 +1,19 @@
+{
+  "admin_users": [
+    {
+      "email": "admin@infonomic.io",
+      "password": "Welcome100!",
+      "isAdmin": true
+    }
+  ],
+  "users": [
+    {
+      "email": "rachel@remix.run",
+      "password": "racheliscool"
+    }
+  ],
+  "auto_users": {
+    "count": 50,
+    "password": "ManyUsers100!"
+  }
+}

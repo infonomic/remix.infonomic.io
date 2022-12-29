@@ -1,0 +1,11 @@
+@import "./base/base.css";
+@import "./components/components.css";
+@import "./layouts/layouts.css";
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
+:root {
+  --loader-color: #16151e;
+}

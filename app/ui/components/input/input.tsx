@@ -1,0 +1,83 @@
+import * as React from 'react'
+
+import cx from 'classnames'
+
+const NAME = 'Input'
+
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  id: string,
+  name: string,
+  label: string,
+  required?: boolean,
+  type?: string,
+  placeHolder?: string,
+  autoComplete?: string,
+  error?: boolean,
+  helpText?: string,
+  errorText?: string,
+  className?: string,
+}
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({
+    id,
+    name,
+    type = 'text',
+    required,
+    label,
+    placeHolder = '',
+    autoComplete = '',
+    error = false,
+    helpText = '',
+    errorText = '',
+    className,
+    ...rest }, ref) => {
+    return (
+      <div className="mb-4">
+        <label
+          id={`label-for-${id}`}
+          htmlFor={id}
+          className="m-0 p-0 font-medium text-gray-700 dark:text-gray-400"
+        >
+          {label}
+        </label>
+        <input
+          ref={ref}
+          id={id}
+          name={name}
+          type={type}
+          required={required}
+          autoComplete={autoComplete}
+          placeholder={placeHolder}
+          aria-labelledby={`label-for-${id}`}
+          aria-invalid={error}
+          aria-required={required}
+          aria-errormessage={errorText}
+          aria-describedby={error ? `error-for-${id}` : undefined}
+          className={cx(
+            'block w-full rounded-md',
+            'text-gray-700 placeholder:text-gray-500 dark:text-gray-400 dark:placeholder:text-gray-600',
+            'border border-gray-400 focus-visible:border-transparent dark:border-gray-700 dark:bg-gray-800',
+            'focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-500 focus-visible:ring-opacity-85',
+            className
+          )}
+          {...rest}
+        />
+        {error
+          ? (
+            <p id={`error-for-${id}`} className="mt-1 mb-1 text-sm text-red-700">{errorText || helpText}</p>
+          ) :
+          (
+            <p className="mt-1 mb-1 text-sm text-gray-700 dark:text-gray-400">{helpText}</p>
+          )
+        }
+      </div>
+    )
+  }
+)
+
+Input.displayName = NAME
+
+export { Input }
+
+export type { InputProps }

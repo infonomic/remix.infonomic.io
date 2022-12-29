@@ -1,0 +1,76 @@
+.btn-to-top {
+  display: flex;
+  position: fixed;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  visibility: hidden;
+  vertical-align: center;
+  align-items: center;
+  text-decoration: none;
+  border-style: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  z-index: 100;
+  justify-content: center;
+  bottom: 45px;
+  right: 30px;
+  @apply text-gray-800;
+  @apply bg-amber-500;
+  transition-property: all, color;
+  transition-duration: 0.3s, 1ms;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.5, 1), ease;
+  transition-delay: 0s, 0s;
+  cursor: pointer;
+}
+
+.btn-to-top span {
+  width: 18px;
+  padding-bottom: 3px;
+}
+
+.btn-to-top span .icon path {
+  stroke: none;
+  @apply fill-gray-800
+}
+
+@media screen and (min-width: 587px) {
+  .btn-to-top {
+    bottom: 45px;
+    right: 45px;
+  }
+
+  .btn-to-top span {
+    width: 18px;
+  }
+}
+
+.btn-to-top:hover,
+.btn-to-top:focus {
+  @apply text-gray-800;
+  @apply bg-amber-400;
+  transform: translateY(-5px);
+}
+
+.btn-floating {
+  min-width: 0;
+  opacity: 1;
+  visibility: visible;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  bottom: 20px;
+  right: 10px;
+  border-radius: 20px;
+}
+
+@media screen and (min-width: 587px) {
+  .btn-floating {
+    width: 42px;
+    height: 42px;
+    border-radius: 21px;
+    bottom: 22px;
+    right: 22px;
+  }
+}

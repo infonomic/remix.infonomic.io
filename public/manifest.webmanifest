@@ -1,0 +1,21 @@
+{
+  "name": "Infonomic",
+  "short_name": "Infonomic",
+  "description": "Infonomic builds applications and user experiences that help individuals and organizations to thrive.",
+  "theme_color": "#f59e0b",
+  "background_color": "#f59e0b",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+        "src": "/android-chrome-192x192.png?v=10",
+        "sizes": "192x192",
+        "type": "image/png"
+    },
+    {
+        "src": "/android-chrome-512x512.png?v=10",
+        "sizes": "512x512",
+        "type": "image/png"
+    }
+  ]
+}

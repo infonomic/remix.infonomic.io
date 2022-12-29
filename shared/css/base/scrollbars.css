@@ -1,0 +1,28 @@
+:root {
+  --scroll-bar-thumb: rgb(251 191 36);
+  --scroll-bar-track: rgb(245 158 11);
+}
+
+/* For Google Chrome */
+::-webkit-scrollbar {
+  width:  0.6em;
+  height: 0.6em;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scroll-bar-thumb);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scroll-bar-track);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--scroll-bar-track);
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-bar-thumb) var(--scroll-bar-track);
+}

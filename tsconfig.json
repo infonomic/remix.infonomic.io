@@ -1,0 +1,54 @@
+{
+  "include": [
+    "app",
+    "test",
+    "mocks",
+    "prisma",
+    "remix.env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "mocks",
+    "node_modules",
+    ".eslintrc.js",
+    "playwright.config.ts",
+    "tailwind.config.js",
+    "postcss.config.js",
+    "tests-examples/demo-todo-app.spec.ts",
+    "coverage",
+    "vitest.config.ts",
+    "remix.config.js",
+    "prettier.config.js",
+    "makeSessionSecret.js"
+  ],
+  "compilerOptions": {
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2019"
+    ],
+    "types": [
+      "vitest/globals"
+    ],
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "target": "ES2019",
+    "strict": true,
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [
+        "./app/*"
+      ]
+    },
+    "skipLibCheck": true,
+    // Remix takes care of building everything in `remix build`.
+    "noEmit": true
+  }
+}
