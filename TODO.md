@@ -3,7 +3,7 @@
 ## General
 
 - [ ] Create mapping definitions for color theme and 'intents' in tailwind.config.js to make swapping out a base color theme and color system easier.
-- [ ] Tests! Playwright and unit tests, and configure Playwright tests to run Github deploy action
+- [ ] Tests! Playwright and unit tests, and configure Playwright tests to run during Github deploy action
 - [ ] Implement i18n and L10n - likely via [https://sergiodxa.com/articles/localizing-remix-apps-with-i18next](https://sergiodxa.com/articles/localizing-remix-apps-with-i18next) and 
 [https://github.com/sergiodxa/remix-i18next](https://github.com/sergiodxa/remix-i18next)
 - [ ] A11y audit
