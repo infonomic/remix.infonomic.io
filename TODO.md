@@ -17,3 +17,4 @@
 - [ ] Pager: implement general purpose pager component
 - [ ] Table: implement sortable columns and filter / search
 - [ ] Menu: extract and create MenuItem component to DRY-up main-menu.tsx
+- [ ] Input: consider implementing variants for Inputs
