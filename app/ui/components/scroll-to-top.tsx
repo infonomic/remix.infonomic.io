@@ -34,7 +34,7 @@ const ScrollToTop = React.forwardRef<HTMLButtonElement, ScrollToTopProps>(
     return (
       <button ref={ref} {...rest} onClick={handleScrollToTopClick} type="button" id="scroll-to-top" className={`btn-to-top ${show && 'btn-floating'}`}>
         <span>
-          <svg className="icon" viewBox="0 0 51 32">
+          <svg className="icon" focusable="false" aria-hidden="true" viewBox="0 0 51 32">
             <path d="M25.4,9.8L45.6,30l4.5-4.5L25.4,0.8L0.8,25.4L5.3,30L25.4,9.8z" />
           </svg>
         </span>
