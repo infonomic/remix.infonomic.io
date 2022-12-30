@@ -33,7 +33,7 @@ The quick-start [Indie stack example](https://github.com/remix-run/indie-stack) 
 
 ### Remix
 
-Remix is pretty cool and we admire the [Remix Philosophy](https://remix.run/docs/en/v1/pages/philosophy). We've tried to do things the Remix way - but, obviously we're new to Remix and so suggestions are welcome. There are a lot of good example Remix projects out there - including (but not limited to)...
+Remix is pretty cool, and we've tried to do things the Remix way - but, obviously we're new to Remix and so suggestions are welcome. There are a few good example Remix projects out there - including (but not limited to)...
 
 [https://github.com/jacob-ebey/remix-dashboard-template](https://github.com/jacob-ebey/remix-dashboard-template)<br>
 [https://github.com/jacob-ebey/remix-ecommerce](https://github.com/jacob-ebey/remix-ecommerce)<br>
