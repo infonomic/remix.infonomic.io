@@ -128,10 +128,10 @@ const clientThemeCode = `
 `
 
 function NonFlashOfWrongThemeEls({ ssrTheme }: { ssrTheme: boolean }) {
-  const t = useTheme()
+  const tcx = useTheme()
   return (
     <>
-      <meta name="color-scheme" content={t.theme === 'light' ? 'light dark' : 'dark light'} />
+      <meta name="color-scheme" content={tcx.theme === 'light' ? 'light dark' : 'dark light'} />
       {ssrTheme ? null : <script dangerouslySetInnerHTML={{ __html: clientThemeCode }} />}
     </>
   )

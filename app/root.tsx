@@ -80,11 +80,11 @@ export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
 }
 
 const Document = ({ children, title }: DocumentProps) => {
-  const t = useTheme()
+  const tcx = useTheme()
   const data = useLoaderData<LoaderData>()
 
   return (
-    <html lang="en" className={cx(t.theme)}>
+    <html lang="en" className={cx(tcx.theme)}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -170,7 +170,6 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
-  // TODO: Configure logger
   // eslint-disable-next-line no-console
   console.error(error)
   return (
