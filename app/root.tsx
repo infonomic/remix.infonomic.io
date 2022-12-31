@@ -37,7 +37,7 @@ export type LoaderData = {
 
 /**
  * links
- * @returns 
+ * @returns LinksFunction
  */
 export const links: LinksFunction = () => {
   return [
@@ -57,7 +57,7 @@ export const links: LinksFunction = () => {
 
 /**
  * meta
- * @returns 
+ * @returns MetaFunction
  */
 export const meta: MetaFunction<typeof loader> = () => {
   return {
@@ -74,7 +74,7 @@ export const meta: MetaFunction<typeof loader> = () => {
 /**
  * loader
  * @param param0 
- * @returns 
+ * @returns LoaderFunction
  */
 export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
   const themeSession = await getThemeSession(request)
@@ -121,6 +121,19 @@ const Document = ({ children }: DocumentProps) => {
   )
 }
 
+export default function App() {
+  const data = useLoaderData<LoaderData>()
+  return (
+    <ThemeProvider specifiedTheme={data.theme}>
+      <Document>
+        <ToastPrimitive.Provider>
+          <Outlet />
+          <ToastPrimitive.Viewport />
+        </ToastPrimitive.Provider>
+      </Document>
+    </ThemeProvider >
+  )
+}
 
 interface ErrorDocumentProps {
   children: React.ReactNode
@@ -141,20 +154,6 @@ const ErrorDocument = ({ children, title }: ErrorDocumentProps) => {
         <LiveReload />
       </body>
     </html>
-  )
-}
-
-export default function App() {
-  const data = useLoaderData<LoaderData>()
-  return (
-    <ThemeProvider specifiedTheme={data.theme}>
-      <Document>
-        <ToastPrimitive.Provider>
-          <Outlet />
-          <ToastPrimitive.Viewport />
-        </ToastPrimitive.Provider>
-      </Document>
-    </ThemeProvider >
   )
 }
 
