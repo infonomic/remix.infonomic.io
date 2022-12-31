@@ -5,7 +5,7 @@ import { json } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 
 import { getSession, commitSession } from '~/session.server'
-import { useUser } from '~/utils'
+import { useUser } from '~/utils/utils'
 
 
 import type { BreadcrumbHandle } from '~/ui/components/breadcrumbs/types/breadcrumbs'

@@ -8,7 +8,7 @@ import { Form, Link, useCatch, useLoaderData } from '@remix-run/react'
 import invariant from 'tiny-invariant'
 import { deleteNote, getNote } from '~/models/note.server'
 import { requireUserId, getSession, commitSession } from '~/session.server'
-import { truncate } from '~/utils'
+import { truncate } from '~/utils/helpers'
 
 import type { NoteProps } from '~/modules/notes'
 

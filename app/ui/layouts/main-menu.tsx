@@ -12,7 +12,7 @@ import {
   ExitIcon,
 } from '@radix-ui/react-icons'
 import cx from 'classnames'
-import { useUser } from '~/utils'
+import { useUser } from '~/utils/utils'
 
 import { Avatar } from '~/ui/components/avatar'
 

@@ -12,7 +12,9 @@ import {
   Scripts,
   ScrollRestoration,
   useCatch,
+  useLocation,
 } from '@remix-run/react'
+
 
 import * as ToastPrimitive from '@radix-ui/react-toast'
 import cx from 'classnames'
@@ -20,6 +22,11 @@ import cx from 'classnames'
 import { getUser } from './session.server'
 import { getThemeSession } from './theme.server'
 import ErrorLayout from './ui/layouts/error-layout'
+import {
+  getDomainUrl,
+  getUrl,
+  removeTrailingSlash,
+} from './utils/helpers'
 
 import { NonFlashOfWrongThemeEls, ThemeProvider, useTheme } from '~/ui/theme/theme-provider'
 import type { Theme } from '~/ui/theme/theme-provider'
@@ -32,8 +39,12 @@ import type { User } from '~/models/user.server'
 export type LoaderData = {
   theme: Theme | null
   user: User | null
+  origin: string,
+  path: string,
+  canonicalUrl: string,
   ENV: object | null
 }
+
 
 /**
  * links
@@ -59,15 +70,22 @@ export const links: LinksFunction = () => {
  * meta
  * @returns MetaFunction
  */
-export const meta: MetaFunction<typeof loader> = () => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+
   return {
-    charset: 'utf-8', // <meta charset="utf-8">
-    title: 'Infonomic Remix Workbench App', // <title>Infonomic Remix Workbench App</title>
-    description: 'A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.', // <meta name="description" content="A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.">
-    viewport: 'width=device-width,initial-scale=1', // <meta name="viewport" content="width=device-width,initial-scale=1">
+    charset: 'utf-8',
+    title: 'Infonomic Remix Workbench App',
+    description: 'A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.',
+    viewport: 'width=device-width,initial-scale=1',
     'theme-color': '#f59e0b',
     'msapplication-TileColor': '#f59e0b',
-    'og:image': 'https://remix.infonomic.io/og.png', // <meta property="og:image" content="https://remix.infonomic.io/og.png">
+    'og:title': 'Infonomic Remix Workbench App',
+    'og:description': 'A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.',
+    // Note - og:url will not update on route changes, but it should be fine for 
+    // og links being crawled or shared (i.e. a full SSR)
+    'og:url': getUrl(data.origin, data.path),
+    'og:type': 'website',
+    'og:image': 'https://remix.infonomic.io/og.png',
   }
 }
 
@@ -83,11 +101,17 @@ export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
   const data: LoaderData = {
     theme: themeSession.getTheme(),
     user: user,
+    origin: getDomainUrl(request),
+    path: new URL(request.url).pathname,
+    canonicalUrl: '',
     ENV: {
       RECAPTCHA_ENABLED: process.env.RECAPTCHA_ENABLED,
       RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY,
     },
   }
+
+  data.canonicalUrl = removeTrailingSlash(`${data.origin}${data.path}`)
+
   return json(data)
 }
 
@@ -99,6 +123,10 @@ interface DocumentProps {
 const Document = ({ children, title }: DocumentProps) => {
   const tcx = useTheme()
   const data = useLoaderData<LoaderData>()
+  // Note: useLocation will force the canonical URL to update
+  // for all route changes (unlike the og:url meta tag above)
+  const { pathname } = useLocation()
+  const canonicalUrl = removeTrailingSlash(`${data.origin}${pathname}`)
 
   return (
     <html lang="en" className={cx(tcx.theme)}>
@@ -106,6 +134,7 @@ const Document = ({ children, title }: DocumentProps) => {
         <NonFlashOfWrongThemeEls ssrTheme={Boolean(data.theme)} />
         {title ? <title>{title}</title> : null}
         <Meta />
+        <link rel="canonical" href={canonicalUrl} />
         <Links />
       </head>
       <body className="bg-white selection:bg-amber-400 dark:bg-gray-900 dark:selection:text-black">

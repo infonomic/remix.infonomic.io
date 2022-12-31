@@ -11,7 +11,8 @@ import { useReCaptcha, reCaptchaExecute } from '~/hooks/useReCaptcha'
 import { reCaptchaCheck, RECAPTCHA_VALIDATION_ERROR } from '~/lib.server.node'
 import { createUser, getUserByEmail } from '~/models/user.server'
 import { getUserId, createUserSession } from '~/session.server'
-import { safeRedirect, isBusy } from '~/utils'
+import { isBusy } from '~/utils/helpers'
+import { safeRedirect } from '~/utils/utils'
 
 import { signUpSchema } from '~/modules/session'
 

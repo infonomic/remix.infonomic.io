@@ -17,7 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import invariant from 'tiny-invariant'
 import { editNote, getNote } from '~/models/note.server'
 import { requireUserId, getSession, commitSession } from '~/session.server'
-import { truncate } from '~/utils'
+import { truncate } from '~/utils/helpers'
 
 import { schema } from '~/modules/notes'
 import type { NoteProps } from '~/modules/notes'

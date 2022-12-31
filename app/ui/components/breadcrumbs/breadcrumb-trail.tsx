@@ -1,6 +1,6 @@
 import { Link, useMatches } from '@remix-run/react'
 
-import { truncate } from '~/utils'
+import { truncate } from '~/utils/helpers'
 
 import type { Breadcrumb } from '~/ui/components/breadcrumbs/types/breadcrumbs'
 

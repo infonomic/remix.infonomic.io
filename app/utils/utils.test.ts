@@ -1,3 +1,4 @@
+// TODO: create real tests
 import { validateEmail } from './utils'
 
 test('validateEmail returns false for non-emails', () => {

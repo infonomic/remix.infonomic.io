@@ -18,7 +18,7 @@ import Loader from 'react-spinners/BeatLoader'
 import invariant from 'tiny-invariant'
 import { updateUserEmail, getUserById } from '~/models/user.server'
 import { requireUserId, getSession, commitSession } from '~/session.server'
-import { isBusy } from '~/utils'
+import { isBusy } from '~/utils/helpers'
 
 import { emailSchema } from '~/modules/account'
 

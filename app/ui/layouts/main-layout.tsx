@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import { Link } from '@remix-run/react'
 
 import cx from 'classnames'
-import { useUser } from '~/utils'
+import { useUser } from '~/utils/utils'
 
 import { BreadcrumbTrail } from '~/ui/components/breadcrumbs/breadcrumb-trail'
 import { Container } from '~/ui/components/container'
@@ -14,6 +14,7 @@ import { ThemeSwitch } from '~/ui/components/theme-switch'
 import { AppBar } from '~/ui/layouts/app-bar'
 import { Footer } from '~/ui/layouts/footer'
 import { MainMenu } from '~/ui/layouts/main-menu'
+
 
 interface MainLayoutProps {
   children?: ReactNode;

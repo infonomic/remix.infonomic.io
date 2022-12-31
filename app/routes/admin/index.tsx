@@ -6,7 +6,6 @@ import { Link, useLoaderData } from '@remix-run/react'
 
 import { getSession, commitSession } from '~/session.server'
 
-
 import type { BreadcrumbHandle } from '~/ui/components/breadcrumbs/types/breadcrumbs'
 import { Card } from '~/ui/components/card'
 import { Toast } from '~/ui/components/notifications'

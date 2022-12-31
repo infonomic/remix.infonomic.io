@@ -1,7 +1,7 @@
 import type { LinksFunction } from '@remix-run/node'
 import { Link } from '@remix-run/react'
 
-import { useOptionalUser } from '~/utils'
+import { useOptionalUser } from '~/utils/utils'
 
 import { Button } from '~/ui/components/button'
 import { Container } from '~/ui/components/container'

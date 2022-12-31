@@ -1,10 +1,8 @@
 import { useMemo } from 'react'
 
 import { useMatches } from '@remix-run/react'
-import type { Transition } from '@remix-run/react/dist/transition'
 
 import type { User } from '~/models/user.server'
-
 
 const DEFAULT_REDIRECT = '/'
 
@@ -70,27 +68,7 @@ export function useUser(): User {
   return maybeUser
 }
 
+// TODO: remove and replace in utils.tests - as we don't need this (using zod now)
 export function validateEmail(email: unknown): email is string {
   return typeof email === 'string' && email.length > 3 && email.includes('@')
-}
-
-export function truncate(str: string, length: number, useWordBoundary: boolean) {
-  if (!str || str.length <= length) { return str }
-  const subString = str.slice(0, length - 2) // the original check - less 2 so zero based + '...' will respect length
-  return (useWordBoundary
-    ? subString.slice(0, subString.lastIndexOf(' '))
-    : subString) + '...'
-};
-
-export function isBusy(transition: Transition) {
-  const loading = {
-    actionRedirect: true,
-    actionReload: true,
-  }
-
-  return transition.state === 'submitting'
-    ? true
-    : transition.state === 'loading'
-      ? loading[transition.type as keyof typeof loading]
-      : false
 }
