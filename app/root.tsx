@@ -41,10 +41,8 @@ export type LoaderData = {
   user: User | null
   origin: string,
   path: string,
-  canonicalUrl: string,
   ENV: object | null
 }
-
 
 /**
  * links
@@ -103,14 +101,11 @@ export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
     user: user,
     origin: getDomainUrl(request),
     path: new URL(request.url).pathname,
-    canonicalUrl: '',
     ENV: {
       RECAPTCHA_ENABLED: process.env.RECAPTCHA_ENABLED,
       RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY,
     },
   }
-
-  data.canonicalUrl = removeTrailingSlash(`${data.origin}${data.path}`)
 
   return json(data)
 }
