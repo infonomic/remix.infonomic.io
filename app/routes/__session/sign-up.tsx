@@ -16,11 +16,9 @@ import { safeRedirect, isBusy } from '~/utils'
 import { signUpSchema } from '~/modules/session'
 
 import { Button } from '~/ui/components/button'
-import { Container } from '~/ui/components/container'
 import { Input } from '~/ui/components/input'
 import { hasErrors, getErrorText } from '~/ui/components/input/utils'
-import { Section } from '~/ui/components/section'
-import PublicLayout from '~/ui/layouts/public-layout'
+import { Alert } from '~/ui/components/notifications'
 
 /**
  * meta
@@ -150,84 +148,84 @@ export default function SignUpPage() {
   }, [serverErrors, setFocus])
 
   return (
-    <PublicLayout>
-      <Section className="flex-1">
-        <Container>
-          <div className="form max-w-[460px] mx-auto rounded-lg mt-[10vh] sm:mt-[14vh] p-5 md:p-7 border border-gray-400 dark:border-gray-700">            <div className='form-header prose dark:prose-invert'>
-            <h1 className="text-[2.25rem] mb-5">Sign Up</h1>
-          </div>
-            <div className='form-content mb-7'>
-              <Form method="post" noValidate onSubmit={handleOnSubmit} className="space-y-6">
-                <fieldset disabled={busy}>
-                  <div className='form-controls mb-6'>
-                    <Input
-                      required
-                      id="email"
-                      type="email"
-                      label="Email"
-                      placeHolder="Email"
-                      autoComplete="email"
-                      disabled={busy}
-                      helpText="Please enter your email address."
-                      error={hasErrors('email', errors, serverErrors)}
-                      errorText={getErrorText('email', errors, serverErrors)}
-                      {...register('email')}
-                    />
+    <div className="form max-w-[460px] mx-auto rounded-lg mt-[10vh] sm:mt-[14vh] p-5 md:p-7 border border-gray-400 dark:border-gray-700">
+      <div className='form-header prose dark:prose-invert'>
+        <h1 className="text-[2.25rem] mb-5">Sign Up</h1>
+      </div>
+      {hasErrors('general', errors, serverErrors) && (
+        <Alert intent="danger">
+          {getErrorText('general', errors, serverErrors)}
+        </Alert>
+      )}
+      <div className='form-content mb-7'>
+        <Form method="post" onSubmit={handleOnSubmit} className="space-y-6">
+          <fieldset disabled={busy}>
+            <div className='form-controls mb-6'>
+              <Input
+                required
+                id="email"
+                type="email"
+                label="Email"
+                placeHolder="Email"
+                autoComplete="email"
+                disabled={busy}
+                helpText="Please enter your email address."
+                error={hasErrors('email', errors, serverErrors)}
+                errorText={getErrorText('email', errors, serverErrors)}
+                {...register('email')}
+              />
 
-                    <Input
-                      required
-                      id="password"
-                      type="password"
-                      label="Password"
-                      placeHolder="Password"
-                      autoComplete="current-password"
-                      disabled={busy}
-                      helpText="Please enter your password."
-                      error={hasErrors('password', errors, serverErrors)}
-                      errorText={getErrorText('password', errors, serverErrors)}
-                      {...register('password')}
+              <Input
+                required
+                id="password"
+                type="password"
+                label="Password"
+                placeHolder="Password"
+                autoComplete="current-password"
+                disabled={busy}
+                helpText="Please enter your password."
+                error={hasErrors('password', errors, serverErrors)}
+                errorText={getErrorText('password', errors, serverErrors)}
+                {...register('password')}
+              />
+              <input type="hidden" name="redirectTo" value={redirectTo} />
+            </div>
+            <div className='form-actions flex gap-4 flex-col md:flex-row'>
+              <Button disabled={busy} type="submit" className="min-w-[150px]">
+                {busy ?
+                  (
+                    <Loader
+                      loading={busy}
+                      color="var(--loader-color)"
+                      size={8}
+                      margin={2}
+                      aria-label="Processing sign up"
+                      data-testid="loader"
                     />
-                    <input type="hidden" name="redirectTo" value={redirectTo} />
-                  </div>
-                  <div className='form-actions flex gap-4 flex-col md:flex-row'>
-                    <Button disabled={busy} type="submit" className="min-w-[150px]">
-                      {busy ?
-                        (
-                          <Loader
-                            loading={busy}
-                            color="var(--loader-color)"
-                            size={8}
-                            margin={2}
-                            aria-label="Processing sign up"
-                            data-testid="loader"
-                          />
-                        ) :
-                        (
-                          'Sign Up'
-                        )
-                      }
-                    </Button>
-                  </div>
-                </fieldset>
-              </Form>
+                  ) :
+                  (
+                    'Sign Up'
+                  )
+                }
+              </Button>
             </div>
-            <div className='form-footer prose dark:prose-invert'>
-              <div style={{ fontSize: '0.95rem', marginTop: '1rem' }}>
-                Already have an account?&nbsp;
-                {' '}
-                <Link
-                  to={{
-                    pathname: '/sign-in',
-                    search: searchParams.toString(),
-                  }}
-                >
-                  Sign in
-                </Link>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
-    </PublicLayout>
+          </fieldset>
+        </Form>
+      </div>
+      <div className='form-footer prose dark:prose-invert'>
+        <div style={{ fontSize: '0.95rem', marginTop: '1rem' }}>
+          Already have an account?&nbsp;
+          {' '}
+          <Link
+            to={{
+              pathname: '/sign-in',
+              search: searchParams.toString(),
+            }}
+          >
+            Sign in
+          </Link>
+        </div>
+      </div>
+    </div>
   )
 }
