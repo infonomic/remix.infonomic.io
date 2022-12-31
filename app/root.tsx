@@ -92,10 +92,11 @@ export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
 }
 
 interface DocumentProps {
-  children: React.ReactNode
+  children: React.ReactNode,
+  title?: string
 }
 
-const Document = ({ children }: DocumentProps) => {
+const Document = ({ children, title }: DocumentProps) => {
   const tcx = useTheme()
   const data = useLoaderData<LoaderData>()
 
@@ -103,6 +104,7 @@ const Document = ({ children }: DocumentProps) => {
     <html lang="en" className={cx(tcx.theme)}>
       <head>
         <NonFlashOfWrongThemeEls ssrTheme={Boolean(data.theme)} />
+        {title ? <title>{title}</title> : null}
         <Meta />
         <Links />
       </head>
@@ -135,12 +137,8 @@ export default function App() {
   )
 }
 
-interface ErrorDocumentProps {
-  children: React.ReactNode
-  title?: string
-}
 
-const ErrorDocument = ({ children, title }: ErrorDocumentProps) => {
+const ErrorDocument = ({ children, title }: DocumentProps) => {
   return (
     <html lang="en" className="dark">
       <head>
