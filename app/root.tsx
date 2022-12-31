@@ -69,7 +69,6 @@ export const links: LinksFunction = () => {
  * @returns MetaFunction
  */
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
-
   return {
     charset: 'utf-8',
     title: 'Infonomic Remix Workbench App',

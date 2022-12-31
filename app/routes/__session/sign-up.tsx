@@ -8,7 +8,7 @@ import { Form, Link, useActionData, useSearchParams, useSubmit, useTransition } 
 import { zodResolver } from '@hookform/resolvers/zod'
 import Loader from 'react-spinners/BeatLoader'
 import { useReCaptcha, reCaptchaExecute } from '~/hooks/useReCaptcha'
-import { reCaptchaCheck, RECAPTCHA_VALIDATION_ERROR } from '~/lib.server.node'
+import { reCaptchaCheck, RECAPTCHA_VALIDATION_ERROR } from '~/lib.node.server'
 import { createUser, getUserByEmail } from '~/models/user.server'
 import { getUserId, createUserSession } from '~/session.server'
 import { isBusy } from '~/utils/helpers'
@@ -58,7 +58,7 @@ export async function action({ request }: ActionArgs) {
     } catch (error) {
       if (error instanceof RECAPTCHA_VALIDATION_ERROR) {
         return json(
-          { errors: null },
+          { errors: { general: { _errors: ['Error signing in. reCAPTCHA failed.'] } } },
           { status: 400 }
         )
       } else {

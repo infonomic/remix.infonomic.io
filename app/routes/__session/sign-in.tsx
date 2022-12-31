@@ -8,7 +8,7 @@ import { Form, Link, useActionData, useSearchParams, useSubmit, useTransition } 
 import { zodResolver } from '@hookform/resolvers/zod'
 import Loader from 'react-spinners/BeatLoader'
 import { useReCaptcha, reCaptchaExecute } from '~/hooks/useReCaptcha'
-import { reCaptchaCheck, RECAPTCHA_VALIDATION_ERROR } from '~/lib.server.node'
+import { reCaptchaCheck, RECAPTCHA_VALIDATION_ERROR } from '~/lib.node.server'
 import { verifyLogin } from '~/models/user.server'
 import { createUserSession, getUserId } from '~/session.server'
 import { isBusy } from '~/utils/helpers'

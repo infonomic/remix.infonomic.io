@@ -15,7 +15,7 @@ export class AppError extends Error {
 }
 
 /**
- * Error for reporting general filesystem errors.
+ * Error for reporting general server errors.
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export class HTTP_REQUEST_ERROR extends AppError {
@@ -25,11 +25,14 @@ export class HTTP_REQUEST_ERROR extends AppError {
   get code() { return 'HTTP_REQUEST_ERROR' }
 }
 
+/**
+ * Error for reporting general reCAPTCHA errors.
+ */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export class RECAPTCHA_VALIDATION_ERROR extends AppError {
   get status() { return 400 }
 
-  get code() { return 'RECAPTCA_VALIDATION_ERROR' }
+  get code() { return 'RECAPTCHA_VALIDATION_ERROR' }
 }
 
 /**
