@@ -83,7 +83,7 @@ export const meta: MetaFunction<LoaderData> = ({ data }) => {
 
 /**
  * loader
- * @param param0
+ * @param LoaderArgs
  * @returns LoaderFunction
  */
 export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
