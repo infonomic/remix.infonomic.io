@@ -5,10 +5,10 @@ import PublicLayout from '~/ui/layouts/public-layout'
 
 /**
  * meta
- * @returns
+ * @returns MetaFunction
  */
 export const meta = () => ({
-  title: '404 - Infonomic - Remix Workbench',
+  title: '404 - Page Not Found - Infonomic Remix Workbench App',
 })
 
 /**
@@ -21,7 +21,7 @@ export async function loader() {
    * 'correct' 404 response - which is handled by the CatchBoundary
    * below. This in turn means that our root.tsx loader and
    * App/Document components will succeed - including our theme
-   * provider settings. So we'll get a proper 'themeable'
+   * provider settings. So we'll get a proper 'theme-able'
    * 404 not found page that we can customize in the CatchBoundary.
    **/
 
@@ -30,13 +30,22 @@ export async function loader() {
 }
 
 /**
- * Index
+ * CatchAll
  * @returns ReactNode
  */
 export default function CatchAll() {
-  return <p>We should never see this.</p>
+  /** 
+   * This should never happen, since the loader above will
+   * always throw Response('Not Found', { status: 404 })
+   * which is caught by the CatchBoundary below.
+   **/
+  return <p>Not found.</p>
 }
 
+/**
+ * CatchBoundary
+ * @returns ReactNode | Error
+ */
 export function CatchBoundary() {
   const caught = useCatch()
   if (caught.status === 404) {
