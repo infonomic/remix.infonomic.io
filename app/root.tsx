@@ -80,7 +80,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     'og:description': 'A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.',
     // Note - og:url will not update on route changes, but it should be fine for 
     // og links being crawled or shared (i.e. a full SSR)
-    'og:url': getUrl(data.origin, data.path),
+    'og:url': getUrl(data?.origin, data?.path),
     'og:type': 'website',
     'og:image': 'https://remix.infonomic.io/og.png',
   }
@@ -120,7 +120,7 @@ const Document = ({ children, title }: DocumentProps) => {
   // Note: useLocation will force the canonical URL to update
   // for all route changes (unlike the og:url meta tag above)
   const { pathname } = useLocation()
-  const canonicalUrl = removeTrailingSlash(`${data.origin}${pathname}`)
+  const canonicalUrl = removeTrailingSlash(`${data?.origin}${pathname}`)
 
   return (
     <html lang="en" className={cx(tcx.theme)}>
