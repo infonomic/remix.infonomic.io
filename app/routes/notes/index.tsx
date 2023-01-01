@@ -15,7 +15,7 @@ import { Toast } from '~/ui/components/notifications'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta: MetaFunction = () => ({
   title: 'Notes - Infonomic Remix Workbench',
@@ -23,24 +23,24 @@ export const meta: MetaFunction = () => ({
 
 /**
  * loader
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function loader({ request }: LoaderArgs) {
-  const [userId, session] = await Promise.all([
-    requireUserId(request),
-    getSession(request),
-  ])
+  const [userId, session] = await Promise.all([requireUserId(request), getSession(request)])
 
   const noteListItems = await getNoteListItems({ userId })
   const message = session.get('success') || null
 
-  return json({ noteListItems, message }, {
-    headers: {
-      // only necessary with cookieSessionStorage
-      'Set-Cookie': await commitSession(session),
-    },
-  })
+  return json(
+    { noteListItems, message },
+    {
+      headers: {
+        // only necessary with cookieSessionStorage
+        'Set-Cookie': await commitSession(session),
+      },
+    }
+  )
 }
 
 /**
@@ -57,7 +57,7 @@ export const handle: BreadcrumbHandle = {
 
 /**
  * NoteIndexPage
- * @returns 
+ * @returns
  */
 export default function NoteIndexPage() {
   const data = useLoaderData<typeof loader>()
@@ -69,31 +69,29 @@ export default function NoteIndexPage() {
       <Toast title="Notes" description={data.message} open={toast} onOpenChange={setToast} />
       <div className="mt-1 mb-3">
         <Button asChild>
-          <Link to="/notes/new">
-            New Note
-          </Link>
+          <Link to="/notes/new">New Note</Link>
         </Button>
       </div>
       {data.noteListItems.length === 0
-        ? (
-          <p className="p-4">No notes yet</p>
-        )
-        : (
-          <div className="grid grid-cols-auto-fit-320 gap-4">
-            {data.noteListItems.map(note => (
-              <Card asChild key={note.id}>
-                <Link
-                  to={note.id}
-                >
-                  <h5 className="mb-2 w-full text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{note.title}</h5>
-                  <p className="font-normal text-gray-700 dark:text-gray-400">
-                    {truncate(note.body, 200, true)}
-                  </p>
-                </Link>
-              </Card>
-            ))}
-          </div>
-        )}
+? (
+        <p className="p-4">No notes yet</p>
+      )
+: (
+        <div className="grid grid-cols-auto-fit-320 gap-4">
+          {data.noteListItems.map(note => (
+            <Card asChild key={note.id}>
+              <Link to={note.id}>
+                <h5 className="mb-2 w-full text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  {note.title}
+                </h5>
+                <p className="font-normal text-gray-700 dark:text-gray-400">
+                  {truncate(note.body, 200, true)}
+                </p>
+              </Link>
+            </Card>
+          ))}
+        </div>
+      )}
     </>
   )
 }

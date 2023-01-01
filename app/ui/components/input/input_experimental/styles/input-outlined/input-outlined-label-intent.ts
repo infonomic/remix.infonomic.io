@@ -1,5 +1,4 @@
 const inputOutlinedLabelColors: object = {
-  
   primary: {
     color: 'text-blue-gray-400 peer-focus:text-amber-500',
     before: 'before:border-blue-gray-200 peer-focus:before:border-amber-500',

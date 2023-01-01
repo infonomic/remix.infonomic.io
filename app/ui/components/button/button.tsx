@@ -15,7 +15,7 @@ import { Primitive } from '@radix-ui/react-primitive'
 import cx from 'classnames'
 /* eslint-disable */
 // @ts-ignore
-import Ripple from "material-ripple-effects";
+import Ripple from 'material-ripple-effects'
 /* eslint-enable */
 import { twMerge } from 'tailwind-merge'
 
@@ -24,15 +24,7 @@ import { button } from './styles'
 import objectsToString from '~/ui/utils/objectsToString'
 
 // types
-import type {
-  variant,
-  size,
-  intent,
-  fullWidth,
-  ripple,
-  className,
-  children,
-} from './types/button'
+import type { variant, size, intent, fullWidth, ripple, className, children } from './types/button'
 import type * as Radix from '@radix-ui/react-primitive'
 
 const NAME = 'Button'
@@ -40,13 +32,13 @@ const NAME = 'Button'
 type ButtonElement = React.ElementRef<typeof Primitive.button>
 type PrimitiveButtonProps = Radix.ComponentPropsWithoutRef<typeof Primitive.button>
 interface ButtonProps extends PrimitiveButtonProps {
-  variant?: variant;
-  size?: size;
-  intent?: intent;
-  fullWidth?: fullWidth;
-  ripple?: ripple;
-  className?: className;
-  children: children;
+  variant?: variant
+  size?: size
+  intent?: intent
+  fullWidth?: fullWidth
+  ripple?: ripple
+  className?: className
+  children: children
 }
 
 const Button = React.forwardRef<ButtonElement, ButtonProps>(
@@ -85,7 +77,8 @@ const Button = React.forwardRef<ButtonElement, ButtonProps>(
         className={classes}
         type={rest.type || 'button'}
         onMouseDown={e => {
-          const onMouseDown: React.MouseEventHandler<HTMLButtonElement> | undefined = rest?.onMouseDown
+          const onMouseDown: React.MouseEventHandler<HTMLButtonElement> | undefined =
+            rest?.onMouseDown
 
           if (ripple) {
             rippleEffect.create(

@@ -15,32 +15,33 @@ import { AppBar } from '~/ui/layouts/app-bar'
 import { Footer } from '~/ui/layouts/footer'
 import { MainMenu } from '~/ui/layouts/main-menu'
 
-
 interface MainLayoutProps {
-  children?: ReactNode;
-  className?: string;
+  children?: ReactNode
+  className?: string
 }
-export type Ref = HTMLDivElement;
+export type Ref = HTMLDivElement
 
 const MainLayout = forwardRef<Ref, MainLayoutProps>(({ children, className, ...other }, ref) => {
-
   const user = useUser()
 
   return (
     <div
-      className={cx('layout-container flex flex-col min-h-screen', className)}
+      className={cx('layout-container flex min-h-screen flex-col', className)}
       ref={ref}
-      {...other} >
+      {...other}
+    >
       <a href="#main-content">Skip to main content</a>
       <AppBar>
         <Link to={{ pathname: '/' }} className="font-medium">
           Home
         </Link>
-        <span className="inline-block ml-auto mr-8 w-[90px] overflow-hidden overflow-ellipsis sm:w-auto">{user.email}</span>
+        <span className="ml-auto mr-8 inline-block w-[90px] overflow-hidden overflow-ellipsis sm:w-auto">
+          {user.email}
+        </span>
         <ThemeSwitch style={{ marginRight: '1rem' }} />
         <MainMenu />
       </AppBar>
-      <main id="main-content" className="flex flex-col flex-1 pt-[58px]">
+      <main id="main-content" className="flex flex-1 flex-col pt-[58px]">
         <Section className="breadcrumb-trail pt-4">
           <Container className="prose dark:prose-invert">
             <BreadcrumbTrail />

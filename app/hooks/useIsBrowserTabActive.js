@@ -6,7 +6,7 @@ const useIsBrowserTabActive = () => {
 
   useEffect(() => {
     const onVisibilityChange = () => {
-      isBrowserTabActiveRef.current = (document.visibilityState === 'visible')
+      isBrowserTabActiveRef.current = document.visibilityState === 'visible'
     }
 
     window.addEventListener('visibilitychange', onVisibilityChange)

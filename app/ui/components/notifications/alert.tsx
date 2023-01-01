@@ -16,13 +16,7 @@ import SuccessIcon from '~/ui/icons/success-icon'
 import WarningIcon from '~/ui/icons/warning-icon'
 import objectsToString from '~/ui/utils/objectsToString'
 
-import type {
-  intent,
-  icon,
-  close,
-  className,
-  children,
-} from './types/alert'
+import type { intent, icon, close, className, children } from './types/alert'
 import type * as Radix from '@radix-ui/react-primitive'
 
 const alertIcons = {
@@ -36,7 +30,7 @@ const alertIcons = {
 
 const NAME = 'Alert'
 
-type AlertElement = React.ElementRef<typeof Primitive.div>;
+type AlertElement = React.ElementRef<typeof Primitive.div>
 type PrimitiveCardProps = Radix.ComponentPropsWithoutRef<typeof Primitive.div>
 interface AlertProps extends PrimitiveCardProps {
   intent?: intent
@@ -48,7 +42,6 @@ interface AlertProps extends PrimitiveCardProps {
 
 const Alert = React.forwardRef<AlertElement, AlertProps>(
   ({ intent, icon, close, className, children, ...rest }, ref) => {
-
     const [show, setShow] = useState(false)
 
     // 1. init
@@ -64,10 +57,7 @@ const Alert = React.forwardRef<AlertElement, AlertProps>(
     // 3. set styles
     const alertBase = objectsToString(base.initial)
     const alertIntent = objectsToString(intents[intent as keyof typeof intents])
-    const classes = twMerge(
-      cx(alertBase, alertIntent),
-      className
-    )
+    const classes = twMerge(cx(alertBase, alertIntent), className)
 
     const Icon = alertIcons[intent as keyof typeof alertIcons]
 
@@ -89,32 +79,25 @@ const Alert = React.forwardRef<AlertElement, AlertProps>(
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <Primitive.div
-          ref={ref}
-          className={classes}
-          {...rest}
-        >
-
+        <Primitive.div ref={ref} className={classes} {...rest}>
           {icon && (
             <div className="alert-icon">
               <Icon />
             </div>
           )}
 
-          <div className="alert-content">
-            {children}
-          </div>
+          <div className="alert-content">{children}</div>
 
           {close && (
             <div className="alert-close ml-auto">
               <CloseButton intent={intent} onClick={handleClose} />
             </div>
           )}
-
         </Primitive.div>
-      </Transition >
+      </Transition>
     )
-  })
+  }
+)
 
 Alert.displayName = NAME
 

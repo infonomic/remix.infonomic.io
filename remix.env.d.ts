@@ -1,11 +1,11 @@
 /// <reference types="@remix-run/dev" />
 /// <reference types="@remix-run/node/globals" />
-declare module '*.css';
+declare module '*.css'
 
-export { }
+export {}
 
 declare global {
   interface Window {
-    ENV: any;
+    ENV: any
   }
 }

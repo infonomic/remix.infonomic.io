@@ -3,7 +3,14 @@ import { useForm } from 'react-hook-form'
 
 import type { ActionArgs, LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { Form, Link, useActionData, useSearchParams, useSubmit, useTransition } from '@remix-run/react'
+import {
+  Form,
+  Link,
+  useActionData,
+  useSearchParams,
+  useSubmit,
+  useTransition,
+} from '@remix-run/react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import Loader from 'react-spinners/BeatLoader'
@@ -23,7 +30,7 @@ import { Alert } from '~/ui/components/notifications'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta: MetaFunction = () => {
   return {
@@ -33,8 +40,8 @@ export const meta: MetaFunction = () => {
 
 /**
  * loader
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request)
@@ -44,8 +51,8 @@ export async function loader({ request }: LoaderArgs) {
 
 /**
  * action
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function action({ request }: ActionArgs) {
   const formData = await request.formData()
@@ -62,20 +69,14 @@ export async function action({ request }: ActionArgs) {
           { status: 400 }
         )
       } else {
-        return json(
-          { errors: null },
-          { status: 500 }
-        )
+        return json({ errors: null }, { status: 500 })
       }
     }
   }
 
   const parseResult = signUpSchema.safeParse(formData)
   if (!parseResult.success) {
-    return json(
-      { errors: parseResult.error.format() },
-      { status: 400 }
-    )
+    return json({ errors: parseResult.error.format() }, { status: 400 })
   }
 
   const existingUser = await getUserByEmail(parseResult.data.email)
@@ -103,14 +104,11 @@ export async function action({ request }: ActionArgs) {
   })
 }
 
-const fields = [
-  'email',
-  'password',
-]
+const fields = ['email', 'password']
 
 /**
  * SignUpPage
- * @returns 
+ * @returns
  */
 export default function SignUpPage() {
   useReCaptcha()
@@ -121,25 +119,27 @@ export default function SignUpPage() {
   const [searchParams] = useSearchParams()
   const redirectTo = searchParams.get('redirectTo') ?? undefined
   const resolver = zodResolver(signUpSchema)
-  const { register, handleSubmit, formState: { errors }, setFocus } = useForm({ resolver })
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setFocus,
+  } = useForm({ resolver })
   const busy = isBusy(transition)
 
   /**
-   * handleOnSubmit - js submission of form so that we can create a 
+   * handleOnSubmit - js submission of form so that we can create a
    * reCaptcha token.
-   * @param event 
+   * @param event
    */
   const handleOnSubmit = async (event: any) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const gtoken = await reCaptchaExecute('sign_up')
     if (gtoken) formData.set('gtoken', gtoken)
-    handleSubmit(() =>
-      submit(
-        formData,
-        { method: 'post', action: '/sign-up', replace: true }
-      )
-    )(event)
+    handleSubmit(() => submit(formData, { method: 'post', action: '/sign-up', replace: true }))(
+      event
+    )
   }
 
   React.useEffect(() => {
@@ -149,19 +149,17 @@ export default function SignUpPage() {
   }, [serverErrors, setFocus])
 
   return (
-    <div className="form max-w-[460px] mx-auto rounded-lg mt-[10vh] sm:mt-[14vh] p-5 md:p-7 border border-gray-400 dark:border-gray-700">
-      <div className='form-header prose dark:prose-invert'>
-        <h1 className="text-[2.25rem] mb-5">Sign Up</h1>
+    <div className="form mx-auto mt-[10vh] max-w-[460px] rounded-lg border border-gray-400 p-5 dark:border-gray-700 sm:mt-[14vh] md:p-7">
+      <div className="form-header prose dark:prose-invert">
+        <h1 className="mb-5 text-[2.25rem]">Sign Up</h1>
       </div>
       {hasErrors('general', errors, serverErrors) && (
-        <Alert intent="danger">
-          {getErrorText('general', errors, serverErrors)}
-        </Alert>
+        <Alert intent="danger">{getErrorText('general', errors, serverErrors)}</Alert>
       )}
-      <div className='form-content mb-7'>
+      <div className="form-content mb-7">
         <Form method="post" onSubmit={handleOnSubmit} className="space-y-6">
           <fieldset disabled={busy}>
-            <div className='form-controls mb-6'>
+            <div className="form-controls mb-6">
               <Input
                 required
                 id="email"
@@ -191,32 +189,30 @@ export default function SignUpPage() {
               />
               <input type="hidden" name="redirectTo" value={redirectTo} />
             </div>
-            <div className='form-actions flex gap-4 flex-col md:flex-row'>
+            <div className="form-actions flex flex-col gap-4 md:flex-row">
               <Button disabled={busy} type="submit" className="min-w-[150px]">
-                {busy ?
-                  (
-                    <Loader
-                      loading={busy}
-                      color="var(--loader-color)"
-                      size={8}
-                      margin={2}
-                      aria-label="Processing sign up"
-                      data-testid="loader"
-                    />
-                  ) :
-                  (
-                    'Sign Up'
-                  )
-                }
+                {busy
+? (
+                  <Loader
+                    loading={busy}
+                    color="var(--loader-color)"
+                    size={8}
+                    margin={2}
+                    aria-label="Processing sign up"
+                    data-testid="loader"
+                  />
+                )
+: (
+                  'Sign Up'
+                )}
               </Button>
             </div>
           </fieldset>
         </Form>
       </div>
-      <div className='form-footer prose dark:prose-invert'>
+      <div className="form-footer prose dark:prose-invert">
         <div style={{ fontSize: '0.95rem', marginTop: '1rem' }}>
-          Already have an account?&nbsp;
-          {' '}
+          Already have an account?&nbsp;{' '}
           <Link
             to={{
               pathname: '/sign-in',

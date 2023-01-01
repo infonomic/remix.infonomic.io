@@ -19,7 +19,7 @@ import ErrorLayout from '~/ui/layouts/error-layout'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta: MetaFunction<typeof loader> = ({ data }) => ({
   title: `Edit Note - ${truncate(data?.note?.body, 50, true)} Infonomic - Remix Workbench`,
@@ -27,8 +27,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => ({
 
 /**
  * loader
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function loader({ request, params }: LoaderArgs) {
   const userId = await requireUserId(request)
@@ -43,8 +43,8 @@ export async function loader({ request, params }: LoaderArgs) {
 
 /**
  * action
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function action({ request, params }: ActionArgs) {
   const userId = await requireUserId(request)
@@ -92,26 +92,24 @@ export const handle: BreadcrumbHandle<NoteProps> = {
 
 /**
  * NoteDetailsPage
- * @returns 
+ * @returns
  */
 export default function NoteDetailsPage() {
   const data = useLoaderData<typeof loader>()
 
   return (
-    <div className="flex flex-col w-full max-w-[560px] mt-[1vh] sm:mt-[4vh] mx-auto">
+    <div className="mx-auto mt-[1vh] flex w-full max-w-[560px] flex-col sm:mt-[4vh]">
       <Alert intent="warning">Warning: This action cannot be undone.</Alert>
-      <h3 className="text-2xl font-bold my-2">{data.note.title}</h3>
+      <h3 className="my-2 text-2xl font-bold">{data.note.title}</h3>
       <p className="py-6">{data.note.body}</p>
       <hr className="my-4" />
       <Form method="post">
-        <div className="form-actions flex gap-3 justify-end flex-row">
+        <div className="form-actions flex flex-row justify-end gap-3">
           <Button type="submit" intent="danger">
             Delete
           </Button>
           <Button asChild intent="secondary">
-            <Link to={`/notes/${data.note.id}`}>
-              Cancel
-            </Link>
+            <Link to={`/notes/${data.note.id}`}>Cancel</Link>
           </Button>
         </div>
       </Form>

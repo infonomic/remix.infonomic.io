@@ -4,21 +4,21 @@ import type { ReactNode } from 'react'
 import cx from 'classnames'
 
 interface FrontLayoutProps {
-  children?: ReactNode;
-  className?: string;
+  children?: ReactNode
+  className?: string
 }
 
-export type Ref = HTMLDivElement;
+export type Ref = HTMLDivElement
 
 const FrontLayout = forwardRef<Ref, FrontLayoutProps>(({ children, className, ...other }, ref) => {
-
   return (
     <div
-      className={cx('layout-container flex flex-col min-h-screen', className)}
+      className={cx('layout-container flex min-h-screen flex-col', className)}
       ref={ref}
-      {...other} >
+      {...other}
+    >
       <a href="#main-content">Skip to main content</a>
-      <main id="main-content" className="bg-amber-500 flex flex-col min-h-screen">
+      <main id="main-content" className="flex min-h-screen flex-col bg-amber-500">
         {children}
       </main>
     </div>

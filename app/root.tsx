@@ -1,4 +1,3 @@
-
 import type * as React from 'react'
 
 import type { LinksFunction, LoaderArgs, MetaFunction, LoaderFunction } from '@remix-run/node'
@@ -15,18 +14,13 @@ import {
   useLocation,
 } from '@remix-run/react'
 
-
 import * as ToastPrimitive from '@radix-ui/react-toast'
 import cx from 'classnames'
 
 import { getUser } from './session.server'
 import { getThemeSession } from './theme.server'
 import ErrorLayout from './ui/layouts/error-layout'
-import {
-  getDomainUrl,
-  getUrl,
-  removeTrailingSlash,
-} from './utils/helpers'
+import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/helpers'
 
 import { NonFlashOfWrongThemeEls, ThemeProvider, useTheme } from '~/ui/theme/theme-provider'
 import type { Theme } from '~/ui/theme/theme-provider'
@@ -39,8 +33,8 @@ import type { User } from '~/models/user.server'
 export type LoaderData = {
   theme: Theme | null
   user: User | null
-  origin: string,
-  path: string,
+  origin: string
+  path: string
   ENV: object | null
 }
 
@@ -68,7 +62,7 @@ export const links: LinksFunction = () => {
  * meta
  * @returns MetaFunction
  */
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<LoaderData> = ({ data }) => {
   return {
     charset: 'utf-8',
     title: 'Infonomic Remix Workbench App',
@@ -77,8 +71,9 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     'theme-color': '#f59e0b',
     'msapplication-TileColor': '#f59e0b',
     'og:title': 'Infonomic Remix Workbench App',
-    'og:description': 'A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.',
-    // Note - og:url will not update on route changes, but it should be fine for 
+    'og:description':
+      'A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.',
+    // Note - og:url will not update on route changes, but it should be fine for
     // og links being crawled or shared (i.e. a full SSR)
     'og:url': getUrl(data?.origin, data?.path),
     'og:type': 'website',
@@ -88,7 +83,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 /**
  * loader
- * @param param0 
+ * @param param0
  * @returns LoaderFunction
  */
 export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
@@ -110,13 +105,14 @@ export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
 }
 
 interface DocumentProps {
-  children: React.ReactNode,
+  children: React.ReactNode
   title?: string
 }
 
 const Document = ({ children, title }: DocumentProps) => {
   const tcx = useTheme()
   const data = useLoaderData<LoaderData>()
+
   // Note: useLocation will force the canonical URL to update
   // for all route changes (unlike the og:url meta tag above)
   const { pathname } = useLocation()
@@ -148,6 +144,7 @@ const Document = ({ children, title }: DocumentProps) => {
 
 export default function App() {
   const data = useLoaderData<LoaderData>()
+
   return (
     <ThemeProvider specifiedTheme={data.theme}>
       <Document>
@@ -156,10 +153,9 @@ export default function App() {
           <ToastPrimitive.Viewport />
         </ToastPrimitive.Provider>
       </Document>
-    </ThemeProvider >
+    </ThemeProvider>
   )
 }
-
 
 const ErrorDocument = ({ children, title }: DocumentProps) => {
   return (

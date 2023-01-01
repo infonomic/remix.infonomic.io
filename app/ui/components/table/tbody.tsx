@@ -2,11 +2,10 @@ import * as React from 'react'
 
 const NAME = 'TableBody'
 
-type TableBodyProps = JSX.IntrinsicElements['tbody'];
+type TableBodyProps = JSX.IntrinsicElements['tbody']
 
 const TableBody = React.forwardRef<HTMLTableSectionElement, TableBodyProps>(
   ({ className, children, ...rest }, ref) => {
-
     return (
       <tbody ref={ref} className={className} {...rest}>
         {children}

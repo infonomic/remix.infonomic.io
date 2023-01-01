@@ -1,9 +1,11 @@
-::-moz-selection, ::selection { 
+::-moz-selection,
+::selection {
   color: #222222;
-  background: rgb(245 158 11); 
+  background: rgb(245 158 11);
 }
 
-::-moz-selection, ::selection { 
+::-moz-selection,
+::selection {
   color: #222222;
-  background: rgb(245 158 11); 
+  background: rgb(245 158 11);
 }

@@ -4,7 +4,8 @@
 // and license for this code should be determined before use.
 import { type DOMAttributes } from 'react'
 
-const FOCUSABLE_ELEMENTS_SELECTOR = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+const FOCUSABLE_ELEMENTS_SELECTOR =
+  'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
 
 class FocusTrap extends HTMLElement {
   static get observedAttributes() {
@@ -29,7 +30,7 @@ class FocusTrap extends HTMLElement {
         }, 1)
       } else if (this._returnTo) {
         setTimeout(() => {
-          (this._returnTo as HTMLElement).focus()
+          ;(this._returnTo as HTMLElement).focus()
         }, 1)
       }
       return
@@ -46,7 +47,7 @@ class FocusTrap extends HTMLElement {
     this.removeEventListener('keydown', this._onKeyDown)
     if (this._returnTo) {
       setTimeout(() => {
-        (this._returnTo as HTMLElement).focus()
+        ;(this._returnTo as HTMLElement).focus()
       }, 1)
     }
   }
@@ -57,8 +58,7 @@ class FocusTrap extends HTMLElement {
     const isTabPressed = event.key === 'Tab'
     if (!isTabPressed) return
 
-    const { firstFocusableElement, lastFocusableElement } =
-      this._getFocusableElements()
+    const { firstFocusableElement, lastFocusableElement } = this._getFocusableElements()
 
     if (event.shiftKey) {
       if (document.activeElement === firstFocusableElement) {
@@ -74,13 +74,9 @@ class FocusTrap extends HTMLElement {
   }
 
   _getFocusableElements() {
-    const focusableElements = this.querySelectorAll(
-      FOCUSABLE_ELEMENTS_SELECTOR
-    )
+    const focusableElements = this.querySelectorAll(FOCUSABLE_ELEMENTS_SELECTOR)
     const firstFocusableElement = focusableElements[0] as HTMLElement
-    const lastFocusableElement = focusableElements[
-      focusableElements.length - 1
-    ] as HTMLElement
+    const lastFocusableElement = focusableElements[focusableElements.length - 1] as HTMLElement
 
     return {
       firstFocusableElement,
@@ -98,14 +94,12 @@ export function registerFocusTrap() {
   }
 }
 
-type CustomElement<T> = Partial<
-  T & DOMAttributes<T> & { children: any; class: string; ref?: any }
->;
+type CustomElement<T> = Partial<T & DOMAttributes<T> & { children: any; class: string; ref?: any }>
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'focus-trap': CustomElement<FocusTrap & { trapped?: 'true' }>;
+      'focus-trap': CustomElement<FocusTrap & { trapped?: 'true' }>
     }
   }
 }

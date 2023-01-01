@@ -6,7 +6,7 @@ import MainLayout from '~/ui/layouts/main-layout'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta = () => ({
   title: 'Notes - Infonomic Remix Workbench',
@@ -14,12 +14,12 @@ export const meta = () => ({
 
 /**
  * NotesPage template route
- * @returns 
+ * @returns
  */
 export default function NotesPage() {
   return (
     <MainLayout>
-      <Section className="flex-1 flex flex-col py-4">
+      <Section className="flex flex-1 flex-col py-4">
         <Container className="prose dark:prose-invert">
           <Outlet />
         </Container>

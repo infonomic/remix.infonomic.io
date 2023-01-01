@@ -8,7 +8,7 @@ Learn more about [Remix Stacks](https://remix.run/stacks).
 
 The original README is [further below](#original-indie-stack-quick-start-readme---whats-in-the-stack) (with some modifications)
 
-## Rationale 
+## Rationale
 
 The quick-start [Indie stack example](https://github.com/remix-run/indie-stack) is a great way to get started with Remix, however, we wanted to create a fuller example with a few goals in mind:
 
@@ -26,7 +26,7 @@ The quick-start [Indie stack example](https://github.com/remix-run/indie-stack) 
 5. Copy the `prisma/users.example.json` file to `prisma/users.json` - these are the seed user accounts, including an admin user.
 6. Run `npm run setup` to initialize the local SQLite database and seed users.
 7. Run `npm run dev` to start your local development environment.
-8. Run `rm -rf build` and `npm run build`  and `npm run start` to run a production build.
+8. Run `rm -rf build` and `npm run build` and `npm run start` to run a production build.
 9. If you'd like to deploy the application to [Fly.io](https://fly.io) - follow the instructions below in the original README. Be sure to rename the application (and unique Fly.io app code) in the `name` section of `package.json` and the `app` section of `fly.toml`.
 
 ## Approach
@@ -50,7 +50,7 @@ See the [Style System](#style-system) section below for the directory structure 
 
 ### Data Layer
 
-As in the original quick-start app, this project uses [Prisma](https://www.prisma.io/) with `User` and `Note` Prisma models for data access. Prisma looks great, and we should probably spent more time with this - but we're new to Prisma as well, having relied on [Knex](https://knexjs.org/) and plain SQL for relational database query building for years now. 
+As in the original quick-start app, this project uses [Prisma](https://www.prisma.io/) with `User` and `Note` Prisma models for data access. Prisma looks great, and we should probably spent more time with this - but we're new to Prisma as well, having relied on [Knex](https://knexjs.org/) and plain SQL for relational database query building for years now.
 
 We've updated the Prisma `/prisma/schema.prisma` `User` model to include an `isAdmin` field. We've also created a `/prisma/users.example.json` source user file for seeding users, including an admin account. Follow the [Getting Started](#getting-started) instructions above to rename this file and seed your database.
 
@@ -69,6 +69,7 @@ CSS files in the root level `/shared` directory are processed and placed in the 
 The entire system can be illustrated as follows:
 
 Source
+
 <pre>
 /shared
 └── css
@@ -102,7 +103,7 @@ Source
     └── index.tsx
 </pre>
 
-Output 
+Output
 
 <pre>
 /app
@@ -120,7 +121,7 @@ Output
 
 </pre>
 
-This means of course that you will need to import stylesheets from the `/app/styles` directory, and not the source route, module or shared CSS directories. In order to 'surface' module-level stylesheets in a route, we followed the [styling guide](https://remix.run/docs/en/v1/guides/styling#surfacing-styles) at Remix. It's not a perfect 'co-located' setup - but it works, and it was the best we could come up with for now. Again - suggestions welcome. You can see an example that combines the `Hero.css` stylesheet with the `index.css` stylesheet here in the [index.tsx route](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/routes/index.tsx). 
+This means of course that you will need to import stylesheets from the `/app/styles` directory, and not the source route, module or shared CSS directories. In order to 'surface' module-level stylesheets in a route, we followed the [styling guide](https://remix.run/docs/en/v1/guides/styling#surfacing-styles) at Remix. It's not a perfect 'co-located' setup - but it works, and it was the best we could come up with for now. Again - suggestions welcome. You can see an example that combines the `Hero.css` stylesheet with the `index.css` stylesheet here in the [index.tsx route](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/routes/index.tsx).
 
 ### Components and Design System
 
@@ -128,11 +129,11 @@ Building a complete design system including design language and tokens is not a 
 
 Below is a brief introduction to the core components, where they came from, and how they've been configured. And here's what's on our current [TODO](./TODO.md) list if you felt like lending a hand (take a look at the [Contributions](#contributions) section).
 
-[Alert](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/ui/components/notifications/alert.tsx) - supports 'intents', and is based on the Radix `@radix-ui/react-primitive` - which in turn means it supports 'slots' and the  `asChild` prop - allowing you to takeover the alert completely, merging default alert styles and props with your own styles and props ('slot' uses `React.cloneElement` and `mergeProps` under the hood. It's very cool). Alerts are animated via [Headless UI Transition](https://headlessui.com/react/transition).
+[Alert](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/ui/components/notifications/alert.tsx) - supports 'intents', and is based on the Radix `@radix-ui/react-primitive` - which in turn means it supports 'slots' and the `asChild` prop - allowing you to takeover the alert completely, merging default alert styles and props with your own styles and props ('slot' uses `React.cloneElement` and `mergeProps` under the hood. It's very cool). Alerts are animated via [Headless UI Transition](https://headlessui.com/react/transition).
 
 [BreadcrumbTrail](https://github.com/infonomic/remix.infonomic.io/tree/develop/app/ui/components/breadcrumbs) - is a 'typed' implementation of Breadcrumbs that used Remix's `useMatches` to match route `handle` methods - looking for Breadcrumbs. You can see an example here in the [app/routes/notes/$noteId.delete.tsx](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/routes/notes/%24noteId.delete.tsx) route. We have no idea if this is the best way to implement a BreadcrumbTrail in Remix - but it seems to work. We _think_ - but may be wrong, that with Remix's file-based router, there's no other way to get or annotate route information, such as a route label - hence this approach. Note too that the `handle` method can implement as many `handle` functions as you like by `&&`-ing or `||`-ing additional handle method types (i.e. handle isn't limited to `BreadcrumbHandle<T>` when Breadcrumbs are implemented on a `handle` method).
 
-[Button](https://github.com/infonomic/remix.infonomic.io/tree/develop/app/ui/components/button) - supports 'variants' and 'intents', and is also based on the Radix `@radix-ui/react-primitive` - which in turn means it supports 'slots' and the  `asChild` prop - allowing you to takeover the button completely, merging default button styles and props with your own styles and props ('slot' uses `React.cloneElement` and `mergeProps` under the hood). This makes it trivial to 'wrap' and customize the Remix router `Link` component as follows:
+[Button](https://github.com/infonomic/remix.infonomic.io/tree/develop/app/ui/components/button) - supports 'variants' and 'intents', and is also based on the Radix `@radix-ui/react-primitive` - which in turn means it supports 'slots' and the `asChild` prop - allowing you to takeover the button completely, merging default button styles and props with your own styles and props ('slot' uses `React.cloneElement` and `mergeProps` under the hood). This makes it trivial to 'wrap' and customize the Remix router `Link` component as follows:
 
 ```TSX
 <Button
@@ -146,7 +147,8 @@ Below is a brief introduction to the core components, where they came from, and 
   </Link>
 </Button>
 ```
-The core button style system was adapted from [Sajad Ahmad Nawabi's](https://github.com/sajadevo) excellent [Material Tailwind](https://github.com/creativetimofficial/material-tailwind) project. The Button component supports [Material Ripple Effects](https://github.com/sajadevo/material-ripple-effects) - also from [Sajad Ahmad Nawabi](https://github.com/sajadevo). 
+
+The core button style system was adapted from [Sajad Ahmad Nawabi's](https://github.com/sajadevo) excellent [Material Tailwind](https://github.com/creativetimofficial/material-tailwind) project. The Button component supports [Material Ripple Effects](https://github.com/sajadevo/material-ripple-effects) - also from [Sajad Ahmad Nawabi](https://github.com/sajadevo).
 
 As mentioned in the introduction to this section, we've intentionally removed any advanced theme configuration system for now. We're also aware of Joe Bell's work on [CVA](https://github.com/joe-bell/cva) - but haven't looked closely enough yet to know whether this would be a better approach.
 
@@ -174,14 +176,13 @@ As mentioned in the introduction to this section, we've intentionally removed an
 
 [Tooltip](https://github.com/infonomic/remix.infonomic.io/tree/develop/app/ui/components/tooltip) - is a functional component wrapper around the [Radix Tailwind project Tooltip](https://github.com/ecklf/tailwindcss-radix/blob/main/demo/components/tooltip.tsx) component.
 
-
 ### Validation and Errors
 
 Data input is validated by both client- and server-side [Zod schemas](https://github.com/colinhacks/zod) and [React Hook Form Zod resolvers](https://github.com/react-hook-form/resolvers) - with errors reported either at field-level for form data errors, or via general alerts for any non-field-based errors. We've tried to implement utility methods for server and client errors returned via Zod, as well as other conditions such as unique constraint violations. You can see an example in the [/account/$userId.email.tsx](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/routes/account/%24userId.email.tsx) route.
 
 ### i18n and L10n
 
-We've yet to implement localization / translations, although another interesting aspect of Remix as a 'first class' SSR framework, is that client preferred language detection can be done via the Accept-Language HTTP header. 
+We've yet to implement localization / translations, although another interesting aspect of Remix as a 'first class' SSR framework, is that client preferred language detection can be done via the Accept-Language HTTP header.
 
 [Sergio Xalambrí](https://github.com/sergiodxa) appears to show the way....
 
@@ -190,7 +191,6 @@ We've yet to implement localization / translations, although another interesting
 <br>
 
 This is high on our TODO list
-
 
 ### A11y
 
@@ -214,7 +214,7 @@ The Docker image that came with the quick-start app for deployment to Fly.io (an
 
 Feedback, thoughts and suggestions are most welcome. Issues and even PRs would be super too! We've created [TODO list](TODO.md).
 
-We use a husky task and [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for our commit messages. 
+We use a husky task and [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for our commit messages.
 
 [@commitlint/cli @commitlint/config-conventional](https://github.com/conventional-changelog/commitlint) are included in the dev dependencies of this project.
 
@@ -376,7 +376,7 @@ We use GitHub Actions for continuous integration and deployment. Anything that g
 ## Testing
 
 ```ts
-cy.login();
+cy.login()
 // you are now logged in as a new user
 ```
 
@@ -384,8 +384,8 @@ We also have a utility to auto-delete the user at the end of your test. Just mak
 
 ```ts
 afterEach(() => {
-  cy.cleanupUser();
-});
+  cy.cleanupUser()
+})
 ```
 
 That way, we can keep your local db clean and keep your tests isolated from one another.

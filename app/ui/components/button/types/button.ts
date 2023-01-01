@@ -9,10 +9,10 @@ import type { intent as t } from '~/ui/components/types/shared'
  */
 
 // typescript types
-export type variant = 'filled' | 'outlined' | 'gradient' | 'text';
-export type size = 'sm' | 'md' | 'lg';
-export type intent = 'primary' | t;
-export type fullWidth = boolean;
-export type ripple = boolean;
-export type className = string;
-export type children = ReactNode;
+export type variant = 'filled' | 'outlined' | 'gradient' | 'text'
+export type size = 'sm' | 'md' | 'lg'
+export type intent = 'primary' | t
+export type fullWidth = boolean
+export type ripple = boolean
+export type className = string
+export type children = ReactNode

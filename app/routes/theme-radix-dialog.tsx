@@ -1,4 +1,3 @@
-
 import { Fragment, useState } from 'react'
 
 import type { MetaFunction } from '@remix-run/node'
@@ -15,7 +14,7 @@ import PublicLayout from '~/ui/layouts/public-layout'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta: MetaFunction = () => {
   return {
@@ -25,7 +24,7 @@ export const meta: MetaFunction = () => {
 
 /**
  * ThemeRadixDialog
- * @returns 
+ * @returns
  */
 export default function ThemeRadixDialog() {
   let [isOpen, setIsOpen] = useState(false)
@@ -48,10 +47,7 @@ export default function ThemeRadixDialog() {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <DialogPrimitive.Overlay
-                  forceMount
-                  className="fixed inset-0 z-20 bg-black/50"
-                />
+                <DialogPrimitive.Overlay forceMount className="fixed inset-0 z-20 bg-black/50" />
               </Transition.Child>
               <Transition.Child
                 as={Fragment}
@@ -76,8 +72,7 @@ export default function ThemeRadixDialog() {
                     Edit profile
                   </DialogPrimitive.Title>
                   <DialogPrimitive.Description className="mt-2 text-sm font-normal text-gray-700 dark:text-gray-400">
-                    Make changes to your profile here. Click save when you&apos;re
-                    done.
+                    Make changes to your profile here. Click save when you&apos;re done.
                   </DialogPrimitive.Description>
                   <form className="mt-2 space-y-2">
                     <fieldset>

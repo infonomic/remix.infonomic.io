@@ -16,63 +16,62 @@ import type {
   className,
 } from '../types/input'
 
-
 export interface InputSizeStylesType {
-  container: object;
-  input: object;
-  label: object;
-  icon: object;
+  container: object
+  input: object
+  label: object
+  icon: object
 }
 
 export interface InputStateStylesType {
-  input: object;
-  label: object;
+  input: object
+  label: object
 }
 
 export interface InputVariantStylesType {
   base: {
-    input: object;
-    inputWithIcon: object;
-    icon: object;
-    label: object;
-  };
+    input: object
+    inputWithIcon: object
+    icon: object
+    label: object
+  }
   sizes: {
-    md: InputSizeStylesType;
-    lg: InputSizeStylesType;
-  };
+    md: InputSizeStylesType
+    lg: InputSizeStylesType
+  }
   intent: {
-    input: object;
-    label: object;
-  };
-  error: InputStateStylesType;
-  success: InputStateStylesType;
+    input: object
+    label: object
+  }
+  error: InputStateStylesType
+  success: InputStateStylesType
 }
 
 export interface InputStylesType {
   defaultProps: {
-    variant: variant;
-    size: size;
-    intent: intent;
-    label: label;
-    error: error;
-    success: success;
-    icon: icon;
-    labelProps: labelProps;
-    className: className;
-  };
+    variant: variant
+    size: size
+    intent: intent
+    label: label
+    error: error
+    success: success
+    icon: icon
+    labelProps: labelProps
+    className: className
+  }
   styles: {
     base: {
-      container: object;
-      input: object;
-      label: object;
-      icon: object;
-    };
+      container: object
+      input: object
+      label: object
+      icon: object
+    }
     variants: {
-      outlined: InputVariantStylesType;
+      outlined: InputVariantStylesType
       // standard: InputVariantStylesType;
       // static: InputVariantStylesType;
-    };
-  };
+    }
+  }
 }
 
 export const input: InputStylesType = {

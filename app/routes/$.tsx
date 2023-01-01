@@ -5,7 +5,7 @@ import PublicLayout from '~/ui/layouts/public-layout'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta = () => ({
   title: '404 - Infonomic - Remix Workbench',
@@ -16,28 +16,25 @@ export const meta = () => ({
  * @returns Response 404 not found
  */
 export async function loader() {
-  /** 
-   * Using the top level splat route here allows us to throw a 
+  /**
+   * Using the top level splat route here allows us to throw a
    * 'correct' 404 response - which is handled by the CatchBoundary
-   * below. This in turn means that our root.tsx loader and 
-   * App/Document components will succeed - including our theme 
-   * provider settings. So we'll get a proper 'themeable' 
+   * below. This in turn means that our root.tsx loader and
+   * App/Document components will succeed - including our theme
+   * provider settings. So we'll get a proper 'themeable'
    * 404 not found page that we can customize in the CatchBoundary.
-  **/
+   **/
 
   // eslint-disable-next-line @typescript-eslint/no-throw-literal
   throw new Response('Not Found', { status: 404 })
 }
-
 
 /**
  * Index
  * @returns ReactNode
  */
 export default function CatchAll() {
-  return (
-    <p>We should never see this.</p>
-  )
+  return <p>We should never see this.</p>
 }
 
 export function CatchBoundary() {

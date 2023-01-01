@@ -31,7 +31,7 @@ import ErrorLayout from '~/ui/layouts/error-layout'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta: MetaFunction<typeof loader> = () => ({
   title: 'Update Email - Infonomic - Remix Workbench',
@@ -39,8 +39,8 @@ export const meta: MetaFunction<typeof loader> = () => ({
 
 /**
  * loader
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function loader({ request, params }: LoaderArgs) {
   const userId = await requireUserId(request)
@@ -56,8 +56,8 @@ export async function loader({ request, params }: LoaderArgs) {
 
 /**
  * action
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function action({ request, params }: ActionArgs) {
   const [userId, session, formData] = await Promise.all([
@@ -70,10 +70,7 @@ export async function action({ request, params }: ActionArgs) {
 
   const parseResult = emailSchema.safeParse(formData)
   if (!parseResult.success) {
-    return json(
-      { errors: parseResult.error.format() },
-      { status: 400 }
-    )
+    return json({ errors: parseResult.error.format() }, { status: 400 })
   }
 
   const user = await updateUserEmail(userId, parseResult.data.email)
@@ -83,7 +80,9 @@ export async function action({ request, params }: ActionArgs) {
       {
         errors: {
           general: {
-            _errors: ['Error updating email address. The address you\'ve entered may already be in use.'],
+            _errors: [
+              'Error updating email address. The address you\'ve entered may already be in use.',
+            ],
           },
         },
       },
@@ -117,13 +116,11 @@ export const handle: BreadcrumbHandle = {
   },
 }
 
-const fields = [
-  'email',
-]
+const fields = ['email']
 
 /**
  * UserEmailEditPage
- * @returns 
+ * @returns
  */
 export default function UserEmailEditPage() {
   const data = useLoaderData<typeof loader>()
@@ -132,7 +129,12 @@ export default function UserEmailEditPage() {
   const submit = useSubmit()
   const transition = useTransition()
   const resolver = zodResolver(emailSchema)
-  const { register, handleSubmit, formState: { errors }, setFocus } = useForm({ resolver })
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setFocus,
+  } = useForm({ resolver })
 
   const busy = isBusy(transition)
 
@@ -144,11 +146,9 @@ export default function UserEmailEditPage() {
   }, [serverErrors, setFocus])
 
   return (
-    <div className="w-full max-w-[560px] md:mt-8 m-auto">
+    <div className="m-auto w-full max-w-[560px] md:mt-8">
       {hasErrors('general', errors, serverErrors) && (
-        <Alert intent="danger">
-          {getErrorText('general', errors, serverErrors)}
-        </Alert>
+        <Alert intent="danger">{getErrorText('general', errors, serverErrors)}</Alert>
       )}
       <Form
         method="post"
@@ -174,10 +174,10 @@ export default function UserEmailEditPage() {
           {...register('email')}
         />
 
-        <div className="form-actions flex gap-3 justify-end flex-row">
+        <div className="form-actions flex flex-row justify-end gap-3">
           <Button disabled={busy} type="submit">
-            {busy ?
-              (
+            {busy
+              ? (
                 <Loader
                   loading={busy}
                   color="var(--loader-color)"
@@ -186,16 +186,13 @@ export default function UserEmailEditPage() {
                   aria-label="Processing sign in"
                   data-testid="loader"
                 />
-              ) :
-              (
-                'Save'
               )
-            }
+              : (
+                'Save'
+              )}
           </Button>
           <Button asChild intent="secondary">
-            <Link to="/account">
-              Cancel
-            </Link>
+            <Link to="/account">Cancel</Link>
           </Button>
         </div>
       </Form>

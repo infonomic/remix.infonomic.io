@@ -14,7 +14,7 @@ import ErrorLayout from '~/ui/layouts/error-layout'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta: MetaFunction<typeof loader> = () => ({
   title: 'Admin - User - Infonomic - Remix Workbench',
@@ -22,8 +22,8 @@ export const meta: MetaFunction<typeof loader> = () => ({
 
 /**
  * loader
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function loader({ request, params }: LoaderArgs) {
   await requireUserId(request)
@@ -65,25 +65,30 @@ export const handle: BreadcrumbHandle<UserProps> = {
 
 /**
  * UserDetailsPage
- * @returns 
+ * @returns
  */
 export default function UserDetailsPage() {
   const data = useLoaderData<typeof loader>()
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      width: '100%',
-      margin: '0 auto',
-    }} >
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        margin: '0 auto',
+      }}
+    >
       <h3 className="text-2xl font-bold">{data?.user?.email}</h3>
-      <p>Account created: {new Intl.DateTimeFormat('en-GB', { dateStyle: 'full', timeStyle: 'long' }).format(new Date(data?.user.createdAt))}</p>
+      <p>
+        Account created:{' '}
+        {new Intl.DateTimeFormat('en-GB', { dateStyle: 'full', timeStyle: 'long' }).format(
+          new Date(data?.user.createdAt)
+        )}
+      </p>
       <hr className="my-4" />
       <p>Table of notes here...</p>
-      {data?.user?.notes && data?.user?.notes.map(note => (
-        (<p key={note.id}>{note.title}</p>)
-      ))}
+      {data?.user?.notes && data?.user?.notes.map(note => <p key={note.id}>{note.title}</p>)}
     </div>
   )
 }

@@ -1,4 +1,3 @@
-
 import { request } from 'undici'
 
 export class AppError extends Error {
@@ -8,10 +7,14 @@ export class AppError extends Error {
   }
 
   // Http status code to return if this error is not caught.
-  get status() { return 500 }
+  get status() {
+    return 500
+  }
 
   // Application-specific error code to help clients identify this error.
-  get code() { return 'ERROR' }
+  get code() {
+    return 'ERROR'
+  }
 }
 
 /**
@@ -19,10 +22,13 @@ export class AppError extends Error {
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export class HTTP_REQUEST_ERROR extends AppError {
+  get status() {
+    return 500
+  }
 
-  get status() { return 500 }
-
-  get code() { return 'HTTP_REQUEST_ERROR' }
+  get code() {
+    return 'HTTP_REQUEST_ERROR'
+  }
 }
 
 /**
@@ -30,21 +36,31 @@ export class HTTP_REQUEST_ERROR extends AppError {
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export class RECAPTCHA_VALIDATION_ERROR extends AppError {
-  get status() { return 400 }
+  get status() {
+    return 400
+  }
 
-  get code() { return 'RECAPTCHA_VALIDATION_ERROR' }
+  get code() {
+    return 'RECAPTCHA_VALIDATION_ERROR'
+  }
 }
 
 /**
  * reCaptchaCheck - perform a server-side reCaptcha validation
- * @param secretKey 
- * @param token 
- * @param score 
- * @param ip 
- * @param headers 
- * @returns 
+ * @param secretKey
+ * @param token
+ * @param score
+ * @param ip
+ * @param headers
+ * @returns
  */
-export const reCaptchaCheck = async (secretKey: string, token: string, score = 0.5, ip = '0.0.0.0', headers = {}) => {
+export const reCaptchaCheck = async (
+  secretKey: string,
+  token: string,
+  score = 0.5,
+  ip = '0.0.0.0',
+  headers = {}
+) => {
   const VERIFY_URL = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`
 
   try {

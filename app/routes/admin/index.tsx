@@ -12,7 +12,7 @@ import { Toast } from '~/ui/components/notifications'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta: MetaFunction = () => ({
   title: 'Admin - Infonomic - Remix Workbench',
@@ -20,22 +20,23 @@ export const meta: MetaFunction = () => ({
 
 /**
  * loader
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function loader({ request }: LoaderArgs) {
-  const [session] = await Promise.all([
-    getSession(request),
-  ])
+  const [session] = await Promise.all([getSession(request)])
 
   const message = session.get('success') || null
 
-  return json({ message }, {
-    headers: {
-      // only necessary with cookieSessionStorage
-      'Set-Cookie': await commitSession(session),
-    },
-  })
+  return json(
+    { message },
+    {
+      headers: {
+        // only necessary with cookieSessionStorage
+        'Set-Cookie': await commitSession(session),
+      },
+    }
+  )
 }
 
 /**
@@ -52,7 +53,7 @@ export const handle: BreadcrumbHandle = {
 
 /**
  * AdminIndexPage
- * @returns 
+ * @returns
  */
 export default function AdminIndexPage() {
   const data = useLoaderData<typeof loader>()
@@ -62,10 +63,8 @@ export default function AdminIndexPage() {
     <>
       <Toast title="Notes" description={data.message} open={toast} onOpenChange={setToast} />
       <div className="grid grid-cols-auto-fit-320 gap-4">
-        <Card asChild className="text-center prose dark:prose-invert">
-          <Link to="/admin/users">
-            Users
-          </Link>
+        <Card asChild className="prose text-center dark:prose-invert">
+          <Link to="/admin/users">Users</Link>
         </Card>
       </div>
     </>

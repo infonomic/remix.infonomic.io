@@ -8,18 +8,18 @@ import type { intent as t } from '~/ui/components/types/shared'
  */
 
 // typescript types
-export type variant = 'standard' | 'outlined' | 'static';
-export type size = 'md' | 'lg';
-export type intent = t;
-export type label = string;
-export type error = boolean;
-export type success = boolean;
-export type icon = ReactNode;
-export type resize = boolean;
+export type variant = 'standard' | 'outlined' | 'static'
+export type size = 'md' | 'lg'
+export type intent = t
+export type label = string
+export type error = boolean
+export type success = boolean
+export type icon = ReactNode
+export type resize = boolean
 export type labelProps = {
-  [key: string]: any;
-};
+  [key: string]: any
+}
 export type containerProps = {
-  [key: string]: any;
-};
-export type className = string;
+  [key: string]: any
+}
+export type className = string

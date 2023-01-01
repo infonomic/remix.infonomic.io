@@ -32,7 +32,7 @@
 
 .btn-to-top span .icon path {
   stroke: none;
-  @apply fill-gray-800
+  @apply fill-gray-800;
 }
 
 @media screen and (min-width: 587px) {

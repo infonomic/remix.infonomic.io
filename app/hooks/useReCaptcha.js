@@ -11,7 +11,7 @@ if (typeof window !== 'undefined') {
   URL = `https://www.recaptcha.net/recaptcha/api.js?render=${SITE_KEY}`
 }
 
-const defaultOptions = { action: 'default', callback: () => { } }
+const defaultOptions = { action: 'default', callback: () => {} }
 export const useReCaptcha = (options = defaultOptions) => {
   useEffect(() => {
     if (ENABLED === 'true') {
@@ -39,10 +39,9 @@ export const reCaptchaExecute = async action => {
   return new Promise((resolve, reject) => {
     if (ENABLED === 'true') {
       window.grecaptcha.ready(() => {
-        window.grecaptcha.execute(SITE_KEY, { action })
-          .then(token => {
-            resolve(token)
-          }, reject)
+        window.grecaptcha.execute(SITE_KEY, { action }).then(token => {
+          resolve(token)
+        }, reject)
       })
     } else {
       resolve('')

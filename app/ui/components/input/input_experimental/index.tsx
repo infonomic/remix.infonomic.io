@@ -32,18 +32,17 @@ import type {
   className,
 } from './types/input'
 
-
 export interface InputProps extends Omit<React.ComponentProps<'input'>, 'size'> {
-  variant?: variant;
-  size?: size;
-  intent?: intent;
-  label?: label;
-  error?: error;
-  success?: success;
-  icon?: icon;
-  labelProps?: labelProps;
-  containerProps?: containerProps;
-  className?: className;
+  variant?: variant
+  size?: size
+  intent?: intent
+  label?: label
+  error?: error
+  success?: success
+  icon?: icon
+  labelProps?: labelProps
+  containerProps?: containerProps
+  className?: className
 }
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -81,14 +80,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const inputSize: InputSizeStylesType = inputVariant.sizes[size as keyof object]
     const inputError = objectsToString(inputVariant.error.input)
     const inputSuccess = objectsToString(inputVariant.success.input)
-    const inputColor = objectsToString(
-      inputVariant.intent.input[intent as keyof object]
-    )
+    const inputColor = objectsToString(inputVariant.intent.input[intent as keyof object])
     const labelError = objectsToString(inputVariant.error.label)
     const labelSuccess = objectsToString(inputVariant.success.label)
-    const labelColor = objectsToString(
-      inputVariant.intent.label[intent as keyof object]
-    )
+    const labelColor = objectsToString(inputVariant.intent.label[intent as keyof object])
     const containerClasses = classnames(
       objectsToString(base.container),
       objectsToString(inputSize.container),

@@ -1,4 +1,3 @@
-
 // types
 
 import type { intent, className, icon, close } from '../types/alert'
@@ -10,7 +9,8 @@ const intentStyles: object = {
     color: 'text-gray-800 dark:text-gray-200',
   },
   secondary: {
-    background: 'bg-gradient-to-tr from-gray-400/10 to-gray-400/10 dark:from-gray-600/20 dark:to-gray-600/20',
+    background:
+      'bg-gradient-to-tr from-gray-400/10 to-gray-400/10 dark:from-gray-600/20 dark:to-gray-600/20',
     border: 'border border-gray-500/50',
     color: 'text-gray-800 dark:text-gray-200',
   },
@@ -38,17 +38,17 @@ const intentStyles: object = {
 
 export interface AlertStyleTypes {
   defaultProps: {
-    intent: intent;
-    icon: icon,
-    close: close,
-    className: className;
-  };
+    intent: intent
+    icon: icon
+    close: close
+    className: className
+  }
   styles: {
     base: {
-      initial: object;
-    };
+      initial: object
+    }
     intents: typeof intentStyles
-  };
+  }
 }
 
 export const alertStyles: AlertStyleTypes = {

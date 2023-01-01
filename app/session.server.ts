@@ -19,7 +19,6 @@ const sessionStorage = createCookieSessionStorage({
   },
 })
 
-
 // Export convenience methods
 const { commitSession, destroySession } = sessionStorage
 export { commitSession, destroySession }
@@ -35,8 +34,8 @@ export async function getSession(request: Request) {
 
 /**
  * Logout
- * @param request 
- * @returns 
+ * @param request
+ * @returns
  */
 export async function logout(request: Request) {
   const session = await getSession(request)
@@ -49,12 +48,11 @@ export async function logout(request: Request) {
 
 /**
  * getUserId
- * 
- * @param request 
- * @returns 
+ *
+ * @param request
+ * @returns
  */
-export async function getUserId(
-  request: Request): Promise<User['id'] | undefined> {
+export async function getUserId(request: Request): Promise<User['id'] | undefined> {
   const session = await getSession(request)
   const userId = session.get(USER_SESSION_KEY)
   return userId
@@ -62,8 +60,8 @@ export async function getUserId(
 
 /**
  * getUser
- * @param request 
- * @returns 
+ * @param request
+ * @returns
  */
 export async function getUser(request: Request) {
   const userId = await getUserId(request)
@@ -77,10 +75,10 @@ export async function getUser(request: Request) {
 
 /**
  * requireUserId
- * 
- * @param request 
- * @param redirectTo 
- * @returns 
+ *
+ * @param request
+ * @param redirectTo
+ * @returns
  */
 export async function requireUserId(
   request: Request,
@@ -96,13 +94,11 @@ export async function requireUserId(
 
 /**
  * requireAdmin
- * 
- * @param request 
- * @returns 
+ *
+ * @param request
+ * @returns
  */
-export async function requireAdmin(
-  request: Request
-) {
+export async function requireAdmin(request: Request) {
   const session = await getSession(request)
   const isAdmin = session.get(USER_IS_ADMIN)
   if (!isAdmin) {
@@ -112,9 +108,9 @@ export async function requireAdmin(
 
 /**
  * requireUser
- * 
- * @param request 
- * @returns 
+ *
+ * @param request
+ * @returns
  */
 export async function requireUser(request: Request) {
   const userId = await requireUserId(request)
@@ -127,9 +123,9 @@ export async function requireUser(request: Request) {
 
 /**
  * createUserSession
- * 
- * @param param0 
- * @returns 
+ *
+ * @param param0
+ * @returns
  */
 export async function createUserSession({
   request,
@@ -138,11 +134,11 @@ export async function createUserSession({
   remember,
   redirectTo,
 }: {
-  request: Request;
-  userId: string;
-  isAdmin: boolean;
-  remember: boolean;
-  redirectTo: string;
+  request: Request
+  userId: string
+  isAdmin: boolean
+  remember: boolean
+  redirectTo: string
 }) {
   const session = await getSession(request)
   session.set(USER_SESSION_KEY, userId)

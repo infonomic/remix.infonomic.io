@@ -1,6 +1,6 @@
-@import "./base/base.css";
-@import "./components/components.css";
-@import "./layouts/layouts.css";
+@import './base/base.css';
+@import './components/components.css';
+@import './layouts/layouts.css';
 
 .grecaptcha-badge {
   visibility: hidden;

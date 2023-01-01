@@ -28,7 +28,7 @@ const useInterval = (duration, options = {}) => {
 
   useEffect(() => {
     const onVisibilityChange = () => {
-      isBrowserTabActiveRef.current = (document.visibilityState === 'visible')
+      isBrowserTabActiveRef.current = document.visibilityState === 'visible'
     }
 
     if (!settings.always) {
@@ -58,7 +58,10 @@ const useInterval = (duration, options = {}) => {
   }, [duration, isBrowserTabActiveRef, settings.always, running])
 
   return {
-    count, stop, start, running,
+    count,
+    stop,
+    start,
+    running,
   }
 }
 

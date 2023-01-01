@@ -5,24 +5,23 @@ import cx from 'classnames'
 
 import { Container } from '~/ui/components/container'
 
-
 interface FrontLayoutProps {
-  children?: ReactNode;
-  className?: string;
+  children?: ReactNode
+  className?: string
 }
 
-export type Ref = HTMLDivElement;
+export type Ref = HTMLDivElement
 
 const ErrorLayout = forwardRef<Ref, FrontLayoutProps>(({ children, className, ...other }, ref) => {
-
   return (
     <div
-      className={cx('layout-container flex flex-col min-h-screen', className)}
+      className={cx('layout-container flex min-h-screen flex-col', className)}
       ref={ref}
-      {...other} >
+      {...other}
+    >
       <a href="#main-content">Skip to main content</a>
-      <main id="main-content" className="flex flex-col flex-1 pt-[58px]">
-        <Container className="flex flex-col flex-1 pt-[24vh] prose dark:prose-invert">
+      <main id="main-content" className="flex flex-1 flex-col pt-[58px]">
+        <Container className="prose flex flex-1 flex-col pt-[24vh] dark:prose-invert">
           {children}
         </Container>
       </main>

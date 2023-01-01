@@ -11,7 +11,7 @@ import objectsToString from '~/ui/utils/objectsToString'
 
 const NAME = 'CloseButton'
 
-type ButtonProps = JSX.IntrinsicElements['button'];
+type ButtonProps = JSX.IntrinsicElements['button']
 interface CloseButtonProps extends ButtonProps {
   intent: intent
   onClick: (event: React.SyntheticEvent) => void
@@ -19,13 +19,13 @@ interface CloseButtonProps extends ButtonProps {
 
 const CloseButton = React.forwardRef<HTMLButtonElement, CloseButtonProps>(
   ({ intent, onClick, className, children, ...rest }, ref) => {
-
-    const closeButtonStyle = objectsToString(closeButtonStyles[intent as keyof typeof closeButtonStyles])
+    const closeButtonStyle = objectsToString(
+      closeButtonStyles[intent as keyof typeof closeButtonStyles]
+    )
     const classes = twMerge(
-      cx('outline-none p-1 rounded-full transition-hover duration-300',
-        closeButtonStyle
-      ),
-      className)
+      cx('outline-none p-1 rounded-full transition-hover duration-300', closeButtonStyle),
+      className
+    )
 
     return (
       <button
@@ -34,10 +34,10 @@ const CloseButton = React.forwardRef<HTMLButtonElement, CloseButtonProps>(
         className={classes}
         type="button"
         onClick={onClick}
-        {...rest}>
+        {...rest}
+      >
         <Cross2Icon />
       </button>
-
     )
   }
 )

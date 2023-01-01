@@ -1,7 +1,7 @@
 export interface SearchParams {
-  page: number,
-  pageSize: number,
-  orderBy: string,
+  page: number
+  pageSize: number
+  orderBy: string
   orderDesc: boolean
 }
 

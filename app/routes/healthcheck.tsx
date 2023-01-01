@@ -5,8 +5,8 @@ import { prisma } from '~/db.server'
 
 /**
  * loader
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 // export async function loader({ request }: LoaderArgs) {
 export async function loader() {
@@ -15,10 +15,10 @@ export async function loader() {
 
   try {
     // const url = new URL("/", `http://${host}`);
-    // When we're deployed in a Docker container, the localhost on port 8080 
-    // (depending on the Dockerfile ) will respond, whereas the host value 
-    // above might not - depending on how the container and its environment 
-    // have been configured - for example when testing the Docker image under 
+    // When we're deployed in a Docker container, the localhost on port 8080
+    // (depending on the Dockerfile ) will respond, whereas the host value
+    // above might not - depending on how the container and its environment
+    // have been configured - for example when testing the Docker image under
     // WSL 2.
     const url = new URL('/', 'http://127.0.0.1:8080')
     // if we can connect to the database and make a simple query

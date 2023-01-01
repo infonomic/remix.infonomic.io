@@ -1,4 +1,3 @@
-
 import { Hero, links as heroLinks } from '~/modules/home/hero'
 
 import FrontLayout from '~/ui/layouts/front-layout'
@@ -7,7 +6,7 @@ import styles from '~/styles/app/routes/index.css'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta = () => ({
   title: 'Home - Infonomic Remix Workbench',
@@ -15,18 +14,15 @@ export const meta = () => ({
 
 /**
  * links
- * @returns 
+ * @returns
  */
 export function links() {
-  return [
-    ...heroLinks(),
-    { rel: 'stylesheet', href: styles },
-  ]
+  return [...heroLinks(), { rel: 'stylesheet', href: styles }]
 }
 
 /**
  * Index
- * @returns 
+ * @returns
  */
 export default function Index() {
   return (

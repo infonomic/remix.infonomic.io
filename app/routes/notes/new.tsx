@@ -16,11 +16,10 @@ import { Button } from '~/ui/components/button'
 import { Input, TextArea } from '~/ui/components/input'
 import { hasErrors, getErrorText } from '~/ui/components/input/utils'
 
-
 /**
  * action
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function action({ request }: ActionArgs) {
   const [userId, session, formData] = await Promise.all([
@@ -31,10 +30,7 @@ export async function action({ request }: ActionArgs) {
 
   const parseResult = schema.safeParse(formData)
   if (!parseResult.success) {
-    return json(
-      { errors: parseResult.error.format() },
-      { status: 400 }
-    )
+    return json({ errors: parseResult.error.format() }, { status: 400 })
   }
 
   const note = await createNote({
@@ -53,7 +49,7 @@ export async function action({ request }: ActionArgs) {
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta = () => ({
   title: 'New Note - Infonomic Remix Workbench',
@@ -77,14 +73,11 @@ export const handle: BreadcrumbHandle = {
   },
 }
 
-const fields = [
-  'title',
-  'body',
-]
+const fields = ['title', 'body']
 
 /**
  * NewNotePage
- * @returns 
+ * @returns
  */
 export default function NewNotePage() {
   const actionData = useActionData<typeof action>()
@@ -93,7 +86,12 @@ export default function NewNotePage() {
   const transition = useTransition()
   const submitting = Boolean(transition.submission)
   const resolver = zodResolver(badSchema)
-  const { register, handleSubmit, formState: { errors }, setFocus } = useForm({ resolver })
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setFocus,
+  } = useForm({ resolver })
 
   useEffect(() => {
     if (serverErrors) {
@@ -102,9 +100,8 @@ export default function NewNotePage() {
     }
   }, [serverErrors, setFocus])
 
-
   return (
-    <div className="w-full max-w-[560px] md:mt-8 m-auto">
+    <div className="m-auto w-full max-w-[560px] md:mt-8">
       <Form
         method="post"
         onSubmit={(event: any) => {
@@ -139,17 +136,15 @@ export default function NewNotePage() {
           {...register('body')}
         />
 
-        <div className="form-actions flex gap-3 justify-end flex-row">
+        <div className="form-actions flex flex-row justify-end gap-3">
           <Button type="submit" disabled={submitting}>
             {submitting ? '...' : 'Save'}
           </Button>
-          <Button asChild intent='secondary' >
-            <Link to={'/notes'}>
-              Cancel
-            </Link>
+          <Button asChild intent="secondary">
+            <Link to={'/notes'}>Cancel</Link>
           </Button>
         </div>
       </Form>
-    </div >
+    </div>
   )
 }

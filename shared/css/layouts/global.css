@@ -6,7 +6,8 @@
   padding: 1%;
 }
 
-[href='#main-content']:active, [href='#main-content']:focus {
+[href='#main-content']:active,
+[href='#main-content']:focus {
   background: blue;
   color: #fff;
   right: auto;

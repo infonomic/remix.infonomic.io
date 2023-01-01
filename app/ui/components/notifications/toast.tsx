@@ -38,27 +38,17 @@ const NAME = 'Toast'
 
 interface ToastProps extends React.InputHTMLAttributes<HTMLLIElement> {
   intent?: intent
-  title: title,
-  description: description,
-  icon?: icon,
-  close?: close,
-  open: open,
+  title: title
+  description: description
+  icon?: icon
+  close?: close
+  open: open
   onOpenChange: onOpenChange
   className?: className
 }
 
 const Toast = React.forwardRef<HTMLLIElement, ToastProps>(
-  ({
-    intent,
-    title,
-    description,
-    icon,
-    close,
-    open,
-    onOpenChange,
-    className,
-  }, ref) => {
-
+  ({ intent, title, description, icon, close, open, onOpenChange, className }, ref) => {
     // 1. init
     const { defaultProps, styles } = toastStyles
     const { base, intents } = styles
@@ -72,10 +62,7 @@ const Toast = React.forwardRef<HTMLLIElement, ToastProps>(
     // 3. set styles
     const toastBase = objectsToString(base.initial)
     const toastIntent = objectsToString(intents[intent as keyof typeof intents])
-    const classes = twMerge(
-      cx(toastBase, toastIntent),
-      className
-    )
+    const classes = twMerge(cx(toastBase, toastIntent), className)
 
     const Icon = toastIcons[intent as keyof typeof toastIcons]
 
@@ -99,9 +86,13 @@ const Toast = React.forwardRef<HTMLLIElement, ToastProps>(
       >
         <focus-trap trapped="true">
           <button className="sr-only" tabIndex={0}></button>
-          <div className="toast-header flex gap-3 justify-between pt-2 px-4">
-            <div className="block text-sm pt-[4px] pl-[4px]">
-              {new Intl.DateTimeFormat('default', { hour12: true, hour: 'numeric', minute: 'numeric' }).format(new Date())}
+          <div className="toast-header flex justify-between gap-3 px-4 pt-2">
+            <div className="block pt-[4px] pl-[4px] text-sm">
+              {new Intl.DateTimeFormat('default', {
+                hour12: true,
+                hour: 'numeric',
+                minute: 'numeric',
+              }).format(new Date())}
             </div>
             {close && (
               <div>
@@ -110,10 +101,10 @@ const Toast = React.forwardRef<HTMLLIElement, ToastProps>(
             )}
           </div>
 
-          <div className="flex gap-3 pt-2 pb-4 px-4">
-            <div className="toast-content w-full radix flex-1 flex flex-col">
-              <ToastPrimitive.Title className="flex gap-2 mb-2 text-base items-center font-medium">
-                {icon && (<Icon />)}
+          <div className="flex gap-3 px-4 pt-2 pb-4">
+            <div className="toast-content radix flex w-full flex-1 flex-col">
+              <ToastPrimitive.Title className="mb-2 flex items-center gap-2 text-base font-medium">
+                {icon && <Icon />}
                 {title}
               </ToastPrimitive.Title>
               <ToastPrimitive.Description className="ml-1 text-sm">
@@ -125,7 +116,7 @@ const Toast = React.forwardRef<HTMLLIElement, ToastProps>(
                 intent="secondary"
                 variant="outlined"
                 size="sm"
-                className="border-gray-700 dark:border-gray-100 text-gray-800 dark:text-white dark:bg-transparent"
+                className="border-gray-700 text-gray-800 dark:border-gray-100 dark:bg-transparent dark:text-white"
                 onClick={e => {
                   e.preventDefault()
                   window.open('https://github.com/infonomic')

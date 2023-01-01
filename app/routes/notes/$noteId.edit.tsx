@@ -30,7 +30,7 @@ import ErrorLayout from '~/ui/layouts/error-layout'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta: MetaFunction<typeof loader> = ({ data }) => ({
   title: `Edit Note - ${truncate(data?.note?.title, 50, true)} Infonomic - Remix Workbench`,
@@ -38,8 +38,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => ({
 
 /**
  * loader
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function loader({ request, params }: LoaderArgs) {
   const userId = await requireUserId(request)
@@ -55,8 +55,8 @@ export async function loader({ request, params }: LoaderArgs) {
 
 /**
  * action
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function action({ request, params }: ActionArgs) {
   const [userId, session, formData] = await Promise.all([
@@ -69,10 +69,7 @@ export async function action({ request, params }: ActionArgs) {
 
   const parseResult = schema.safeParse(formData)
   if (!parseResult.success) {
-    return json(
-      { errors: parseResult.error.format() },
-      { status: 400 }
-    )
+    return json({ errors: parseResult.error.format() }, { status: 400 })
   }
 
   await editNote({
@@ -118,14 +115,11 @@ export const handle: BreadcrumbHandle<NoteProps> = {
   },
 }
 
-const fields = [
-  'title',
-  'body',
-]
+const fields = ['title', 'body']
 
 /**
  * NoteEditPage
- * @returns 
+ * @returns
  */
 export default function NoteEditPage() {
   const data = useLoaderData<typeof loader>()
@@ -135,7 +129,12 @@ export default function NoteEditPage() {
   const transition = useTransition()
   const submitting = Boolean(transition.submission)
   const resolver = zodResolver(schema)
-  const { register, handleSubmit, formState: { errors }, setFocus } = useForm({ resolver })
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setFocus,
+  } = useForm({ resolver })
 
   React.useEffect(() => {
     if (serverErrors) {
@@ -145,7 +144,7 @@ export default function NoteEditPage() {
   }, [serverErrors, setFocus])
 
   return (
-    <div className="w-full max-w-[560px] md:mt-8 m-auto">
+    <div className="m-auto w-full max-w-[560px] md:mt-8">
       <Form
         method="post"
         onSubmit={(event: any) => {
@@ -181,14 +180,12 @@ export default function NoteEditPage() {
           {...register('body')}
         />
 
-        <div className="form-actions flex gap-3 justify-end flex-row">
+        <div className="form-actions flex flex-row justify-end gap-3">
           <Button type="submit" disabled={submitting}>
             {submitting ? '...' : 'Save'}
           </Button>
           <Button asChild intent="secondary">
-            <Link to={`/notes/${data.note.id}`}>
-              Cancel
-            </Link>
+            <Link to={`/notes/${data.note.id}`}>Cancel</Link>
           </Button>
         </div>
       </Form>

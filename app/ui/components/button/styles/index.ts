@@ -5,41 +5,34 @@ import buttonText from './button-text'
 
 // types
 
-import type {
-  variant,
-  size,
-  intent,
-  fullWidth,
-  ripple,
-  className,
-} from '../types/button'
+import type { variant, size, intent, fullWidth, ripple, className } from '../types/button'
 
 export interface ButtonStyleTypes {
   defaultProps: {
-    variant: variant;
-    size: size;
-    intent: intent;
-    fullWidth: fullWidth;
-    ripple: ripple;
-    className: className;
-  };
+    variant: variant
+    size: size
+    intent: intent
+    fullWidth: fullWidth
+    ripple: ripple
+    className: className
+  }
   styles: {
     base: {
-      initial: object;
-      fullWidth: object;
-    };
+      initial: object
+      fullWidth: object
+    }
     sizes: {
-      sm: object;
-      md: object;
-      lg: object;
-    };
+      sm: object
+      md: object
+      lg: object
+    }
     variants: {
-      filled: typeof buttonFilled;
-      gradient: typeof buttonGradient;
-      outlined: typeof buttonOutlined;
-      text: typeof buttonText;
-    };
-  };
+      filled: typeof buttonFilled
+      gradient: typeof buttonGradient
+      outlined: typeof buttonOutlined
+      text: typeof buttonText
+    }
+  }
 }
 
 export const button: ButtonStyleTypes = {

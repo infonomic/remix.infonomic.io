@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 // NOTE: This is a js file and not ts, to make running seeds in production
-// easier at fly.io - since they can be run directly from node without 
+// easier at fly.io - since they can be run directly from node without
 // typescript dependencies.
-// 
+//
 // i.e. in package.json
 // "prisma": {
 //  "seed": "node prisma/seed.js"
@@ -68,7 +68,6 @@ async function seedUser() {
         userId: newUser.id,
       },
     })
-
   })
 
   // eslint-disable-next-line no-console
@@ -95,7 +94,6 @@ async function seedAutoUsers() {
   // eslint-disable-next-line no-console
   console.log('Auto users seeded. 🌱')
 }
-
 
 async function seed() {
   // cleanup the existing database

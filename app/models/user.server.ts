@@ -7,10 +7,7 @@ import type { SearchParams } from '~/models/user'
 
 export type { User } from '@prisma/client'
 
-export async function verifyLogin(
-  email: User['email'],
-  password: Password['hash']
-) {
+export async function verifyLogin(email: User['email'], password: Password['hash']) {
   const userWithPassword = await prisma.user.findUnique({
     where: { email },
     include: {
@@ -22,10 +19,7 @@ export async function verifyLogin(
     return null
   }
 
-  const isValid = await bcrypt.compare(
-    password,
-    userWithPassword.password.hash
-  )
+  const isValid = await bcrypt.compare(password, userWithPassword.password.hash)
 
   if (!isValid) {
     return null
@@ -37,14 +31,12 @@ export async function verifyLogin(
   return userWithoutPassword
 }
 
-export async function getUsers(
-  {
-    page = SEARCH_PARAMS_DEFAULTS.page,
-    pageSize = SEARCH_PARAMS_DEFAULTS.pageSize,
-    orderBy = SEARCH_PARAMS_DEFAULTS.orderBy,
-    orderDesc = SEARCH_PARAMS_DEFAULTS.orderDesc,
-  }: SearchParams
-) {
+export async function getUsers({
+  page = SEARCH_PARAMS_DEFAULTS.page,
+  pageSize = SEARCH_PARAMS_DEFAULTS.pageSize,
+  orderBy = SEARCH_PARAMS_DEFAULTS.orderBy,
+  orderDesc = SEARCH_PARAMS_DEFAULTS.orderDesc,
+}: SearchParams) {
   const count = await prisma.user.count()
   const meta = {
     total: count,
@@ -75,7 +67,8 @@ export async function getUserByEmail(email: User['email']) {
 
 export async function getUserWithNotes(id: User['id']) {
   return prisma.user.findUnique({
-    where: { id }, include: {
+    where: { id },
+    include: {
       notes: true,
     },
   })
@@ -96,7 +89,6 @@ export async function createUser(email: User['email'], password: string) {
 }
 
 export async function updateUserEmail(id: User['id'], email: User['email']) {
-
   // Check for another user with this email address
   const result = await prisma.user.findMany({
     where: {
@@ -124,7 +116,11 @@ export async function updateUserEmail(id: User['id'], email: User['email']) {
   })
 }
 
-export async function updateUserPassword(id: User['id'], currentPassword: string, newPassword: string) {
+export async function updateUserPassword(
+  id: User['id'],
+  currentPassword: string,
+  newPassword: string
+) {
   const hashedNewPassword = await bcrypt.hash(newPassword, 10)
   const userWithPassword = await prisma.user.findUnique({
     where: { id },
@@ -137,10 +133,7 @@ export async function updateUserPassword(id: User['id'], currentPassword: string
     return null
   }
 
-  const isValid = await bcrypt.compare(
-    currentPassword,
-    userWithPassword.password.hash
-  )
+  const isValid = await bcrypt.compare(currentPassword, userWithPassword.password.hash)
 
   if (!isValid) {
     return null

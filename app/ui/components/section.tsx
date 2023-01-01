@@ -1,10 +1,9 @@
-
 import React from 'react'
 
 import cx from 'classnames'
 
-type SectionIntrinsicProps = JSX.IntrinsicElements['section'];
-interface SectionProps extends SectionIntrinsicProps { }
+type SectionIntrinsicProps = JSX.IntrinsicElements['section']
+interface SectionProps extends SectionIntrinsicProps {}
 
 const Section = React.forwardRef<HTMLElement, SectionProps>(
   ({ className, children, ...rest }, ref) => {

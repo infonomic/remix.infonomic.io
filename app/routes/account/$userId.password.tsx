@@ -4,13 +4,7 @@ import { useForm } from 'react-hook-form'
 import type { ActionArgs, LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import { Link } from '@remix-run/react'
-import {
-  Form,
-  useCatch,
-  useActionData,
-  useSubmit,
-  useTransition,
-} from '@remix-run/react'
+import { Form, useCatch, useActionData, useSubmit, useTransition } from '@remix-run/react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import Loader from 'react-spinners/BeatLoader'
@@ -30,7 +24,7 @@ import ErrorLayout from '~/ui/layouts/error-layout'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta: MetaFunction<typeof loader> = () => ({
   title: 'Update Password - Infonomic - Remix Workbench',
@@ -38,8 +32,8 @@ export const meta: MetaFunction<typeof loader> = () => ({
 
 /**
  * loader
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function loader({ request, params }: LoaderArgs) {
   const userId = await requireUserId(request)
@@ -55,8 +49,8 @@ export async function loader({ request, params }: LoaderArgs) {
 
 /**
  * action
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function action({ request, params }: ActionArgs) {
   const [userId, session, formData] = await Promise.all([
@@ -69,26 +63,27 @@ export async function action({ request, params }: ActionArgs) {
 
   const parseResult = passwordSchema.safeParse(formData)
   if (!parseResult.success) {
-    return json(
-      { errors: parseResult.error.format() },
-      { status: 400 }
-    )
+    return json({ errors: parseResult.error.format() }, { status: 400 })
   }
 
-  const user = await updateUserPassword(userId, parseResult.data.currentPassword, parseResult.data.password)
+  const user = await updateUserPassword(
+    userId,
+    parseResult.data.currentPassword,
+    parseResult.data.password
+  )
 
   if (user) {
-    session.flash('success', `Password for user with email: '${user?.email}' was successfully updated.`)
+    session.flash(
+      'success',
+      `Password for user with email: '${user?.email}' was successfully updated.`
+    )
     return redirect('/account', {
       headers: {
         'Set-Cookie': await commitSession(session),
       },
     })
   } else {
-    return json(
-      { errors: { general: { _errors: ['Error updating password'] } } },
-      { status: 400 }
-    )
+    return json({ errors: { general: { _errors: ['Error updating password'] } } }, { status: 400 })
   }
 }
 
@@ -110,13 +105,11 @@ export const handle: BreadcrumbHandle = {
   },
 }
 
-const fields = [
-  'email',
-]
+const fields = ['email']
 
 /**
  * UserPasswordEditPage
- * @returns 
+ * @returns
  */
 export default function UserPasswordEditPage() {
   const actionData = useActionData<typeof action>()
@@ -124,7 +117,12 @@ export default function UserPasswordEditPage() {
   const submit = useSubmit()
   const transition = useTransition()
   const resolver = zodResolver(passwordSchema)
-  const { register, handleSubmit, formState: { errors }, setFocus } = useForm({ resolver })
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setFocus,
+  } = useForm({ resolver })
   const busy = isBusy(transition)
 
   React.useEffect(() => {
@@ -134,11 +132,9 @@ export default function UserPasswordEditPage() {
   }, [serverErrors, setFocus])
 
   return (
-    <div className="w-full max-w-[560px] md:mt-8 m-auto">
+    <div className="m-auto w-full max-w-[560px] md:mt-8">
       {hasErrors('general', errors, serverErrors) && (
-        <Alert intent="danger">
-          {getErrorText('general', errors, serverErrors)}
-        </Alert>
+        <Alert intent="danger">{getErrorText('general', errors, serverErrors)}</Alert>
       )}
       <Form
         method="post"
@@ -192,10 +188,10 @@ export default function UserPasswordEditPage() {
           {...register('confirmPassword')}
         />
 
-        <div className="form-actions flex gap-3 justify-end flex-row">
+        <div className="form-actions flex flex-row justify-end gap-3">
           <Button disabled={busy} type="submit">
-            {busy ?
-              (
+            {busy
+              ? (
                 <Loader
                   loading={busy}
                   color="var(--loader-color)"
@@ -204,16 +200,13 @@ export default function UserPasswordEditPage() {
                   aria-label="Processing sign in"
                   data-testid="loader"
                 />
-              ) :
-              (
-                'Save'
               )
-            }
+              : (
+                'Save'
+              )}
           </Button>
           <Button asChild intent="secondary">
-            <Link to="/account">
-              Cancel
-            </Link>
+            <Link to="/account">Cancel</Link>
           </Button>
         </div>
       </Form>

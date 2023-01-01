@@ -5,7 +5,7 @@ import { logout } from '~/session.server'
 
 /**
  * loader
- * @returns 
+ * @returns
  */
 export async function loader() {
   return redirect('/')
@@ -13,8 +13,8 @@ export async function loader() {
 
 /**
  * action
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function action({ request }: ActionArgs) {
   return logout(request)

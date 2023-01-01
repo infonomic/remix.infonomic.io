@@ -9,9 +9,9 @@ import type * as Radix from '@radix-ui/react-primitive'
 
 const NAME = 'Card'
 
-type CardElement = React.ElementRef<typeof Primitive.div>;
-type PrimitiveCardProps = Radix.ComponentPropsWithoutRef<typeof Primitive.div>;
-interface CardProps extends PrimitiveCardProps { }
+type CardElement = React.ElementRef<typeof Primitive.div>
+type PrimitiveCardProps = Radix.ComponentPropsWithoutRef<typeof Primitive.div>
+interface CardProps extends PrimitiveCardProps {}
 
 const Card = React.forwardRef<CardElement, CardProps>((props, ref) => {
   const { className, children, ...rest } = props
@@ -26,11 +26,7 @@ const Card = React.forwardRef<CardElement, CardProps>((props, ref) => {
   )
 
   return (
-    <Primitive.div
-      ref={ref}
-      className={classes}
-      {...rest}
-    >
+    <Primitive.div ref={ref} className={classes} {...rest}>
       {children}
     </Primitive.div>
   )

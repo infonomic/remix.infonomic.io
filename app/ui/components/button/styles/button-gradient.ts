@@ -10,14 +10,16 @@ const buttonGradient: object = {
     background: 'bg-gradient-to-tr from-amber-600 to-amber-400',
     color: 'text-black',
     hover: 'hover:opacity-[0.85]',
-    focus: 'focus:outline-none focus:ring-amber-500 focus:ring-1 focus:ring-offset-2 dark:ring-offset-slate-900',
+    focus:
+      'focus:outline-none focus:ring-amber-500 focus:ring-1 focus:ring-offset-2 dark:ring-offset-slate-900',
     active: 'hover:opacity-[0.85]',
   },
   secondary: {
     background: 'bg-gradient-to-tr from-gray-300 to-gray-200 dark:from-gray-800 dark:to-gray-700',
     color: 'text-black dark:text-white',
     hover: 'hover:opacity-[0.85] dark:hover:opacity-[0.85]',
-    focus: 'focus:outline-none focus:ring-gray-500 focus:ring-1 focus:ring-offset-2 dark:ring-offset-slate-900',
+    focus:
+      'focus:outline-none focus:ring-gray-500 focus:ring-1 focus:ring-offset-2 dark:ring-offset-slate-900',
     active: 'dark:hover:opacity-[0.85]',
   },
   success: {

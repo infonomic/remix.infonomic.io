@@ -8,18 +8,16 @@ const TOOLTIP_NAME = 'Tooltip'
 type TooltipIntrinsicProps = JSX.IntrinsicElements['div']
 interface TooltipProps extends TooltipIntrinsicProps {
   text: string
-  delay?: number,
+  delay?: number
   side?: 'bottom' | 'top' | 'right' | 'left' | undefined
 }
 
 const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
   ({ text, delay = 600, side = 'top', children }: TooltipProps, ref) => {
     return (
-      <TooltipPrimitive.Provider delayDuration={delay} >
+      <TooltipPrimitive.Provider delayDuration={delay}>
         <TooltipPrimitive.Root>
-          <TooltipPrimitive.Trigger asChild>
-            {children}
-          </TooltipPrimitive.Trigger>
+          <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
           <TooltipPrimitive.Content
             ref={ref}
             side={side}
@@ -33,13 +31,13 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
               'bg-slate-200/70 dark:bg-slate-800'
             )}
           >
-            <TooltipPrimitive.Arrow className="fill-slate-200/70 dark:fill-slate-800 text-white dark:text-gray-800" />
+            <TooltipPrimitive.Arrow className="fill-slate-200/70 text-white dark:fill-slate-800 dark:text-gray-800" />
             <span className="block text-xs leading-none text-gray-700 dark:text-gray-100">
               {text}
             </span>
           </TooltipPrimitive.Content>
         </TooltipPrimitive.Root>
-      </TooltipPrimitive.Provider >
+      </TooltipPrimitive.Provider>
     )
   }
 )

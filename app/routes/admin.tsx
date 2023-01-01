@@ -11,7 +11,7 @@ import MainLayout from '~/ui/layouts/main-layout'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta = () => ({
   title: 'Admin - Infonomic - Remix Workbench',
@@ -19,8 +19,8 @@ export const meta = () => ({
 
 /**
  * loader
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function loader({ request }: LoaderArgs) {
   await requireUserId(request)
@@ -28,15 +28,14 @@ export async function loader({ request }: LoaderArgs) {
   return null
 }
 
-
 /**
  * Index
- * @returns 
+ * @returns
  */
 export default function Admin() {
   return (
     <MainLayout>
-      <Section className="flex-1 flex flex-col py-4">
+      <Section className="flex flex-1 flex-col py-4">
         <Container>
           <Outlet />
         </Container>

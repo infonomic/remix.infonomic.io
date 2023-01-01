@@ -11,7 +11,8 @@ enum Theme {
 
 // Helper to find system preference
 const prefersDarkMQ = '(prefers-color-scheme: dark)'
-const getPreferredTheme = () => (window.matchMedia(prefersDarkMQ).matches ? Theme.DARK : Theme.LIGHT)
+const getPreferredTheme = () =>
+  window.matchMedia(prefersDarkMQ).matches ? Theme.DARK : Theme.LIGHT
 
 // Helper to type check Theme value
 const themes: Array<Theme> = Object.values(Theme)
@@ -21,7 +22,7 @@ function isTheme(value: unknown): value is Theme {
 
 // ThemeContext
 type ThemeContextType = {
-  theme: Theme | null,
+  theme: Theme | null
   setTheme: Dispatch<SetStateAction<Theme | null>>
 }
 // type ThemeContextType = (Theme | Dispatch<SetStateAction<Theme | null>> | null)[]
@@ -29,11 +30,13 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 // ThemeProvider
-function ThemeProvider({ children, specifiedTheme }: {
-  children: ReactNode,
-  specifiedTheme: Theme | null;
+function ThemeProvider({
+  children,
+  specifiedTheme,
+}: {
+  children: ReactNode
+  specifiedTheme: Theme | null
 }) {
-
   const [theme, setTheme] = useState<Theme | null>(() => {
     if (specifiedTheme) {
       if (themes.includes(specifiedTheme)) {

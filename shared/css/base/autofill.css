@@ -46,5 +46,5 @@ select:autofill:focus {
   box-shadow: 0 0 0px 1000px #253341 inset !important;
   transition: background-color 5000s ease-in-out 0s !important;
   color: white !important;
-  background-color: rgba(100,100,100, 0.5) !important;
+  background-color: rgba(100, 100, 100, 0.5) !important;
 }

@@ -14,11 +14,10 @@ export const signInSchema = zfd.formData({
       .email({ message: 'Please enter a valid email address.' })
   ),
   password: zfd.text(
-    z
-      .string({
-        required_error: 'Password is required.',
-        invalid_type_error: 'Password must be a string.',
-      })
+    z.string({
+      required_error: 'Password is required.',
+      invalid_type_error: 'Password must be a string.',
+    })
   ),
 })
 

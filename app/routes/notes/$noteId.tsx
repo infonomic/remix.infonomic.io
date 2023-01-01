@@ -19,7 +19,7 @@ import ErrorLayout from '~/ui/layouts/error-layout'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta: MetaFunction<typeof loader> = ({ data }) => ({
   title: `Note - ${truncate(data?.note?.body, 50, true)} Infonomic - Remix Workbench`,
@@ -27,8 +27,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => ({
 
 /**
  * loader
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function loader({ request, params }: LoaderArgs) {
   const userId = await requireUserId(request)
@@ -42,12 +42,15 @@ export async function loader({ request, params }: LoaderArgs) {
 
   const message = session.get('success') || null
 
-  return json({ note, message }, {
-    headers: {
-      // only necessary with cookieSessionStorage
-      'Set-Cookie': await commitSession(session),
-    },
-  })
+  return json(
+    { note, message },
+    {
+      headers: {
+        // only necessary with cookieSessionStorage
+        'Set-Cookie': await commitSession(session),
+      },
+    }
+  )
 }
 
 /**
@@ -74,7 +77,7 @@ export const handle: BreadcrumbHandle<NoteProps> = {
 
 /**
  * NoteDetailsPage
- * @returns 
+ * @returns
  */
 export default function NoteDetailsPage() {
   const data = useLoaderData<typeof loader>()
@@ -82,33 +85,29 @@ export default function NoteDetailsPage() {
   const [toast, setToast] = React.useState(!!data.message)
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      width: '100%',
-      maxWidth: '560px',
-      margin: '0 auto',
-    }} >
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        maxWidth: '560px',
+        margin: '0 auto',
+      }}
+    >
       <Toast title="Notes" description={data.message} open={toast} onOpenChange={setToast} />
       <h3 className="text-2xl font-bold">{data.note.title}</h3>
       <p className="py-6">{data.note.body}</p>
       <hr className="my-4" />
       <Form method="post">
-        <div className="form-actions flex gap-3 justify-end flex-row">
+        <div className="form-actions flex flex-row justify-end gap-3">
           <Button asChild intent="secondary">
-            <Link to={`/notes/${data.note.id}/delete`}>
-              Delete
-            </Link>
+            <Link to={`/notes/${data.note.id}/delete`}>Delete</Link>
           </Button>
-          <Button asChild intent="secondary" >
-            <Link to={`/notes/${data.note.id}/edit`}>
-              Edit
-            </Link>
+          <Button asChild intent="secondary">
+            <Link to={`/notes/${data.note.id}/edit`}>Edit</Link>
           </Button>
-          <Button asChild intent="secondary" >
-            <Link to={'/notes'}>
-              Close
-            </Link>
+          <Button asChild intent="secondary">
+            <Link to={'/notes'}>Close</Link>
           </Button>
         </div>
       </Form>

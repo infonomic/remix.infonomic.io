@@ -32,10 +32,9 @@
   @apply border-slate-200;
 }
 
-
 .theme-switch .moon,
 .theme-switch .light {
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   position: absolute;
   margin: 0;
   padding: 0;

@@ -7,8 +7,8 @@ import { isTheme } from '~/ui/theme/theme-provider'
 
 /**
  * action
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export const action: ActionFunction = async ({ request }) => {
   const themeSession = await getThemeSession(request)

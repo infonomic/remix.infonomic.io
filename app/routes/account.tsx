@@ -11,7 +11,7 @@ import MainLayout from '~/ui/layouts/main-layout'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta = () => ({
   title: 'Account - Manage Account',
@@ -19,23 +19,22 @@ export const meta = () => ({
 
 /**
  * loader
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function loader({ request }: LoaderArgs) {
   await requireUserId(request)
   return null
 }
 
-
 /**
  * Index
- * @returns 
+ * @returns
  */
 export default function Account() {
   return (
     <MainLayout>
-      <Section className="flex-1 flex flex-col py-4">
+      <Section className="flex flex-1 flex-col py-4">
         <Container className="prose dark:prose-invert">
           <Outlet />
         </Container>

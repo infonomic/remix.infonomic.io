@@ -7,15 +7,14 @@ import cx from 'classnames'
 import { twMerge } from 'tailwind-merge'
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  id: string,
-  name: string,
-  label: string,
-  checked?: boolean,
+  id: string
+  name: string
+  label: string
+  checked?: boolean
 }
 
 export const Checkbox = React.forwardRef<HTMLButtonElement, Props>(
   ({ id, name, label, className, checked = false, ...rest }, ref) => {
-
     const classes = twMerge(
       cx(
         'flex h-4 w-4 items-center justify-center rounded outline-none focus:outline-none',

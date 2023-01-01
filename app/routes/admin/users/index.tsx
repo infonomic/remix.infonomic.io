@@ -28,8 +28,8 @@ import {
 import type { PaginationState, Updater } from '@tanstack/react-table'
 
 type User = {
-  id: string,
-  email: string,
+  id: string
+  email: string
   createdAt: string
 }
 
@@ -53,7 +53,7 @@ const columns = [
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta: MetaFunction = () => ({
   title: 'Users - Infonomic Remix Workbench',
@@ -61,8 +61,8 @@ export const meta: MetaFunction = () => ({
 
 /**
  * loader
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url)
@@ -70,7 +70,8 @@ export async function loader({ request }: LoaderArgs) {
   // TODO: zod validator for query string params
   const pageString = url.searchParams.get('page') || SEARCH_PARAMS_DEFAULTS.page.toString()
   const page = parseInt(pageString, 10)
-  const pageSizeString = url.searchParams.get('pageSize') || SEARCH_PARAMS_DEFAULTS.pageSize.toString()
+  const pageSizeString =
+    url.searchParams.get('pageSize') || SEARCH_PARAMS_DEFAULTS.pageSize.toString()
   const pageSize = parseInt(pageSizeString, 10)
   const { users, meta: usersMeta } = await getUsers({ ...SEARCH_PARAMS_DEFAULTS, page, pageSize })
   return json({ users, meta: usersMeta })
@@ -96,7 +97,7 @@ export const handle: BreadcrumbHandle = {
 
 /**
  * UserIndexPage
- * @returns 
+ * @returns
  */
 export default function UserIndexPage() {
   const data = useLoaderData<typeof loader>()
@@ -158,67 +159,76 @@ export default function UserIndexPage() {
 
   return (
     <>
-      <div className="prose dark:prose-invert mb-4">
+      <div className="prose mb-4 dark:prose-invert">
         <h1 className="text-3xl text-slate-600">Registered Users</h1>
       </div>
       {data.users.length === 0
-        ? (
-          <p className="p-4">No users yet</p>
-        )
-        : (
-          <>
-            <TableContainer>
-              <Table>
-                <TableHeader>
-                  {table.getHeaderGroups().map(headerGroup => (
-                    <TableRow key={headerGroup.id} >
-                      <TableHeadingCell scope="col" className="p-4">
-                        <Checkbox id="checkbox-all-search" name="checkbox-all-search" label="" className="dark:ring-offset-slate-800" />
+? (
+        <p className="p-4">No users yet</p>
+      )
+: (
+        <>
+          <TableContainer>
+            <Table>
+              <TableHeader>
+                {table.getHeaderGroups().map(headerGroup => (
+                  <TableRow key={headerGroup.id}>
+                    <TableHeadingCell scope="col" className="p-4">
+                      <Checkbox
+                        id="checkbox-all-search"
+                        name="checkbox-all-search"
+                        label=""
+                        className="dark:ring-offset-slate-800"
+                      />
+                    </TableHeadingCell>
+                    {headerGroup.headers.map(header => (
+                      <TableHeadingCell key={header.id} scope="col" className="p-4">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
                       </TableHeadingCell>
-                      {headerGroup.headers.map(header => (
-                        <TableHeadingCell key={header.id} scope="col" className="p-4">
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                        </TableHeadingCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableHeader>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableHeader>
 
-                <TableBody>
-                  {table.getRowModel().rows.map((row, index) => (
-                    <TableRow key={row.id} className="bg-white border-b border-solid border-slate-200 dark:bg-slate-800/60 dark:border-slate-700/60 hover:bg-slate-100/80 dark:hover:bg-slate-800/30">
-                      <TableCell className="p-4 w-4">
-                        <Checkbox id={`checkbox-${index}`} name={`checkbox-${index}`} label="" className="dark:ring-offset-slate-800" />
+              <TableBody>
+                {table.getRowModel().rows.map((row, index) => (
+                  <TableRow
+                    key={row.id}
+                    className="border-b border-solid border-slate-200 bg-white hover:bg-slate-100/80 dark:border-slate-700/60 dark:bg-slate-800/60 dark:hover:bg-slate-800/30"
+                  >
+                    <TableCell className="w-4 p-4">
+                      <Checkbox
+                        id={`checkbox-${index}`}
+                        name={`checkbox-${index}`}
+                        label=""
+                        className="dark:ring-offset-slate-800"
+                      />
+                    </TableCell>
+                    {row.getVisibleCells().map(cell => (
+                      <TableCell key={cell.id} className="p-4">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
-                      {row.getVisibleCells().map(cell => (
-                        <TableCell key={cell.id} className="p-4">
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
+                    ))}
+                  </TableRow>
+                ))}
 
-                  {fill > 0 && (
-                    <TableRow
-                      className="bg-white border-b border-solid border-slate-200 dark:bg-slate-800 dark:border-slate-700/60"
-                      style={{ height: 54 * fill }}>
-                      <TableCell colSpan={3} />
-                    </TableRow>
-                  )}
-                </TableBody>
+                {fill > 0 && (
+                  <TableRow
+                    className="border-b border-solid border-slate-200 bg-white dark:border-slate-700/60 dark:bg-slate-800"
+                    style={{ height: 54 * fill }}
+                  >
+                    <TableCell colSpan={3} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-              </Table>
-            </TableContainer >
-
-            <TablePager data={data} table={table} onPageSizeChange={handlePageSizeChange} />
-          </>
-        )
-      }
+          <TablePager data={data} table={table} onPageSizeChange={handlePageSizeChange} />
+        </>
+      )}
     </>
   )
 }

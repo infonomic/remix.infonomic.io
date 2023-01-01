@@ -5,33 +5,37 @@ import cx from 'classnames'
 const NAME = 'Input'
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  id: string,
-  name: string,
-  label: string,
-  required?: boolean,
-  type?: string,
-  placeHolder?: string,
-  autoComplete?: string,
-  error?: boolean,
-  helpText?: string,
-  errorText?: string,
-  className?: string,
+  id: string
+  name: string
+  label: string
+  required?: boolean
+  type?: string
+  placeHolder?: string
+  autoComplete?: string
+  error?: boolean
+  helpText?: string
+  errorText?: string
+  className?: string
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({
-    id,
-    name,
-    type = 'text',
-    required,
-    label,
-    placeHolder = '',
-    autoComplete = '',
-    error = false,
-    helpText = '',
-    errorText = '',
-    className,
-    ...rest }, ref) => {
+  (
+    {
+      id,
+      name,
+      type = 'text',
+      required,
+      label,
+      placeHolder = '',
+      autoComplete = '',
+      error = false,
+      helpText = '',
+      errorText = '',
+      className,
+      ...rest
+    },
+    ref
+  ) => {
     return (
       <div className="mb-4">
         <label
@@ -58,19 +62,20 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             'block w-full rounded-md',
             'text-gray-700 placeholder:text-gray-500 dark:text-gray-400 dark:placeholder:text-gray-600',
             'border border-gray-400 focus-visible:border-transparent dark:border-gray-700 dark:bg-gray-800',
-            'focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-500 focus-visible:ring-opacity-85',
+            'focus-visible:ring-opacity-85 focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-500',
             className
           )}
           {...rest}
         />
         {error
-          ? (
-            <p id={`error-for-${id}`} className="mt-1 mb-1 text-sm text-red-700">{errorText || helpText}</p>
-          ) :
-          (
-            <p className="mt-1 mb-1 text-sm text-gray-700 dark:text-gray-400">{helpText}</p>
-          )
-        }
+? (
+          <p id={`error-for-${id}`} className="mt-1 mb-1 text-sm text-red-700">
+            {errorText || helpText}
+          </p>
+        )
+: (
+          <p className="mt-1 mb-1 text-sm text-gray-700 dark:text-gray-400">{helpText}</p>
+        )}
       </div>
     )
   }

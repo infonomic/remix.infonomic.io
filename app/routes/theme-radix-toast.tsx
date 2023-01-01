@@ -1,4 +1,3 @@
-
 import { useState } from 'react'
 
 import type { MetaFunction } from '@remix-run/node'
@@ -13,7 +12,7 @@ import PublicLayout from '~/ui/layouts/public-layout'
 
 /**
  * meta
- * @returns 
+ * @returns
  */
 export const meta: MetaFunction = () => {
   return {
@@ -23,7 +22,7 @@ export const meta: MetaFunction = () => {
 
 /**
  * ThemeRadixToast
- * @returns 
+ * @returns
  */
 export default function ThemeRadixToast() {
   let [toast, setToast] = useState(false)
@@ -50,7 +49,7 @@ export default function ThemeRadixToast() {
             open={toast}
             onOpenChange={setToast}
             className={cx(
-              'z-50 fixed bottom-4 inset-x-4 w-auto md:top-[62px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm shadow-lg rounded-lg',
+              'fixed inset-x-4 bottom-4 z-50 w-auto rounded-lg shadow-lg md:top-[62px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
               'bg-white dark:bg-gray-800',
               'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-right',
               'radix-state-closed:animate-toast-hide',
@@ -61,8 +60,8 @@ export default function ThemeRadixToast() {
             )}
           >
             <div className="flex">
-              <div className="w-0 flex-1 flex items-center pl-5 py-4">
-                <div className="w-full radix">
+              <div className="flex w-0 flex-1 items-center py-4 pl-5">
+                <div className="radix w-full">
                   <ToastPrimitive.Title className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     Pull Request Review
                   </ToastPrimitive.Title>
@@ -73,11 +72,11 @@ export default function ThemeRadixToast() {
                 </div>
               </div>
               <div className="flex">
-                <div className="flex flex-col px-3 py-2 space-y-1">
-                  <div className="h-0 flex-1 flex">
+                <div className="flex flex-col space-y-1 px-3 py-2">
+                  <div className="flex h-0 flex-1">
                     <ToastPrimitive.Action
                       altText="view now"
-                      className="w-full border border-transparent rounded-lg px-3 py-2 flex items-center justify-center text-sm font-medium text-purple-600 dark:text-purple-500 hover:bg-gray-50 dark:hover:bg-gray-900 focus:z-10 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
+                      className="flex w-full items-center justify-center rounded-lg border border-transparent px-3 py-2 text-sm font-medium text-purple-600 hover:bg-gray-50 focus:z-10 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 dark:text-purple-500 dark:hover:bg-gray-900"
                       onClick={e => {
                         e.preventDefault()
                         window.open('https://github.com')
@@ -86,8 +85,8 @@ export default function ThemeRadixToast() {
                       Review
                     </ToastPrimitive.Action>
                   </div>
-                  <div className="h-0 flex-1 flex">
-                    <ToastPrimitive.Close className="w-full border border-transparent rounded-lg px-3 py-2 flex items-center justify-center text-sm font-medium text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-900 focus:z-10 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                  <div className="flex h-0 flex-1">
+                    <ToastPrimitive.Close className="flex w-full items-center justify-center rounded-lg border border-transparent px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 dark:text-gray-100 dark:hover:bg-gray-900">
                       Dismiss
                     </ToastPrimitive.Close>
                   </div>
