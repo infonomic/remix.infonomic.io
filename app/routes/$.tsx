@@ -48,7 +48,7 @@ export function CatchBoundary() {
         <ErrorLayout>
           <div>
             <h1>404</h1>
-            <p>Oops. You url you tried to visit does not exist.</p>
+            <p>Oops. The page you tried to visit does not exist.</p>
           </div>
         </ErrorLayout>
       </PublicLayout>
