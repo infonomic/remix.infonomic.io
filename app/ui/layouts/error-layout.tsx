@@ -15,7 +15,7 @@ export type Ref = HTMLDivElement
 const ErrorLayout = forwardRef<Ref, FrontLayoutProps>(({ children, className, ...other }, ref) => {
   return (
     <div
-      className={cx('layout-container flex min-h-screen flex-col', className)}
+      className={cx('layout-container flex flex-1 flex-col', className)}
       ref={ref}
       {...other}
     >
