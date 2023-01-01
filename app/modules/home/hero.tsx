@@ -43,50 +43,50 @@ export function Hero() {
           </p>
           <div>
             {user
-? (
-              <div
-                style={{ display: 'flex', gap: '18px', justifyContent: 'center', margin: '1rem 0' }}
-              >
-                <Button
-                  asChild
-                  variant="outlined"
-                  intent="primary"
-                  size="lg"
-                  className="rounded-lg bg-amber-500/70 py-3 px-10 !text-black hover:bg-amber-400/70"
+              ? (
+                <div
+                  style={{ display: 'flex', gap: '18px', justifyContent: 'center', margin: '1rem 0' }}
                 >
-                  <Link to="/notes">View notes for {user.email}</Link>
-                </Button>
-              </div>
-            )
-: (
-              <div
-                style={{
-                  display: 'flex',
-                  gap: '18px',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  margin: '1rem 0',
-                }}
-              >
-                <Button
-                  asChild
-                  variant="outlined"
-                  intent="primary"
-                  size="lg"
-                  className="rounded-lg border-2 bg-gray-50 py-3 px-8 font-medium !text-black hover:bg-gray-100 focus:ring-0 focus:ring-offset-0"
+                  <Button
+                    asChild
+                    variant="outlined"
+                    intent="primary"
+                    size="lg"
+                    className="rounded-lg bg-amber-500/70 py-3 px-10 !text-black hover:bg-amber-400/70"
+                  >
+                    <Link to="/notes">View notes for {user.email}</Link>
+                  </Button>
+                </div>
+              )
+              : (
+                <div
+                  style={{
+                    display: 'flex',
+                    gap: '18px',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    margin: '1rem 0',
+                  }}
                 >
-                  <Link to="/sign-up">Sign Up</Link>
-                </Button>
-                <Button
-                  asChild
-                  intent="primary"
-                  size="lg"
-                  className="rounded-lg border-2 border-amber-500 py-3 px-8 font-medium focus:ring-0 focus:ring-offset-0"
-                >
-                  <Link to="/sign-in">Sign In</Link>
-                </Button>
-              </div>
-            )}
+                  <Button
+                    asChild
+                    variant="outlined"
+                    intent="primary"
+                    size="lg"
+                    className="rounded-lg border-2 bg-gray-50 py-3 px-8 font-medium !text-black hover:bg-gray-100 focus:ring-0 focus:ring-offset-0"
+                  >
+                    <Link aria-label="Sign Up" to="/sign-up">Sign Up</Link>
+                  </Button>
+                  <Button
+                    asChild
+                    intent="primary"
+                    size="lg"
+                    className="rounded-lg border-2 border-amber-500 py-3 px-8 font-medium focus:ring-0 focus:ring-offset-0"
+                  >
+                    <Link aria-label="Sign In" to="/sign-in">Sign In</Link>
+                  </Button>
+                </div>
+              )}
           </div>
           <a href="https://remix.run" style={{ display: 'block', margin: '56px' }}>
             <img
