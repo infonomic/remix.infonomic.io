@@ -17,7 +17,7 @@ module.exports = {
     "playwright.config.ts",
     "tailwind.config.js",
     "postcss.config.js",
-    "tests-examples/demo-todo-app.spec.ts",
+    "e2e-examples/demo-todo-app.spec.ts",
     "coverage",
     "vitest.config.ts",
     "remix.config.js",

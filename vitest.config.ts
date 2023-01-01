@@ -14,8 +14,8 @@ export default defineConfig({
     setupFiles: ["./test/setup-test-env.ts"],
     exclude: [
       ...configDefaults.exclude,
-      'tests/*',
-      'tests-examples/*',
+      'e2e/*',
+      'e2e-examples/*',
     ]
   },
 })
