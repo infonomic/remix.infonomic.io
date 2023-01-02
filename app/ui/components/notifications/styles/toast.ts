@@ -49,6 +49,17 @@ const intentStyles: object = {
   },
 }
 
+/**
+ * NOTE! - for the swipe radix-swipe-end animations - you need to be sure that the 
+ * <ToastPrimitive.Provider swipeDirection='right'> in root.tsx has been set
+ * to a direction that makes sense - and 'agrees' with the position
+ * setting below. <ToastPrimitive.Provider swipeDirection='right'> determines
+ * which mouse drag, or touch gesture direction is going to be used to 
+ * trigger the end animation - so for example, it would be a little strange if 
+ * you had <ToastPrimitive.Provider swipeDirection='left'> configured in the provider,
+ * but were animating out to the right. 
+ */
+
 const positionStyles: object = {
   'top-left': {
     position: 'bottom-4 md:top-[68px] md:left-4 md:right-auto md:bottom-auto md:w-full md:max-w-sm',
@@ -106,7 +117,7 @@ export const toastStyles: ToastStyleTypes = {
         typography: 'font-base font-normal text-sm',
         radix: cx(
           'radix-state-closed:animate-toast-hide',
-          'translate-x-radix-toast-swipe-move-x',
+          // 'translate-x-radix-toast-swipe-move-x',
           'radix-swipe-cancel:translate-x-0 radix-swipe-cancel:duration-200 radix-swipe-cancel:ease-[ease]'
         ),
       },

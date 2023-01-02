@@ -94,6 +94,7 @@ export default function NoteDetailsPage() {
         margin: '0 auto',
       }}
     >
+      {/* Important!: see comments in app/ui/components/notifications/styles/toast.ts regarding toast position */}
       <Toast title="Notes" iconType="success" intent="secondary" position="top-right" description={data.message} open={toast} onOpenChange={setToast} />
       <h3 className="text-2xl font-bold">{data.note.title}</h3>
       <p className="py-6">{data.note.body}</p>

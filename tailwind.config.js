@@ -113,6 +113,10 @@ module.exports = {
           "0%": { transform: `translateY(calc(100% + 1rem))` },
           "100%": { transform: "translateY(0)" },
         },
+        "toast-slide-in-top": {
+          "0%": { transform: `translateY(-1 * (calc(100% + 1rem)))` },
+          "100%": { transform: "translateY(0)" },
+        },
         // Leave toast-swipe-out for compatibility - swipe out right
         "toast-swipe-out": {
           "0%": { transform: "translateX(var(--radix-toast-swipe-end-x))" },
@@ -130,6 +134,18 @@ module.exports = {
           "0%": { transform: "translateX(var(--radix-toast-swipe-end-x))" },
           "100%": {
             transform: `translateX(calc(-1 * (100% + 1rem)))`,
+          },
+        },
+        "toast-swipe-out-down": {
+          "0%": { transform: "translateY(var(--radix-toast-swipe-end-y))" },
+          "100%": {
+            transform: `translateY(calc(100% + 1rem))`,
+          },
+        },
+        "toast-swipe-out-up": {
+          "0%": { transform: "translateY(var(--radix-toast-swipe-end-y))" },
+          "100%": {
+            transform: `translateY(calc(-1 * (100% + 1rem)))`,
           },
         },
       },
@@ -161,10 +177,14 @@ module.exports = {
           "toast-slide-in-left 150ms cubic-bezier(0.16, 1, 0.3, 1)",
         "toast-slide-in-bottom":
           "toast-slide-in-bottom 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "toast-slide-in-top":
+          "toast-slide-in-top 150ms cubic-bezier(0.16, 1, 0.3, 1)",
         // Leave toast-swipe-out for compatibility - swipe out right.
         "toast-swipe-out": "toast-swipe-out 100ms ease-out forwards",
         "toast-swipe-out-right": "toast-swipe-out-right 100ms ease-out forwards",
         "toast-swipe-out-left": "toast-swipe-out-left 100ms ease-out forwards",
+        "toast-swipe-out-down": "toast-swipe-out-down 100ms ease-out forwards",
+        "toast-swipe-out-up": "toast-swipe-out-up 100ms ease-out forwards",
       },
     },
   },

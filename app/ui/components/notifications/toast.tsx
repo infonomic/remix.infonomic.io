@@ -49,6 +49,8 @@ interface ToastProps extends React.InputHTMLAttributes<HTMLLIElement> {
   className?: className
 }
 
+// Important!: see comments in app/ui/components/notifications/styles/toast.ts regarding toast position
+
 const Toast = React.forwardRef<HTMLLIElement, ToastProps>(
   ({ intent, position, title, description, icon, iconType, close, open, onOpenChange, className }, ref) => {
     // 1. init
