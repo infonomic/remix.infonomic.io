@@ -16,18 +16,18 @@ import objectsToString from '~/ui/utils/objectsToString'
 
 import type {
   intent,
+  position,
   className,
   title,
   description,
   icon,
+  iconType,
   close,
   open,
   onOpenChange,
 } from './types/toast'
 
 const toastIcons = {
-  primary: WarningIcon,
-  secondary: InfoIcon,
   success: SuccessIcon,
   info: InfoIcon,
   warning: WarningIcon,
@@ -38,9 +38,11 @@ const NAME = 'Toast'
 
 interface ToastProps extends React.InputHTMLAttributes<HTMLLIElement> {
   intent?: intent
+  position?: position
   title: title
   description: description
   icon?: icon
+  iconType?: iconType
   close?: close
   open: open
   onOpenChange: onOpenChange
@@ -48,23 +50,26 @@ interface ToastProps extends React.InputHTMLAttributes<HTMLLIElement> {
 }
 
 const Toast = React.forwardRef<HTMLLIElement, ToastProps>(
-  ({ intent, title, description, icon, close, open, onOpenChange, className }, ref) => {
+  ({ intent, position, title, description, icon, iconType, close, open, onOpenChange, className }, ref) => {
     // 1. init
     const { defaultProps, styles } = toastStyles
-    const { base, intents } = styles
+    const { base, intents, positions } = styles
 
     // 2. set default props
     intent = intent ?? defaultProps.intent
+    position = position ?? defaultProps.position
     icon = icon ?? defaultProps.icon
+    iconType = iconType ?? defaultProps.iconType
     close = close ?? defaultProps.close
     className = className ?? defaultProps.className
 
     // 3. set styles
     const toastBase = objectsToString(base.initial)
     const toastIntent = objectsToString(intents[intent as keyof typeof intents])
-    const classes = twMerge(cx(toastBase, toastIntent), className)
+    const toastPosition = objectsToString(positions[position as keyof typeof positions])
+    const classes = twMerge(cx(toastBase, toastIntent, toastPosition), className)
 
-    const Icon = toastIcons[intent as keyof typeof toastIcons]
+    const Icon = toastIcons[iconType as keyof typeof toastIcons]
 
     const handleClose = () => {
       if (onOpenChange) onOpenChange(false)

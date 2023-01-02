@@ -1,6 +1,6 @@
 // types
 
-import type { intent, className, icon, close } from '../types/toast'
+import type { intent, position, className, icon, iconType, close } from '../types/toast'
 
 const intentStyles: object = {
   primary: {
@@ -48,10 +48,19 @@ const intentStyles: object = {
   },
 }
 
+const positionStyles: object = {
+  'top-left': 'bottom-4 md:top-[68px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
+  'top-right': 'bottom-4 md:top-[68px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
+  'bottom-left': 'bottom-4 md:top-[68px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
+  'bottom-right': 'bottom-4 md:right-4 md:left-auto md:w-full md:max-w-sm',
+}
+
 export interface ToastStyleTypes {
   defaultProps: {
     intent: intent
+    position: position
     icon: icon
+    iconType: iconType
     close: close
     className: className
   }
@@ -60,13 +69,16 @@ export interface ToastStyleTypes {
       initial: object
     }
     intents: typeof intentStyles
+    positions: typeof positionStyles
   }
 }
 
 export const toastStyles: ToastStyleTypes = {
   defaultProps: {
     intent: 'success',
+    position: 'top-right',
     icon: true,
+    iconType: 'success',
     close: true,
     className: 'toast',
   },
@@ -80,6 +92,7 @@ export const toastStyles: ToastStyleTypes = {
       },
     },
     intents: intentStyles,
+    positions: positionStyles,
   },
 }
 
