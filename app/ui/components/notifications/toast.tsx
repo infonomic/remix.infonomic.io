@@ -95,9 +95,11 @@ const Toast = React.forwardRef<HTMLLIElement, ToastProps>(
               }).format(new Date())}
             </div>
             {close && (
-              <div>
-                <CloseButton intent={intent} onClick={handleClose} />
-              </div>
+              <ToastPrimitive.Close aria-label="Close" asChild>
+                <div>
+                  <CloseButton intent={intent} onClick={handleClose} />
+                </div>
+              </ToastPrimitive.Close>
             )}
           </div>
 

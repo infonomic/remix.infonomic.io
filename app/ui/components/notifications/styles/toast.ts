@@ -73,8 +73,9 @@ export const toastStyles: ToastStyleTypes = {
   styles: {
     base: {
       initial: {
-        display: 'z-50 fixed bottom-4 inset-x-3 w-auto rounded-md shadow-md',
-        position: 'md:top-[68px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
+        display: 'z-50 fixed inset-x-3 w-auto rounded-md shadow-md',
+        // TODO: position prop. Top right on desktop, bottom on mobile
+        position: 'bottom-4 md:top-[68px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
         typography: 'font-base font-normal text-sm',
       },
     },

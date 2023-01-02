@@ -17,3 +17,4 @@
 - [ ] Table: implement sortable columns and filter / search
 - [ ] Menu: extract and create MenuItem component to DRY-up main-menu.tsx
 - [ ] Input: consider implementing variants for Inputs
+- [ ] Toast: position prop, intent from message parse, separate prop for icon
