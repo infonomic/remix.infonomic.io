@@ -148,7 +148,7 @@ export default function App() {
   return (
     <ThemeProvider specifiedTheme={data.theme}>
       <Document>
-        <ToastPrimitive.Provider>
+        <ToastPrimitive.Provider swipeDirection='right'>
           <Outlet />
           <ToastPrimitive.Viewport />
         </ToastPrimitive.Provider>

@@ -53,18 +53,22 @@ const positionStyles: object = {
   'top-left': {
     position: 'bottom-4 md:top-[68px] md:left-4 md:right-auto md:bottom-auto md:w-full md:max-w-sm',
     transition: 'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-left',
+    swipe: 'radix-swipe-end:animate-toast-swipe-out-left',
   },
   'top-right': {
     position: 'bottom-4 md:top-[68px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
     transition: 'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-right',
+    swipe: 'radix-swipe-end:animate-toast-swipe-out-right',
   },
   'bottom-left': {
     position: 'bottom-4 md:left-4 md:right-auto md:w-full md:max-w-sm',
     transition: 'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-left',
+    swipe: 'radix-swipe-end:animate-toast-swipe-out-left',
   },
   'bottom-right': {
     position: 'bottom-4 md:right-4 md:left-auto md:w-full md:max-w-sm',
     transition: 'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-right',
+    swipe: 'radix-swipe-end:animate-toast-swipe-out-right',
   },
 }
 
@@ -102,7 +106,6 @@ export const toastStyles: ToastStyleTypes = {
         typography: 'font-base font-normal text-sm',
         radix: cx(
           'radix-state-closed:animate-toast-hide',
-          'radix-swipe-end:animate-toast-swipe-out',
           'translate-x-radix-toast-swipe-move-x',
           'radix-swipe-cancel:translate-x-0 radix-swipe-cancel:duration-200 radix-swipe-cancel:ease-[ease]'
         ),
