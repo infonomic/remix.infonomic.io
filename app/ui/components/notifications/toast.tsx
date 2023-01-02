@@ -68,7 +68,6 @@ const Toast = React.forwardRef<HTMLLIElement, ToastProps>(
     const toastIntent = objectsToString(intents[intent as keyof typeof intents])
     const toastPosition = objectsToString(positions[position as keyof typeof positions])
     const classes = twMerge(cx(toastBase, toastIntent, toastPosition), className)
-
     const Icon = toastIcons[iconType as keyof typeof toastIcons]
 
     const handleClose = () => {
@@ -80,14 +79,7 @@ const Toast = React.forwardRef<HTMLLIElement, ToastProps>(
         open={open}
         ref={ref}
         onOpenChange={onOpenChange}
-        className={cx(
-          classes,
-          'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-right',
-          'radix-state-closed:animate-toast-hide',
-          'radix-swipe-end:animate-toast-swipe-out',
-          'translate-x-radix-toast-swipe-move-x',
-          'radix-swipe-cancel:translate-x-0 radix-swipe-cancel:duration-200 radix-swipe-cancel:ease-[ease]'
-        )}
+        className={classes}
       >
         <focus-trap trapped="true">
           <button className="sr-only" tabIndex={0}></button>

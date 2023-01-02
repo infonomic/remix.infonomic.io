@@ -66,7 +66,7 @@ export default function NoteIndexPage() {
 
   return (
     <>
-      <Toast title="Notes" iconType="success" intent="secondary" description={data.message} open={toast} onOpenChange={setToast} />
+      <Toast title="Notes" iconType="success" intent="secondary" position="top-right" description={data.message} open={toast} onOpenChange={setToast} />
       <div className="mt-1 mb-3">
         <Button asChild>
           <Link to="/notes/new">New Note</Link>

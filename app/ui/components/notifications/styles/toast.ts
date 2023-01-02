@@ -1,4 +1,5 @@
 // types
+import cx from 'classnames'
 
 import type { intent, position, className, icon, iconType, close } from '../types/toast'
 
@@ -49,10 +50,22 @@ const intentStyles: object = {
 }
 
 const positionStyles: object = {
-  'top-left': 'bottom-4 md:top-[68px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
-  'top-right': 'bottom-4 md:top-[68px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
-  'bottom-left': 'bottom-4 md:top-[68px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
-  'bottom-right': 'bottom-4 md:right-4 md:left-auto md:w-full md:max-w-sm',
+  'top-left': {
+    position: 'bottom-4 md:top-[68px] md:left-4 md:right-auto md:bottom-auto md:w-full md:max-w-sm',
+    transition: 'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-left',
+  },
+  'top-right': {
+    position: 'bottom-4 md:top-[68px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
+    transition: 'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-right',
+  },
+  'bottom-left': {
+    position: 'bottom-4 md:left-4 md:right-auto md:w-full md:max-w-sm',
+    transition: 'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-left',
+  },
+  'bottom-right': {
+    position: 'bottom-4 md:right-4 md:left-auto md:w-full md:max-w-sm',
+    transition: 'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-right',
+  },
 }
 
 export interface ToastStyleTypes {
@@ -86,9 +99,13 @@ export const toastStyles: ToastStyleTypes = {
     base: {
       initial: {
         display: 'z-50 fixed inset-x-3 w-auto rounded-md shadow-md',
-        // TODO: position prop. Top right on desktop, bottom on mobile
-        position: 'bottom-4 md:top-[68px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
         typography: 'font-base font-normal text-sm',
+        radix: cx(
+          'radix-state-closed:animate-toast-hide',
+          'radix-swipe-end:animate-toast-swipe-out',
+          'translate-x-radix-toast-swipe-move-x',
+          'radix-swipe-cancel:translate-x-0 radix-swipe-cancel:duration-200 radix-swipe-cancel:ease-[ease]'
+        ),
       },
     },
     intents: intentStyles,
