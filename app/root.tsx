@@ -61,24 +61,27 @@ export const links: LinksFunction = () => {
 /**
  * meta
  * @returns MetaFunction
+ * TODO: ts type for meta
+ * New v2 meta api
+ * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
+ * https://github.com/remix-run/remix/discussions/4462 
  */
-export const meta: MetaFunction<LoaderData> = ({ data }) => {
-  return {
-    charset: 'utf-8',
-    title: 'Infonomic Remix Workbench App',
-    description: 'A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.',
-    viewport: 'width=device-width,initial-scale=1',
-    'theme-color': '#f59e0b',
-    'msapplication-TileColor': '#f59e0b',
-    'og:title': 'Infonomic Remix Workbench App',
-    'og:description':
-      'A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.',
+export const meta = ({ data }: any) => {
+  return [
+    { charset: 'utf-8' },
+    { title: 'Infonomic Remix Workbench App' },
+    { name: 'description', content: 'A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { name: 'theme-color', content: '#f59e0b' },
+    { name: 'msapplication-TileColor', content: '#f59e0b' },
+    { property: 'og:title', content: 'Infonomic Remix Workbench App' },
+    { property: 'og:description', content: 'A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.' },
     // Note - og:url will not update on route changes, but it should be fine for
     // og links being crawled or shared (i.e. a full SSR)
-    'og:url': getUrl(data?.origin, data?.path),
-    'og:type': 'website',
-    'og:image': 'https://remix.infonomic.io/og.png',
-  }
+    { property: 'og:url', content: getUrl(data?.origin, data?.path) },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:image', content: 'https://remix.infonomic.io/og.png' },
+  ]
 }
 
 /**

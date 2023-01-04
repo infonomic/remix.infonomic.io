@@ -19,7 +19,7 @@ import { reCaptchaCheck, RECAPTCHA_VALIDATION_ERROR } from '~/lib.node.server'
 import { createUser, getUserByEmail } from '~/models/user.server'
 import { getUserId, createUserSession } from '~/session.server'
 import { isBusy } from '~/utils/helpers'
-import { safeRedirect } from '~/utils/utils'
+import { safeRedirect, mergeMeta } from '~/utils/utils'
 
 import { signUpSchema } from '~/modules/session'
 
@@ -28,14 +28,31 @@ import { Input } from '~/ui/components/input'
 import { hasErrors, getErrorText } from '~/ui/components/input/utils'
 import { Alert } from '~/ui/components/notifications'
 
+// /**
+//  * meta
+//  * @returns
+//  */
+// export const meta: MetaFunction = () => {
+//   return {
+//     title: 'Sign Up - Infonomic Remix Workbench',
+//   }
+// }
+
 /**
  * meta
- * @returns
+ * @returns MetaFunction
+ * TODO: ts type for meta
+ * New v2 meta api
+ * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
+ * https://github.com/remix-run/remix/discussions/4462 
  */
-export const meta: MetaFunction = () => {
-  return {
-    title: 'Sign Up - Infonomic Remix Workbench',
-  }
+export const meta = ({ data, matches }: any) => {
+  return mergeMeta(matches,
+    [
+      { title: 'Sign Up - Infonomic Remix Workbench' },
+      { property: 'og:title', content: 'Sign Up - Infonomic Remix Workbench' },
+    ]
+  )
 }
 
 /**
@@ -192,19 +209,19 @@ export default function SignUpPage() {
             <div className="form-actions flex flex-col gap-4 md:flex-row">
               <Button disabled={busy} type="submit" className="min-w-[150px]">
                 {busy
-? (
-                  <Loader
-                    loading={busy}
-                    color="var(--loader-color)"
-                    size={8}
-                    margin={2}
-                    aria-label="Processing sign up"
-                    data-testid="loader"
-                  />
-                )
-: (
-                  'Sign Up'
-                )}
+                  ? (
+                    <Loader
+                      loading={busy}
+                      color="var(--loader-color)"
+                      size={8}
+                      margin={2}
+                      aria-label="Processing sign up"
+                      data-testid="loader"
+                    />
+                  )
+                  : (
+                    'Sign Up'
+                  )}
               </Button>
             </div>
           </fieldset>

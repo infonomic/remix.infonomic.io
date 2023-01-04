@@ -4,13 +4,28 @@ import FrontLayout from '~/ui/layouts/front-layout'
 
 import styles from '~/styles/app/routes/index.css'
 
+// /**
+//  * meta
+//  * @returns
+//  */
+// export const meta = () => ({
+//   title: 'Home - Infonomic Remix Workbench',
+// })
+
 /**
  * meta
- * @returns
+ * @returns MetaFunction
+ * TODO: ts types for meta
+ * New v2 meta api
+ * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
+ * https://github.com/remix-run/remix/discussions/4462 
  */
-export const meta = () => ({
-  title: 'Home - Infonomic Remix Workbench',
-})
+export const meta = ({ data, matches }: any) => {
+  return [
+    ...matches.map((match: any) => match.meta),
+    { title: 'Home - Infonomic Remix Workbench' },
+  ]
+}
 
 /**
  * links

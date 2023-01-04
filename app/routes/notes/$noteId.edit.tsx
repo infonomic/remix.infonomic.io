@@ -28,13 +28,27 @@ import { Input, TextArea } from '~/ui/components/input'
 import { hasErrors, getErrorText } from '~/ui/components/input/utils'
 import ErrorLayout from '~/ui/layouts/error-layout'
 
+// /**
+//  * meta
+//  * @returns
+//  */
+// export const meta: MetaFunction<typeof loader> = ({ data }) => ({
+//   title: `Edit Note - ${truncate(data?.note?.title, 50, true)} Infonomic - Remix Workbench`,
+// })
+
 /**
  * meta
- * @returns
+ * @returns MetaFunction
+ * TODO: ts type for meta
+ * New v2 meta api
+ * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
+ * https://github.com/remix-run/remix/discussions/4462 
  */
-export const meta: MetaFunction<typeof loader> = ({ data }) => ({
-  title: `Edit Note - ${truncate(data?.note?.title, 50, true)} Infonomic - Remix Workbench`,
-})
+export const meta = ({ data, matches }: any) => {
+  return [
+    { title: `Edit Note - ${truncate(data?.note?.title, 50, true)} Infonomic - Remix Workbench` },
+  ]
+}
 
 /**
  * loader

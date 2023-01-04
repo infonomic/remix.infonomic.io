@@ -11,13 +11,27 @@ import type { BreadcrumbHandle } from '~/ui/components/breadcrumbs/types/breadcr
 import { Card } from '~/ui/components/card'
 import { Toast } from '~/ui/components/notifications'
 
+// /**
+//  * meta
+//  * @returns
+//  */
+// export const meta: MetaFunction = () => ({
+//   title: 'Account - Infonomic - Remix Workbench',
+// })
+
 /**
  * meta
- * @returns
+ * @returns MetaFunction
+ * TODO: ts type for meta
+ * New v2 meta api
+ * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
+ * https://github.com/remix-run/remix/discussions/4462 
  */
-export const meta: MetaFunction = () => ({
-  title: 'Account - Infonomic - Remix Workbench',
-})
+export const meta = ({ data, matches }: any) => {
+  return [
+    { title: 'Account - Infonomic - Remix Workbench' },
+  ]
+}
 
 /**
  * loader

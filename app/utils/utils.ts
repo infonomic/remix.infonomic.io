@@ -2,6 +2,8 @@ import { useMemo } from 'react'
 
 import { useMatches } from '@remix-run/react'
 
+import UserPasswordEditPage from '~/routes/account/$userId.password'
+
 import type { User } from '~/models/user.server'
 
 const DEFAULT_REDIRECT = '/'
@@ -66,4 +68,44 @@ export function useUser(): User {
 // TODO: remove and replace in utils.tests - as we don't need this (using zod now)
 export function validateEmail(email: unknown): email is string {
   return typeof email === 'string' && email.length > 3 && email.includes('@')
+}
+
+/**
+ * mergeMeta
+ * @returns [] merged metatags
+ * TODO: this is a temporary merge meta function for the 
+ * new v2 meta api. It may not be completed or the best way 
+ * to do this - but it works for the moment.
+ * TODO: types
+ * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
+ * https://github.com/remix-run/remix/discussions/4462 
+ */
+export function mergeMeta(matches: any, tags: any[] = []) {
+  function findMatch(upperTag: any, tag: any) {
+    if (upperTag?.title) {
+      return tag?.title
+    } else if (upperTag?.name) {
+      return upperTag?.name === tag.name
+    } else if (upperTag?.property) {
+      return upperTag?.property === tag.property
+    } else {
+      return false
+    }
+  }
+
+  const filteredMeta = matches.map((match: any) => match.meta)
+    .map((upperTags: any[]) => {
+      const filteredUpperTags: any[] = []
+      for (const upperTag of upperTags) {
+        let found = false
+        for (const tag of tags) {
+          found = findMatch(upperTag, tag)
+          if (found) break
+        }
+        if (!found) filteredUpperTags.push(upperTag)
+      }
+      return filteredUpperTags
+    })
+
+  return [...filteredMeta, tags]
 }

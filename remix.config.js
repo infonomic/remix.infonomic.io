@@ -9,4 +9,7 @@ module.exports = {
   publicPath: "/build/",
   serverBuildPath: "build/index.js",
   serverBuildTarget: "node-cjs",
+  future: {
+    v2_meta: true,
+  },
 }
