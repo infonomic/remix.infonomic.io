@@ -83,11 +83,11 @@ export function mergeMeta(matches: any, tags: any[] = []) {
   function findMatch(upperTag: any, tag: any) {
     let found = false
     const rules = [
-      { k: 'charSet', f: () => !!tag?.charSet },
-      { k: 'title', f: () => !!tag?.title },
-      { k: 'name', f: () => upperTag?.name === tag.name },
-      { k: 'property', f: () => upperTag?.property === tag.property },
-      { k: 'httpEquiv', f: () => upperTag?.httpEquiv === tag.httpEquiv },
+      { k: 'charSet', f: () => !!tag.charSet },
+      { k: 'title', f: () => !!tag.title },
+      { k: 'name', f: () => upperTag.name === tag.name },
+      { k: 'property', f: () => upperTag.property === tag.property },
+      { k: 'httpEquiv', f: () => upperTag.httpEquiv === tag.httpEquiv },
     ]
 
     for (let index = 0; index < rules.length; index += 1) {
