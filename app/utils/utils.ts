@@ -72,7 +72,7 @@ export function validateEmail(email: unknown): email is string {
  * mergeMeta
  * @returns [] merged metatags
  * TODO: this is a temporary merge meta function for the 
- * new v2 meta api. It may not be completed or the best way 
+ * new v2 meta api. It may not be complete or the best way 
  * to do this - but it works for the moment.
  * TODO: types
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
