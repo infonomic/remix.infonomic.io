@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 
-import type { ActionArgs, LoaderArgs, MetaFunction } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import {
   Form,
@@ -13,7 +13,6 @@ import {
 } from '@remix-run/react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { TargetIcon } from '@radix-ui/react-icons'
 import Loader from 'react-spinners/BeatLoader'
 import { useReCaptcha, reCaptchaExecute } from '~/hooks/useReCaptcha'
 import { reCaptchaCheck, RECAPTCHA_VALIDATION_ERROR } from '~/lib.node.server'

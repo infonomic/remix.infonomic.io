@@ -2,8 +2,6 @@ import { useMemo } from 'react'
 
 import { useMatches } from '@remix-run/react'
 
-import UserPasswordEditPage from '~/routes/account/$userId.password'
-
 import type { User } from '~/models/user.server'
 
 const DEFAULT_REDIRECT = '/'

@@ -1,6 +1,6 @@
 import type * as React from 'react'
 
-import type { LinksFunction, LoaderArgs, MetaFunction, LoaderFunction } from '@remix-run/node'
+import type { LinksFunction, LoaderArgs, LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import {
