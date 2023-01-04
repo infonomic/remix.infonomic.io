@@ -117,7 +117,7 @@ export const toastStyles: ToastStyleTypes = {
         typography: 'font-base font-normal text-sm',
         radix: cx(
           'radix-state-closed:animate-toast-hide',
-          // 'translate-x-radix-toast-swipe-move-x',
+          'translate-x-radix-toast-swipe-move-x', // needed for continuous motion during swipe. TODO: configure swipe up and down
           'radix-swipe-cancel:translate-x-0 radix-swipe-cancel:duration-200 radix-swipe-cancel:ease-[ease]'
         ),
       },
