@@ -24,6 +24,7 @@ import { hasErrors, getErrorText } from '~/ui/components/input/utils'
  * New v2 meta api
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462 
+ * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
 export const meta = ({ matches }: any) => {
   const title = 'New Note - Infonomic Remix Workbench App'

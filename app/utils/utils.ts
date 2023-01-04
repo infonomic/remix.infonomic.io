@@ -77,18 +77,28 @@ export function validateEmail(email: unknown): email is string {
  * TODO: types
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462 
+ * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
 export function mergeMeta(matches: any, tags: any[] = []) {
   function findMatch(upperTag: any, tag: any) {
-    if (upperTag?.title) {
-      return !!tag?.title
-    } else if (upperTag?.name) {
-      return upperTag?.name === tag.name
-    } else if (upperTag?.property) {
-      return upperTag?.property === tag.property
-    } else {
-      return false
+    let found = false
+    const rules = [
+      { k: 'charSet', f: () => !!tag?.charSet },
+      { k: 'title', f: () => !!tag?.title },
+      { k: 'name', f: () => upperTag?.name === tag.name },
+      { k: 'property', f: () => upperTag?.property === tag.property },
+      { k: 'httpEquiv', f: () => upperTag?.httpEquiv === tag.httpEquiv },
+    ]
+
+    for (let index = 0; index < rules.length; index += 1) {
+      const rule = rules[index]
+      if (upperTag[rule.k] !== undefined) {
+        found = rule.f()
+        break
+      }
     }
+
+    return found
   }
 
   const filteredMeta = matches.map((match: any) => match.meta)
