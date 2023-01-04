@@ -29,16 +29,6 @@ import { Checkbox, Input } from '~/ui/components/input'
 import { hasErrors, getErrorText } from '~/ui/components/input/utils'
 import { Alert } from '~/ui/components/notifications'
 
-// /**
-//  * meta
-//  * @returns
-//  */
-// export const meta: MetaFunction = () => {
-//   return {
-//     title: 'Sign In - Infonomic Remix Workbench',
-//   }
-// }
-
 /**
  * meta
  * @returns MetaFunction
@@ -47,11 +37,12 @@ import { Alert } from '~/ui/components/notifications'
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462 
  */
-export const meta = ({ data, matches }: any) => {
+export const meta = ({ matches }: any) => {
+  const title = 'Sign In - Infonomic Remix Workbench'
   return mergeMeta(matches,
     [
-      { title: 'Sign In - Infonomic Remix Workbench' },
-      { property: 'og:title', content: 'Sign In - Infonomic Remix Workbench' },
+      { title },
+      { property: 'og:title', content: title },
     ]
   )
 }

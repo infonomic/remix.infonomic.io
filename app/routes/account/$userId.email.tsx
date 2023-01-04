@@ -19,6 +19,7 @@ import invariant from 'tiny-invariant'
 import { updateUserEmail, getUserById } from '~/models/user.server'
 import { requireUserId, getSession, commitSession } from '~/session.server'
 import { isBusy } from '~/utils/helpers'
+import { mergeMeta } from '~/utils/utils'
 
 import { emailSchema } from '~/modules/account'
 
@@ -29,13 +30,6 @@ import { hasErrors, getErrorText } from '~/ui/components/input/utils'
 import { Alert } from '~/ui/components/notifications'
 import ErrorLayout from '~/ui/layouts/error-layout'
 
-// /**
-//  * meta
-//  * @returns
-//  */
-// export const meta: MetaFunction<typeof loader> = () => ({
-//   title: 'Update Email - Infonomic - Remix Workbench',
-// })
 
 /**
  * meta
@@ -45,11 +39,14 @@ import ErrorLayout from '~/ui/layouts/error-layout'
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462 
  */
-export const meta = ({ data, matches }: any) => {
-
-  return [
-    { title: 'Update Email - Infonomic - Remix Workbench' },
-  ]
+export const meta = ({ matches }: any) => {
+  const title = 'Update Email - Infonomic Remix Workbench'
+  return mergeMeta(matches,
+    [
+      { title },
+      { property: 'og:title', content: title },
+    ]
+  )
 }
 
 /**

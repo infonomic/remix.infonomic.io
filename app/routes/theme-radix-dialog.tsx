@@ -1,26 +1,15 @@
 import { Fragment, useState } from 'react'
 
-import type { MetaFunction } from '@remix-run/node'
-
 import { Transition } from '@headlessui/react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { Cross1Icon } from '@radix-ui/react-icons'
 import cx from 'classnames'
+import { mergeMeta } from '~/utils/utils'
 
 import { Button } from '~/ui/components/button'
 import { Container } from '~/ui/components/container'
 import { Section } from '~/ui/components/section'
 import PublicLayout from '~/ui/layouts/public-layout'
-
-// /**
-//  * meta
-//  * @returns
-//  */
-// export const meta: MetaFunction = () => {
-//   return {
-//     title: 'Radix Dialog - Infonomic Remix Workbench',
-//   }
-// }
 
 /**
  * meta
@@ -30,10 +19,14 @@ import PublicLayout from '~/ui/layouts/public-layout'
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462 
  */
-export const meta = ({ data, matches }: any) => {
-  return [
-    { title: 'Radix Dialog - Infonomic Remix Workbench' },
-  ]
+export const meta = ({ matches }: any) => {
+  const title = 'Radix Dialog - Infonomic Remix Workbench'
+  return mergeMeta(matches,
+    [
+      { title },
+      { property: 'og:title', content: title },
+    ]
+  )
 }
 
 /**

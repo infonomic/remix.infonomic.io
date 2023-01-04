@@ -1,19 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import type { MetaFunction } from '@remix-run/node'
+import { mergeMeta } from '~/utils/utils'
 
 import { Container } from '~/ui/components/container'
 import { Section } from '~/ui/components/section'
 import PublicLayout from '~/ui/layouts/public-layout'
-
-// /**
-//  * meta
-//  * @returns
-//  */
-// export const meta: MetaFunction = () => {
-//   return {
-//     title: 'Tailwind Forms - Infonomic Remix Workbench',
-//   }
-// }
 
 /**
  * meta
@@ -23,10 +13,14 @@ import PublicLayout from '~/ui/layouts/public-layout'
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462 
  */
-export const meta = ({ data, matches }: any) => {
-  return [
-    { title: 'Tailwind Forms - Infonomic Remix Workbench' },
-  ]
+export const meta = ({ matches }: any) => {
+  const title = 'Tailwind Forms - Infonomic Remix Workbench'
+  return mergeMeta(matches,
+    [
+      { title },
+      { property: 'og:title', content: title },
+    ]
+  )
 }
 
 /**

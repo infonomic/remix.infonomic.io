@@ -1,16 +1,10 @@
+import { mergeMeta } from '~/utils/utils'
+
 import { Hero, links as heroLinks } from '~/modules/home/hero'
 
 import FrontLayout from '~/ui/layouts/front-layout'
 
 import styles from '~/styles/app/routes/index.css'
-
-// /**
-//  * meta
-//  * @returns
-//  */
-// export const meta = () => ({
-//   title: 'Home - Infonomic Remix Workbench',
-// })
 
 /**
  * meta
@@ -20,11 +14,14 @@ import styles from '~/styles/app/routes/index.css'
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462 
  */
-export const meta = ({ data, matches }: any) => {
-  return [
-    ...matches.map((match: any) => match.meta),
-    { title: 'Home - Infonomic Remix Workbench' },
-  ]
+export const meta = ({ matches }: any) => {
+  const title = 'Home - Infonomic Remix Workbench'
+  return mergeMeta(matches,
+    [
+      { title },
+      { property: 'og:title', content: title },
+    ]
+  )
 }
 
 /**

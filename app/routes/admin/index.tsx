@@ -1,22 +1,15 @@
 import * as React from 'react'
 
-import type { LoaderArgs, MetaFunction } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 
 import { getSession, commitSession } from '~/session.server'
+import { mergeMeta } from '~/utils/utils'
 
 import type { BreadcrumbHandle } from '~/ui/components/breadcrumbs/types/breadcrumbs'
 import { Card } from '~/ui/components/card'
 import { Toast } from '~/ui/components/notifications'
-
-// /**
-//  * meta
-//  * @returns
-//  */
-// export const meta: MetaFunction = () => ({
-//   title: 'Admin - Infonomic - Remix Workbench',
-// })
 
 /**
  * meta
@@ -26,10 +19,14 @@ import { Toast } from '~/ui/components/notifications'
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462 
  */
-export const meta = ({ data, matches }: any) => {
-  return [
-    { title: 'Admin - Infonomic - Remix Workbench' },
-  ]
+export const meta = ({ matches }: any) => {
+  const title = 'Admin - Infonomic Remix Workbench'
+  return mergeMeta(matches,
+    [
+      { title },
+      { property: 'og:title', content: title },
+    ]
+  )
 }
 
 /**

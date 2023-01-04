@@ -1,24 +1,17 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
-import type { LoaderArgs, MetaFunction } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useCatch, useLoaderData } from '@remix-run/react'
 
 import invariant from 'tiny-invariant'
 import { getUserWithNotes } from '~/models/user.server'
 import { requireUserId } from '~/session.server'
+import { mergeMeta } from '~/utils/utils'
 
 import type { UserProps } from '~/modules/admin'
 
 import type { BreadcrumbHandle } from '~/ui/components/breadcrumbs/types'
 import ErrorLayout from '~/ui/layouts/error-layout'
-
-// /**
-//  * meta
-//  * @returns
-//  */
-// export const meta: MetaFunction<typeof loader> = () => ({
-//   title: 'Admin - User - Infonomic - Remix Workbench',
-// })
 
 /**
  * meta
@@ -28,10 +21,14 @@ import ErrorLayout from '~/ui/layouts/error-layout'
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462 
  */
-export const meta = ({ data, matches }: any) => {
-  return [
-    { title: 'Admin - User - Infonomic - Remix Workbench' },
-  ]
+export const meta = ({ matches }: any) => {
+  const title = 'Admin - User - Infonomic Remix Workbench'
+  return mergeMeta(matches,
+    [
+      { title },
+      { property: 'og:title', content: title },
+    ]
+  )
 }
 
 /**

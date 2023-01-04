@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
 
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
-import type { MetaFunction } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import { Form, Link, useCatch, useLoaderData } from '@remix-run/react'
 
@@ -9,6 +8,7 @@ import invariant from 'tiny-invariant'
 import { deleteNote, getNote } from '~/models/note.server'
 import { requireUserId, getSession, commitSession } from '~/session.server'
 import { truncate } from '~/utils/helpers'
+import { mergeMeta } from '~/utils/utils'
 
 import type { NoteProps } from '~/modules/notes'
 
@@ -16,14 +16,6 @@ import type { BreadcrumbHandle } from '~/ui/components/breadcrumbs/types/breadcr
 import { Button } from '~/ui/components/button'
 import { Alert } from '~/ui/components/notifications'
 import ErrorLayout from '~/ui/layouts/error-layout'
-
-// /**
-//  * meta
-//  * @returns
-//  */
-// export const meta: MetaFunction<typeof loader> = ({ data }) => ({
-//   title: `Edit Note - ${truncate(data?.note?.body, 50, true)} Infonomic - Remix Workbench`,
-// })
 
 /**
  * meta
@@ -34,9 +26,13 @@ import ErrorLayout from '~/ui/layouts/error-layout'
  * https://github.com/remix-run/remix/discussions/4462 
  */
 export const meta = ({ data, matches }: any) => {
-  return [
-    { title: `Edit Note - ${truncate(data?.note?.body, 50, true)} Infonomic - Remix Workbench` },
-  ]
+  const title = `Delete Note - ${truncate(data?.note?.title, 50, true)} Infonomic Remix Workbench App`
+  return mergeMeta(matches,
+    [
+      { title },
+      { property: 'og:title', content: title },
+    ]
+  )
 }
 
 /**

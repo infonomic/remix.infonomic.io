@@ -1,7 +1,7 @@
 import type { LoaderArgs } from '@remix-run/node'
-import type { MetaFunction } from '@remix-run/node'
 
 import { requireUserId } from '~/session.server'
+import { mergeMeta } from '~/utils/utils'
 
 import { Button } from '~/ui/components/button'
 import { Card } from '~/ui/components/card'
@@ -11,16 +11,6 @@ import { Alert } from '~/ui/components/notifications'
 import { Section } from '~/ui/components/section'
 import MainLayout from '~/ui/layouts/main-layout'
 
-// /**
-//  * meta
-//  * @returns
-//  */
-// export const meta: MetaFunction = () => {
-//   return {
-//     title: 'Theme - Infonomic Remix Workbench',
-//   }
-// }
-
 /**
  * meta
  * @returns MetaFunction
@@ -29,10 +19,14 @@ import MainLayout from '~/ui/layouts/main-layout'
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462 
  */
-export const meta = ({ data, matches }: any) => {
-  return [
-    { title: 'Theme - Infonomic Remix Workbench' },
-  ]
+export const meta = ({ matches }: any) => {
+  const title = 'Theme - Infonomic Remix Workbench'
+  return mergeMeta(matches,
+    [
+      { title },
+      { property: 'og:title', content: title },
+    ]
+  )
 }
 
 /**

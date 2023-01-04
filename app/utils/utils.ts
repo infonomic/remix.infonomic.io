@@ -83,7 +83,7 @@ export function validateEmail(email: unknown): email is string {
 export function mergeMeta(matches: any, tags: any[] = []) {
   function findMatch(upperTag: any, tag: any) {
     if (upperTag?.title) {
-      return tag?.title
+      return !!tag?.title
     } else if (upperTag?.name) {
       return upperTag?.name === tag.name
     } else if (upperTag?.property) {

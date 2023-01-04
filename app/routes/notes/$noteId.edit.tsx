@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 
-import type { ActionArgs, LoaderArgs, MetaFunction } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import {
   Form,
@@ -18,6 +18,7 @@ import invariant from 'tiny-invariant'
 import { editNote, getNote } from '~/models/note.server'
 import { requireUserId, getSession, commitSession } from '~/session.server'
 import { truncate } from '~/utils/helpers'
+import { mergeMeta } from '~/utils/utils'
 
 import { schema } from '~/modules/notes'
 import type { NoteProps } from '~/modules/notes'
@@ -28,14 +29,6 @@ import { Input, TextArea } from '~/ui/components/input'
 import { hasErrors, getErrorText } from '~/ui/components/input/utils'
 import ErrorLayout from '~/ui/layouts/error-layout'
 
-// /**
-//  * meta
-//  * @returns
-//  */
-// export const meta: MetaFunction<typeof loader> = ({ data }) => ({
-//   title: `Edit Note - ${truncate(data?.note?.title, 50, true)} Infonomic - Remix Workbench`,
-// })
-
 /**
  * meta
  * @returns MetaFunction
@@ -45,9 +38,13 @@ import ErrorLayout from '~/ui/layouts/error-layout'
  * https://github.com/remix-run/remix/discussions/4462 
  */
 export const meta = ({ data, matches }: any) => {
-  return [
-    { title: `Edit Note - ${truncate(data?.note?.title, 50, true)} Infonomic - Remix Workbench` },
-  ]
+  const title = `Edit Note - ${truncate(data?.note?.title, 50, true)} Infonomic Remix Workbench App`
+  return mergeMeta(matches,
+    [
+      { title },
+      { property: 'og:title', content: title },
+    ]
+  )
 }
 
 /**

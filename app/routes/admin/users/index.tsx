@@ -1,4 +1,4 @@
-import type { MetaFunction, LoaderArgs } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData, useNavigate } from '@remix-run/react'
 
@@ -10,6 +10,7 @@ import {
 } from '@tanstack/react-table'
 import { SEARCH_PARAMS_DEFAULTS } from '~/models/user'
 import { getUsers } from '~/models/user.server'
+import { mergeMeta } from '~/utils/utils'
 
 import type { BreadcrumbHandle } from '~/ui/components/breadcrumbs/types/breadcrumbs'
 import { Checkbox } from '~/ui/components/input'
@@ -51,14 +52,6 @@ const columns = [
   }),
 ]
 
-// /**
-//  * meta
-//  * @returns
-//  */
-// export const meta: MetaFunction = () => ({
-//   title: 'Users - Infonomic Remix Workbench',
-// })
-
 /**
  * meta
  * @returns MetaFunction
@@ -67,10 +60,14 @@ const columns = [
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462 
  */
-export const meta = ({ data, matches }: any) => {
-  return [
-    { title: 'Users - Infonomic Remix Workbench' },
-  ]
+export const meta = ({ matches }: any) => {
+  const title = 'Admin - Users - Infonomic Remix Workbench'
+  return mergeMeta(matches,
+    [
+      { title },
+      { property: 'og:title', content: title },
+    ]
+  )
 }
 
 /**
