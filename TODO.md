@@ -9,6 +9,7 @@
 - [ ] A11y audit
 - [ ] Configure server logger with [Pino](https://github.com/pinojs/pino)
 - [ ] Consider form error handling where after receiving server errors, any changes in values of the form reset server errors, and only client form errors are display
+- [x] Meta - implmement meta v2, and experimental mergeMeta helper util
 
 ## Components
 
@@ -17,4 +18,7 @@
 - [ ] Table: implement sortable columns and filter / search
 - [ ] Menu: extract and create MenuItem component to DRY-up main-menu.tsx
 - [ ] Input: consider implementing variants for Inputs
-- [ ] Toast: position prop, intent from message parse, separate prop for icon
+- [ ] Toast: 
+  - [x] props for position, intent and icon
+  - [ ] finer grain style configuration for entrance direction, swipe direction, and exit direction
+  
