@@ -71,12 +71,12 @@ export function validateEmail(email: unknown): email is string {
 /**
  * mergeMeta
  * @returns [] merged metatags
- * TODO: this is a temporary merge meta function for the 
- * new v2 meta api. It may not be complete or the best way 
+ * TODO: this is a temporary merge meta function for the
+ * new v2 meta api. It may not be complete or the best way
  * to do this - but it works for the moment.
  * TODO: types
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
- * https://github.com/remix-run/remix/discussions/4462 
+ * https://github.com/remix-run/remix/discussions/4462
  * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
 export function mergeMeta(matches: any, tags: any[] = []) {
@@ -101,7 +101,8 @@ export function mergeMeta(matches: any, tags: any[] = []) {
     return found
   }
 
-  const filteredMeta = matches.map((match: any) => match.meta)
+  const filteredMeta = matches
+    .map((match: any) => match.meta)
     .map((upperTags: any[]) => {
       const filteredUpperTags: any[] = []
       for (const upperTag of upperTags) {

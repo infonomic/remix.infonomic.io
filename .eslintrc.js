@@ -35,7 +35,6 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'plugin:react-hooks/recommended',
     'airbnb-typescript',
-    "prettier",
   ],
   // we're using vitest which has a very similar API to jest
   // (so the linting plugins work nicely), but it means we have to explicitly
@@ -78,7 +77,7 @@ module.exports = {
     // Warn but allow console in production
     'no-console': ['warn'],
     quotes: ["error", "single"],
-    "@typescript-eslint/quotes": ["error", "single"],
+    '@typescript-eslint/quotes': ["error", "single"],
     // At most this should be a warning.  For now, since our api is returning
     // snake-cased data, just turn it off.
     camelcase: ['off'],
@@ -213,16 +212,9 @@ module.exports = {
 
     // Require extra trailing commas in multiline lists and similar contexts,
     // but not on last function argument.
-    'comma-dangle': [
-      'error',
-      {
-        arrays: 'always-multiline',
-        objects: 'always-multiline',
-        imports: 'always-multiline',
-        exports: 'always-multiline',
-        functions: 'never',
-      },
-    ],
+    // Updated 2023-01-06 - let prettier handle trailing commas
+    'comma-dangle': ['off'],
+    '@typescript-eslint/comma-dangle': ['off'],
 
     // Allow newlines either before or after "=>".
     'implicit-arrow-linebreak': ['off'],
@@ -234,5 +226,10 @@ module.exports = {
 
     // No semicolons (except single-line)
     semi: ['error', 'never'],
+    '@typescript-eslint/semi': ["error", "never"],
+
+    // Updated 2023-01-06 - let prettier handle no-extra-semi
+    'no-extra-semi': ["off"],
+    '@typescript-eslint/no-extra-semi': ["off"]
   },
 }

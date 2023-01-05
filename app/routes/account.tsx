@@ -9,7 +9,6 @@ import { Section } from '~/ui/components/section'
 import ErrorLayout from '~/ui/layouts/error-layout'
 import MainLayout from '~/ui/layouts/main-layout'
 
-
 /**
  * loader
  * @param param0

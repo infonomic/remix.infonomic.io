@@ -50,35 +50,39 @@ const intentStyles: object = {
 }
 
 /**
- * NOTE! - for the swipe radix-swipe-end animations - you need to be sure that the 
+ * NOTE! - for the swipe radix-swipe-end animations - you need to be sure that the
  * <ToastPrimitive.Provider swipeDirection='right'> in root.tsx has been set
  * to a direction that makes sense - and 'agrees' with the position
  * setting below. <ToastPrimitive.Provider swipeDirection='right'> determines
- * which mouse drag, or touch gesture direction is going to be used to 
- * trigger the end animation - so for example, it would be a little strange if 
+ * which mouse drag, or touch gesture direction is going to be used to
+ * trigger the end animation - so for example, it would be a little strange if
  * you had <ToastPrimitive.Provider swipeDirection='left'> configured in the provider,
- * but were animating out to the right. 
+ * but were animating out to the right.
  */
 
 const positionStyles: object = {
   'top-left': {
     position: 'bottom-4 md:top-[68px] md:left-4 md:right-auto md:bottom-auto md:w-full md:max-w-sm',
-    transition: 'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-left',
+    transition:
+      'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-left',
     swipe: 'radix-swipe-end:animate-toast-swipe-out-left',
   },
   'top-right': {
     position: 'bottom-4 md:top-[68px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
-    transition: 'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-right',
+    transition:
+      'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-right',
     swipe: 'radix-swipe-end:animate-toast-swipe-out-right',
   },
   'bottom-left': {
     position: 'bottom-4 md:left-4 md:right-auto md:w-full md:max-w-sm',
-    transition: 'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-left',
+    transition:
+      'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-left',
     swipe: 'radix-swipe-end:animate-toast-swipe-out-left',
   },
   'bottom-right': {
     position: 'bottom-4 md:right-4 md:left-auto md:w-full md:max-w-sm',
-    transition: 'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-right',
+    transition:
+      'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-right',
     swipe: 'radix-swipe-end:animate-toast-swipe-out-right',
   },
 }

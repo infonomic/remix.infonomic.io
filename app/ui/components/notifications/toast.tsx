@@ -52,7 +52,10 @@ interface ToastProps extends React.InputHTMLAttributes<HTMLLIElement> {
 // Important!: see comments in app/ui/components/notifications/styles/toast.ts regarding toast position
 
 const Toast = React.forwardRef<HTMLLIElement, ToastProps>(
-  ({ intent, position, title, description, icon, iconType, close, open, onOpenChange, className }, ref) => {
+  (
+    { intent, position, title, description, icon, iconType, close, open, onOpenChange, className },
+    ref
+  ) => {
     // 1. init
     const { defaultProps, styles } = toastStyles
     const { base, intents, positions } = styles
@@ -77,12 +80,7 @@ const Toast = React.forwardRef<HTMLLIElement, ToastProps>(
     }
 
     return (
-      <ToastPrimitive.Root
-        open={open}
-        ref={ref}
-        onOpenChange={onOpenChange}
-        className={classes}
-      >
+      <ToastPrimitive.Root open={open} ref={ref} onOpenChange={onOpenChange} className={classes}>
         <focus-trap trapped="true">
           <button className="sr-only" tabIndex={0}></button>
           <div className="toast-header flex justify-between gap-3 px-4 pt-2">

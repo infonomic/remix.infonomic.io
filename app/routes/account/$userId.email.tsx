@@ -30,24 +30,18 @@ import { hasErrors, getErrorText } from '~/ui/components/input/utils'
 import { Alert } from '~/ui/components/notifications'
 import ErrorLayout from '~/ui/layouts/error-layout'
 
-
 /**
  * meta
  * @returns V2_MetaFunction
  * TODO: ts type for meta
  * New v2 meta api
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
- * https://github.com/remix-run/remix/discussions/4462 
+ * https://github.com/remix-run/remix/discussions/4462
  * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
 export const meta = ({ matches }: any) => {
   const title = 'Update Email - Infonomic Remix Workbench'
-  return mergeMeta(matches,
-    [
-      { title },
-      { property: 'og:title', content: title },
-    ]
-  )
+  return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
 
 /**
@@ -94,7 +88,7 @@ export async function action({ request, params }: ActionArgs) {
         errors: {
           general: {
             _errors: [
-              'Error updating email address. The address you\'ve entered may already be in use.',
+              'Error updating email address. The address you have entered may already be in use.',
             ],
           },
         },
@@ -168,7 +162,7 @@ export default function UserEmailEditPage() {
         onSubmit={(event: any) => {
           handleSubmit(() => submit(event.target))(event)
         }}
-        className="flex flex-col w-full"
+        className="flex w-full flex-col"
       >
         <Input
           id="email"
@@ -185,20 +179,18 @@ export default function UserEmailEditPage() {
 
         <div className="form-actions flex flex-row justify-end gap-3">
           <Button disabled={busy} type="submit">
-            {busy
-              ? (
-                <Loader
-                  loading={busy}
-                  color="var(--loader-color)"
-                  size={8}
-                  margin={2}
-                  aria-label="Processing sign in"
-                  data-testid="loader"
-                />
-              )
-              : (
-                'Save'
-              )}
+            {busy ? (
+              <Loader
+                loading={busy}
+                color="var(--loader-color)"
+                size={8}
+                margin={2}
+                aria-label="Processing sign in"
+                data-testid="loader"
+              />
+            ) : (
+              'Save'
+            )}
           </Button>
           <Button asChild intent="secondary">
             <Link to="/account">Cancel</Link>

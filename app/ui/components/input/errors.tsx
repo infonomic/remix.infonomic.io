@@ -15,11 +15,9 @@ export function Error(props: JSX.IntrinsicElements['div']) {
 export function ServerError({ name, errors }: { name: string; errors: any }) {
   if (errors) {
     const error = errors[name as keyof typeof errors] as FormattedErrors
-    return error && error._errors
-? (
+    return error && error._errors ? (
       <Error id={`error-for-${name}`}>{error._errors.join(' ')}</Error>
-    )
-: null
+    ) : null
   } else return null
 }
 

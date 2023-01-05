@@ -65,13 +65,11 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, Props>(
           )}
           {...rest}
         />
-        {error
-? (
+        {error ? (
           <p id={`error-for-${id}`} className="mt-1 text-sm text-red-700">
             {errorText || helpText}
           </p>
-        )
-: (
+        ) : (
           <p className="mt-1 text-sm text-gray-700 dark:text-gray-400">{helpText}</p>
         )}
       </fieldset>

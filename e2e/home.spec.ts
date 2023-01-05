@@ -19,5 +19,4 @@ test('homepage has title and links to sign in and sign up page', async ({ page }
 
   // Expect an attribute "to be strictly equal" to the value.
   await expect(signUp).toHaveAttribute('href', '/sign-up')
-
 })

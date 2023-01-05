@@ -58,17 +58,12 @@ const columns = [
  * TODO: ts type for meta
  * New v2 meta api
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
- * https://github.com/remix-run/remix/discussions/4462 
+ * https://github.com/remix-run/remix/discussions/4462
  * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
 export const meta = ({ matches }: any) => {
   const title = 'Admin - Users - Infonomic Remix Workbench'
-  return mergeMeta(matches,
-    [
-      { title },
-      { property: 'og:title', content: title },
-    ]
-  )
+  return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
 
 /**
@@ -174,73 +169,71 @@ export default function UserIndexPage() {
       <div className="prose mb-4 dark:prose-invert">
         <h1 className="text-3xl text-slate-600">Registered Users</h1>
       </div>
-      {data.users.length === 0
-        ? (
-          <p className="p-4">No users yet</p>
-        )
-        : (
-          <>
-            <TableContainer>
-              <Table>
-                <TableHeader>
-                  {table.getHeaderGroups().map(headerGroup => (
-                    <TableRow key={headerGroup.id}>
-                      <TableHeadingCell scope="col" className="p-4">
-                        <Checkbox
-                          id="checkbox-all-search"
-                          name="checkbox-all-search"
-                          label=""
-                          className="dark:ring-offset-slate-800"
-                        />
+      {data.users.length === 0 ? (
+        <p className="p-4">No users yet</p>
+      ) : (
+        <>
+          <TableContainer>
+            <Table>
+              <TableHeader>
+                {table.getHeaderGroups().map(headerGroup => (
+                  <TableRow key={headerGroup.id}>
+                    <TableHeadingCell scope="col" className="p-4">
+                      <Checkbox
+                        id="checkbox-all-search"
+                        name="checkbox-all-search"
+                        label=""
+                        className="dark:ring-offset-slate-800"
+                      />
+                    </TableHeadingCell>
+                    {headerGroup.headers.map(header => (
+                      <TableHeadingCell key={header.id} scope="col" className="p-4">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
                       </TableHeadingCell>
-                      {headerGroup.headers.map(header => (
-                        <TableHeadingCell key={header.id} scope="col" className="p-4">
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(header.column.columnDef.header, header.getContext())}
-                        </TableHeadingCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableHeader>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableHeader>
 
-                <TableBody>
-                  {table.getRowModel().rows.map((row, index) => (
-                    <TableRow
-                      key={row.id}
-                      className="border-b border-solid border-slate-200 bg-white hover:bg-slate-100/80 dark:border-slate-700/60 dark:bg-slate-800/60 dark:hover:bg-slate-800/30"
-                    >
-                      <TableCell className="w-4 p-4">
-                        <Checkbox
-                          id={`checkbox-${index}`}
-                          name={`checkbox-${index}`}
-                          label=""
-                          className="dark:ring-offset-slate-800"
-                        />
+              <TableBody>
+                {table.getRowModel().rows.map((row, index) => (
+                  <TableRow
+                    key={row.id}
+                    className="border-b border-solid border-slate-200 bg-white hover:bg-slate-100/80 dark:border-slate-700/60 dark:bg-slate-800/60 dark:hover:bg-slate-800/30"
+                  >
+                    <TableCell className="w-4 p-4">
+                      <Checkbox
+                        id={`checkbox-${index}`}
+                        name={`checkbox-${index}`}
+                        label=""
+                        className="dark:ring-offset-slate-800"
+                      />
+                    </TableCell>
+                    {row.getVisibleCells().map(cell => (
+                      <TableCell key={cell.id} className="p-4">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
-                      {row.getVisibleCells().map(cell => (
-                        <TableCell key={cell.id} className="p-4">
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
+                    ))}
+                  </TableRow>
+                ))}
 
-                  {fill > 0 && (
-                    <TableRow
-                      className="border-b border-solid border-slate-200 bg-white dark:border-slate-700/60 dark:bg-slate-800"
-                      style={{ height: 54 * fill }}
-                    >
-                      <TableCell colSpan={3} />
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                {fill > 0 && (
+                  <TableRow
+                    className="border-b border-solid border-slate-200 bg-white dark:border-slate-700/60 dark:bg-slate-800"
+                    style={{ height: 54 * fill }}
+                  >
+                    <TableCell colSpan={3} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-            <TablePager data={data} table={table} onPageSizeChange={handlePageSizeChange} />
-          </>
-        )}
+          <TablePager data={data} table={table} onPageSizeChange={handlePageSizeChange} />
+        </>
+      )}
     </>
   )
 }

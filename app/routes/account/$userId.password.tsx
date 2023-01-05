@@ -29,17 +29,12 @@ import ErrorLayout from '~/ui/layouts/error-layout'
  * TODO: ts type for meta
  * New v2 meta api
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
- * https://github.com/remix-run/remix/discussions/4462 
+ * https://github.com/remix-run/remix/discussions/4462
  * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
 export const meta = ({ matches }: any) => {
   const title = 'Update Password - Infonomic Remix Workbench'
-  return mergeMeta(matches,
-    [
-      { title },
-      { property: 'og:title', content: title },
-    ]
-  )
+  return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
 
 /**
@@ -153,7 +148,7 @@ export default function UserPasswordEditPage() {
         onSubmit={(event: any) => {
           handleSubmit(() => submit(event.target))(event)
         }}
-        className="flex flex-col w-full"
+        className="flex w-full flex-col"
       >
         <Input
           required
@@ -198,20 +193,18 @@ export default function UserPasswordEditPage() {
 
         <div className="form-actions flex flex-row justify-end gap-3">
           <Button disabled={busy} type="submit">
-            {busy
-              ? (
-                <Loader
-                  loading={busy}
-                  color="var(--loader-color)"
-                  size={8}
-                  margin={2}
-                  aria-label="Processing sign in"
-                  data-testid="loader"
-                />
-              )
-              : (
-                'Save'
-              )}
+            {busy ? (
+              <Loader
+                loading={busy}
+                color="var(--loader-color)"
+                size={8}
+                margin={2}
+                aria-label="Processing sign in"
+                data-testid="loader"
+              />
+            ) : (
+              'Save'
+            )}
           </Button>
           <Button asChild intent="secondary">
             <Link to="/account">Cancel</Link>

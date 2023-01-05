@@ -148,11 +148,9 @@ export const MainMenu = () => {
                       key={`${name}-${i}`}
                       className={cx(menuItemClasses, 'w-28 md:w-32')}
                     >
-                      {url
-? (
+                      {url ? (
                         <img className="mr-2.5 h-6 w-6 rounded-full" src={url} alt={name} />
-                      )
-: (
+                      ) : (
                         <PersonIcon className="mr-2.5 h-6 w-6" />
                       )}
                       <span className="text-gray-700 dark:text-gray-300">{name}</span>

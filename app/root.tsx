@@ -64,19 +64,25 @@ export const links: LinksFunction = () => {
  * TODO: ts type for meta
  * New v2 meta api
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
- * https://github.com/remix-run/remix/discussions/4462 
+ * https://github.com/remix-run/remix/discussions/4462
  * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
 export const meta = ({ data }: any) => {
   return [
     { charset: 'utf-8' },
     { title: 'Infonomic Remix Workbench App' },
-    { name: 'description', content: 'A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.' },
+    {
+      name: 'description',
+      content: 'A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.',
+    },
     { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { name: 'theme-color', content: '#f59e0b' },
     { name: 'msapplication-TileColor', content: '#f59e0b' },
     { property: 'og:title', content: 'Infonomic Remix Workbench App' },
-    { property: 'og:description', content: 'A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.' },
+    {
+      property: 'og:description',
+      content: 'A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.',
+    },
     // Note - og:url will not update on route changes, but it should be fine for
     // og links being crawled or shared (i.e. a full SSR)
     { property: 'og:url', content: getUrl(data?.origin, data?.path) },
@@ -152,7 +158,7 @@ export default function App() {
   return (
     <ThemeProvider specifiedTheme={data.theme}>
       <Document>
-        <ToastPrimitive.Provider swipeDirection='right'>
+        <ToastPrimitive.Provider swipeDirection="right">
           <Outlet />
           <ToastPrimitive.Viewport />
         </ToastPrimitive.Provider>

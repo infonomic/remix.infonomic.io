@@ -2,7 +2,7 @@ const inputStaticLabel: object = {
   position: '-top-2.5',
   fontSize: 'text-sm peer-focus:text-sm',
   after: {
-    content: 'after:content[\' \']',
+    content: "after:content[' ']",
     display: 'after:block',
     width: 'after:w-full',
     position: 'after:absolute',

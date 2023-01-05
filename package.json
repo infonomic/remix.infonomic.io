@@ -98,7 +98,6 @@
     "cssnano": "^5.1.14",
     "eslint": "^8.23.1",
     "eslint-config-airbnb-typescript": "^17.0.0",
-    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx": "^0.1.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",

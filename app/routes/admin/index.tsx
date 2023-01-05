@@ -17,17 +17,12 @@ import { Toast } from '~/ui/components/notifications'
  * TODO: ts type for meta
  * New v2 meta api
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
- * https://github.com/remix-run/remix/discussions/4462 
+ * https://github.com/remix-run/remix/discussions/4462
  * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
 export const meta = ({ matches }: any) => {
   const title = 'Admin - Infonomic Remix Workbench'
-  return mergeMeta(matches,
-    [
-      { title },
-      { property: 'og:title', content: title },
-    ]
-  )
+  return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
 
 /**

@@ -23,17 +23,12 @@ import { hasErrors, getErrorText } from '~/ui/components/input/utils'
  * TODO: ts type for meta
  * New v2 meta api
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
- * https://github.com/remix-run/remix/discussions/4462 
+ * https://github.com/remix-run/remix/discussions/4462
  * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
 export const meta = ({ matches }: any) => {
   const title = 'New Note - Infonomic Remix Workbench App'
-  return mergeMeta(matches,
-    [
-      { title },
-      { property: 'og:title', content: title },
-    ]
-  )
+  return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
 
 /**
@@ -66,7 +61,6 @@ export async function action({ request }: ActionArgs) {
     },
   })
 }
-
 
 /**
  * handle
@@ -120,7 +114,7 @@ export default function NewNotePage() {
         onSubmit={(event: any) => {
           handleSubmit(() => submit(event.target))(event)
         }}
-        className="flex flex-col w-full"
+        className="flex w-full flex-col"
       >
         <Input
           required

@@ -34,7 +34,7 @@ export async function loader() {
  * @returns ReactNode
  */
 export default function CatchAll() {
-  /** 
+  /**
    * This should never happen, since the loader above will
    * always throw Response('Not Found', { status: 404 })
    * which is caught by the CatchBoundary below.

@@ -24,17 +24,12 @@ import ErrorLayout from '~/ui/layouts/error-layout'
  * TODO: ts type for meta
  * New v2 meta api
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
- * https://github.com/remix-run/remix/discussions/4462 
+ * https://github.com/remix-run/remix/discussions/4462
  * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
 export const meta = ({ data, matches }: any) => {
   const title = `Note - ${truncate(data?.note?.title, 50, true)} - Infonomic Remix Workbench App`
-  return mergeMeta(matches,
-    [
-      { title },
-      { property: 'og:title', content: title },
-    ]
-  )
+  return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
 
 /**
@@ -107,7 +102,15 @@ export default function NoteDetailsPage() {
       }}
     >
       {/* Important!: see comments in app/ui/components/notifications/styles/toast.ts regarding toast position */}
-      <Toast title="Notes" iconType="success" intent="secondary" position="top-right" description={data.message} open={toast} onOpenChange={setToast} />
+      <Toast
+        title="Notes"
+        iconType="success"
+        intent="secondary"
+        position="top-right"
+        description={data.message}
+        open={toast}
+        onOpenChange={setToast}
+      />
       <h3 className="text-2xl font-bold">{data.note.title}</h3>
       <p className="py-6">{data.note.body}</p>
       <hr className="my-4" />
