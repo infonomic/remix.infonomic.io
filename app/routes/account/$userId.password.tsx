@@ -153,11 +153,7 @@ export default function UserPasswordEditPage() {
         onSubmit={(event: any) => {
           handleSubmit(() => submit(event.target))(event)
         }}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '100%',
-        }}
+        className="flex flex-col w-full"
       >
         <Input
           required

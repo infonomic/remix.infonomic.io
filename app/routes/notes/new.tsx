@@ -120,13 +120,7 @@ export default function NewNotePage() {
         onSubmit={(event: any) => {
           handleSubmit(() => submit(event.target))(event)
         }}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '100%',
-          maxWidth: '560px',
-          margin: '0 auto',
-        }}
+        className="flex flex-col w-full"
       >
         <Input
           required

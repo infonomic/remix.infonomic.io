@@ -168,11 +168,7 @@ export default function UserEmailEditPage() {
         onSubmit={(event: any) => {
           handleSubmit(() => submit(event.target))(event)
         }}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '100%',
-        }}
+        className="flex flex-col w-full"
       >
         <Input
           id="email"
