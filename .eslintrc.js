@@ -220,7 +220,8 @@ module.exports = {
     'implicit-arrow-linebreak': ['off'],
 
     // Consistent newlines in multi-line ternary expressions (single-line still ok).
-    'multiline-ternary': ['error', 'always-multiline'],
+    // Updated 2023-01-06 - let prettier handle ternary
+    'multiline-ternary': ["off"],
 
     'no-multiple-empty-lines': ['error', { max: 2, maxBOF: 1, maxEOF: 0 }],
 

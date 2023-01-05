@@ -20,7 +20,7 @@ import cx from 'classnames'
 import { getUser } from './session.server'
 import { getThemeSession } from './theme.server'
 import ErrorLayout from './ui/layouts/error-layout'
-import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/helpers'
+import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/utils'
 
 import { NonFlashOfWrongThemeEls, ThemeProvider, useTheme } from '~/ui/theme/theme-provider'
 import type { Theme } from '~/ui/theme/theme-provider'

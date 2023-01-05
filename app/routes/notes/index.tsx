@@ -6,8 +6,7 @@ import { Link, useLoaderData } from '@remix-run/react'
 
 import { getNoteListItems } from '~/models/note.server'
 import { requireUserId, getSession, commitSession } from '~/session.server'
-import { truncate } from '~/utils/helpers'
-import { mergeMeta } from '~/utils/utils'
+import { mergeMeta, truncate } from '~/utils/utils'
 
 import type { BreadcrumbHandle } from '~/ui/components/breadcrumbs/types/breadcrumbs'
 import { Button } from '~/ui/components/button'
