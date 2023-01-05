@@ -5,7 +5,7 @@ const inputOutlinedLabel: object = {
     fontSize: 'text-[11px] peer-focus:text-[11px]',
   },
   before: {
-    content: "before:content[' ']",
+    content: 'before:content[" "]',
     display: 'before:block',
     boxSizing: 'before:box-border',
     width: 'before:w-2.5',
@@ -23,7 +23,7 @@ const inputOutlinedLabel: object = {
     disabled: 'peer-disabled:before:border-transparent',
   },
   after: {
-    content: "after:content[' ']",
+    content: 'after:content[" "]',
     display: 'after:block',
     flexGrow: 'after:flex-grow',
     boxSizing: 'after:box-border',

@@ -3,7 +3,6 @@ import { useMemo } from 'react'
 import { useMatches } from '@remix-run/react'
 import type { Transition } from '@remix-run/react/dist/transition'
 
-
 import type { User } from '~/models/user.server'
 
 const DEFAULT_REDIRECT = '/'
@@ -84,6 +83,7 @@ export function isBusy(transition: Transition) {
     actionReload: true,
   }
 
+  // prettier-ignore
   return transition.state === 'submitting'
     ? true
     : transition.state === 'loading'
