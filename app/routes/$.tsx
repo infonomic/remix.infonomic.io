@@ -5,7 +5,7 @@ import PublicLayout from '~/ui/layouts/public-layout'
 
 /**
  * meta
- * @returns MetaFunction
+ * @returns V2_MetaFunction
  */
 export const meta = () => ({
   title: '404 - Page Not Found - Infonomic Remix Workbench App',

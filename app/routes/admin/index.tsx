@@ -13,7 +13,7 @@ import { Toast } from '~/ui/components/notifications'
 
 /**
  * meta
- * @returns MetaFunction
+ * @returns V2_MetaFunction
  * TODO: ts type for meta
  * New v2 meta api
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
