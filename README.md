@@ -210,6 +210,10 @@ Also high on our TODO list
 
 The Docker image that came with the quick-start app for deployment to Fly.io (and [Firecracker microVMs](https://firecracker-microvm.github.io/)) has been updated to Node v18 LTS. There are also `docker-build.sh`, `docker-compose.yml` and `docker-exec.sh` files that will allow you to build and run the Docker image and container locally if you'd like to test a local Docker environment. Note that we don't currently mount the SQLite data directory, and so starting a new container instance will create a new database. This is also a great start for creating your own deployment pipeline via Docker and say for example [AWS ECS](https://aws.amazon.com/ecs/), or other.
 
+### The Stack
+
+Assuming this effort doesn't suck, and after a little more work it turns out there's value here for anyone here getting started with Remix and a headless UI strategy, we'll convert this project to a [Remix stack](https://remix.run/docs/en/v1/pages/stacks). Stay tuned!
+
 ## Contributions
 
 Feedback, thoughts and suggestions are most welcome. Issues and even PRs would be super too! We've created [TODO list](TODO.md).
