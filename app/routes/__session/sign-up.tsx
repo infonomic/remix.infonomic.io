@@ -23,8 +23,7 @@ import { safeRedirect, mergeMeta, isBusy } from '~/utils/utils'
 import { signUpSchema } from '~/modules/session'
 
 import { Button } from '~/ui/components/button'
-import { Input } from '~/ui/components/input'
-import { hasErrors, getErrorText } from '~/ui/components/input/utils'
+import { Input, hasErrors, getErrorText } from '~/ui/components/input'
 import { Alert } from '~/ui/components/notifications'
 
 /**

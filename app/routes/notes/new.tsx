@@ -14,8 +14,7 @@ import { schema } from '~/modules/notes'
 
 import type { BreadcrumbHandle } from '~/ui/components/breadcrumbs/types/breadcrumbs'
 import { Button } from '~/ui/components/button'
-import { Input, TextArea } from '~/ui/components/input'
-import { hasErrors, getErrorText } from '~/ui/components/input/utils'
+import { Input, TextArea, hasErrors, getErrorText } from '~/ui/components/input'
 
 /**
  * meta

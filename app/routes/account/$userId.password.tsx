@@ -17,8 +17,7 @@ import { passwordSchema } from '~/modules/account'
 
 import type { BreadcrumbHandle } from '~/ui/components/breadcrumbs/types/breadcrumbs'
 import { Button } from '~/ui/components/button'
-import { Input } from '~/ui/components/input'
-import { hasErrors, getErrorText } from '~/ui/components/input/utils'
+import { Input, hasErrors, getErrorText } from '~/ui/components/input'
 import { Alert } from '~/ui/components/notifications'
 import ErrorLayout from '~/ui/layouts/error-layout'
 
