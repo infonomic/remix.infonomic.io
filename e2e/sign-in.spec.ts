@@ -4,8 +4,6 @@ const describe = test.describe
 
 describe('sign in page', () => {
   test('@functional sign in', async ({ page }) => {
-    console.log(process.env.NODE_ENV)
-    console.log(process.env.RECAPTCHA_MANDATORY)
     await page.goto('/')
     await page.getByRole('link', { name: 'Sign In' }).click()
     await page.getByPlaceholder('Email').click()
