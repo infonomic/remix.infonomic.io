@@ -1,12 +1,12 @@
 import { devices } from '@playwright/test'
-
+import dotenv from 'dotenv'
 import type { PlaywrightTestConfig } from '@playwright/test'
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// require('dotenv').config();
+dotenv.config();
 
 // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 const PORT = Number(process.env.PORT || 3000)
@@ -113,10 +113,6 @@ const config: PlaywrightTestConfig = {
       ? `cross-env PORT=${PORT} npm run start:mocks`
       : `cross-env PORT=${PORT} npm run dev`,
     port: Number(PORT),
-    env: {
-      SESSION_SECRET: 'this-should-be-a-secret',
-      NODE_ENV: 'integration',
-    },
   },
 }
 

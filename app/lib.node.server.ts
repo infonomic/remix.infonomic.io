@@ -63,6 +63,8 @@ export const reCaptchaCheck = async (
 ) => {
   const VERIFY_URL = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`
 
+  if (process.env.NODE_ENV == 'development') return true
+
   try {
     const { statusCode, body } = await request(VERIFY_URL, { method: 'POST' })
 
