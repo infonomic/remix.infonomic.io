@@ -10,7 +10,7 @@ import { createNote } from '~/models/note.server'
 import { requireUserId, getSession, commitSession } from '~/session.server'
 import { mergeMeta } from '~/utils/utils'
 
-import { schema, badSchema } from '~/modules/notes'
+import { schema } from '~/modules/notes'
 
 import type { BreadcrumbHandle } from '~/ui/components/breadcrumbs/types/breadcrumbs'
 import { Button } from '~/ui/components/button'
@@ -92,7 +92,7 @@ export default function NewNotePage() {
   const submit = useSubmit()
   const transition = useTransition()
   const submitting = Boolean(transition.submission)
-  const resolver = zodResolver(badSchema)
+  const resolver = zodResolver(schema)
   const {
     register,
     handleSubmit,
