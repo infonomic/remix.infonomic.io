@@ -43,7 +43,7 @@ export function CatchBoundary() {
       <ErrorLayout>
         <div>
           <h1>Unauthorized</h1>
-          <p>Oops. You don&apos;t have permission to view this route.</p>
+          <p>Oops. You don&apos;t have permission to view this page.</p>
         </div>
       </ErrorLayout>
     )
