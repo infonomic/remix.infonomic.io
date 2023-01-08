@@ -2,7 +2,7 @@ import { mergeMeta } from '~/utils/utils'
 
 import { Hero, links as heroLinks } from '~/modules/home/hero'
 
-import styles from '~/styles/app/routes/_landing.index.css'
+import styles from '~/styles/app/routes/_landing+/index.css'
 
 /**
  * meta
