@@ -26,10 +26,10 @@ import ErrorLayout from '~/ui/layouts/error-layout'
  * https://github.com/remix-run/remix/discussions/4462
  * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
-export const meta = ({ data, matches }: any) => {
-  const title = `Note - ${truncate(data?.note?.title, 50, true)} - Infonomic Remix Workbench App`
-  return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
-}
+// export const meta = ({ data, matches }: any) => {
+//   const title = `Note - ${truncate(data?.note?.title, 50, true)} - Infonomic Remix Workbench App`
+//   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
+// }
 
 /**
  * loader
@@ -62,30 +62,31 @@ export async function loader({ request, params }: LoaderArgs) {
 /**
  * handle
  */
-export const handle: BreadcrumbHandle<NoteProps> = {
-  breadcrumb: ({ data, params }) => {
-    if (data?.note) {
-      return [
-        {
-          path: '/notes',
-          label: 'Notes',
-        },
-        {
-          path: `/notes/${params.noteId}`,
-          label: data.note.title || 'Title Not Found',
-        },
-      ]
-    } else {
-      return { path: '/notes/', label: 'Not Found' }
-    }
-  },
-}
+// export const handle: BreadcrumbHandle<NoteProps> = {
+//   breadcrumb: ({ data, params }) => {
+//     if (data?.note) {
+//       return [
+//         {
+//           path: '/notes',
+//           label: 'Notes',
+//         },
+//         {
+//           path: `/notes/${params.noteId}`,
+//           label: data.note.title || 'Title Not Found',
+//         },
+//       ]
+//     } else {
+//       return { path: '/notes/', label: 'Not Found' }
+//     }
+//   },
+// }
 
 /**
  * NoteDetailsPage
  * @returns
  */
 export default function NoteDetailsPage() {
+  debugger
   const data = useLoaderData<typeof loader>()
 
   const [toast, setToast] = React.useState(!!data.message)
@@ -116,13 +117,13 @@ export default function NoteDetailsPage() {
       <Form method="post">
         <div className="form-actions flex flex-row justify-end gap-3">
           <Button asChild intent="secondary">
-            <Link to={`/notes/${data.note.id}/delete`}>Delete</Link>
+            <Link to="delete">Delete</Link>
           </Button>
           <Button asChild intent="secondary">
-            <Link to={`/notes/${data.note.id}/edit`}>Edit</Link>
+            <Link to="edit">Edit</Link>
           </Button>
           <Button asChild intent="secondary">
-            <Link to={'/notes'}>Close</Link>
+            <Link to={'/app/notes'}>Close</Link>
           </Button>
         </div>
       </Form>

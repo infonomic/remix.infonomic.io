@@ -65,7 +65,7 @@ export const handle: BreadcrumbHandle = {
  * NoteIndexPage
  * @returns
  */
-export default function NoteIndexPage() {
+export default function NotesPage() {
   const data = useLoaderData<typeof loader>()
 
   const [toast, setToast] = React.useState(!!data.message)

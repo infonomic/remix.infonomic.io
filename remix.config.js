@@ -7,7 +7,7 @@ module.exports = {
   appDirectory: "app",
   assetsBuildDirectory: "public/build",
   cacheDirectory: "./node_modules/.cache/remix",
-  ignoredRouteFiles: ["**/.*", "**/*.css", "**/*.scss", "**/*.css.map", "**/*.test.{js,jsx,ts,tsx}"],
+  ignoredRouteFiles: ['**/*'],
   publicPath: "/build/",
   serverBuildPath: "build/index.js",
   serverBuildTarget: "node-cjs",
@@ -16,7 +16,7 @@ module.exports = {
   },
   routes: async defineRoutes => {
 		return flatRoutes('routes', defineRoutes, {
-			ignoredRouteFiles: ['.*', '**/*.css', '**/*.test.{js,jsx,ts,tsx}'],
+			ignoredRouteFiles: ['.*', '**/*.css', "**/*.scss", "**/*.css.map", '**/*.test.{js,jsx,ts,tsx}'],
 		})
 	},
 }

@@ -25,14 +25,14 @@ import ErrorLayout from '~/ui/layouts/error-layout'
  * https://github.com/remix-run/remix/discussions/4462
  * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
-export const meta = ({ data, matches }: any) => {
-  const title = `Delete Note - ${truncate(
-    data?.note?.title,
-    50,
-    true
-  )} Infonomic Remix Workbench App`
-  return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
-}
+// export const meta = ({ data, matches }: any) => {
+//   const title = `Delete Note - ${truncate(
+//     data?.note?.title,
+//     50,
+//     true
+//   )} Infonomic Remix Workbench App`
+//   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
+// }
 
 /**
  * loader
@@ -76,28 +76,28 @@ export async function action({ request, params }: ActionArgs) {
 /**
  * handle
  */
-export const handle: BreadcrumbHandle<NoteProps> = {
-  breadcrumb: ({ data, params }) => {
-    if (data?.note) {
-      return [
-        {
-          path: '/notes',
-          label: 'Notes',
-        },
-        {
-          path: `/notes/${params.noteId}`,
-          label: data.note.title || 'Title Not Found',
-        },
-        {
-          path: `/notes/${params.noteId}/delete`,
-          label: 'Delete',
-        },
-      ]
-    } else {
-      return { path: '/notes/', label: 'Not Found' }
-    }
-  },
-}
+// export const handle: BreadcrumbHandle<NoteProps> = {
+//   breadcrumb: ({ data, params }) => {
+//     if (data?.note) {
+//       return [
+//         {
+//           path: '/notes',
+//           label: 'Notes',
+//         },
+//         {
+//           path: `/notes/${params.noteId}`,
+//           label: data.note.title || 'Title Not Found',
+//         },
+//         {
+//           path: `/notes/${params.noteId}/delete`,
+//           label: 'Delete',
+//         },
+//       ]
+//     } else {
+//       return { path: '/notes/', label: 'Not Found' }
+//     }
+//   },
+// }
 
 /**
  * NoteDetailsPage
