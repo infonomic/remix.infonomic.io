@@ -52,7 +52,7 @@ export async function loader({ request }: LoaderArgs) {
 export const handle: BreadcrumbHandle = {
   breadcrumb: () => {
     return {
-      path: '/account',
+      path: '/app/account',
       label: 'Account',
     }
   },

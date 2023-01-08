@@ -25,14 +25,14 @@ import ErrorLayout from '~/ui/layouts/error-layout'
  * https://github.com/remix-run/remix/discussions/4462
  * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
-// export const meta = ({ data, matches }: any) => {
-//   const title = `Delete Note - ${truncate(
-//     data?.note?.title,
-//     50,
-//     true
-//   )} Infonomic Remix Workbench App`
-//   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
-// }
+export const meta = ({ data, matches }: any) => {
+  const title = `Delete Note - ${truncate(
+    data?.note?.title,
+    50,
+    true
+  )} Infonomic Remix Workbench App`
+  return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
+}
 
 /**
  * loader
@@ -66,7 +66,7 @@ export async function action({ request, params }: ActionArgs) {
   await deleteNote({ userId, id: params.noteId })
 
   session.flash('success', message)
-  return redirect('/notes', {
+  return redirect('/app/notes', {
     headers: {
       'Set-Cookie': await commitSession(session),
     },
@@ -76,28 +76,28 @@ export async function action({ request, params }: ActionArgs) {
 /**
  * handle
  */
-// export const handle: BreadcrumbHandle<NoteProps> = {
-//   breadcrumb: ({ data, params }) => {
-//     if (data?.note) {
-//       return [
-//         {
-//           path: '/notes',
-//           label: 'Notes',
-//         },
-//         {
-//           path: `/notes/${params.noteId}`,
-//           label: data.note.title || 'Title Not Found',
-//         },
-//         {
-//           path: `/notes/${params.noteId}/delete`,
-//           label: 'Delete',
-//         },
-//       ]
-//     } else {
-//       return { path: '/notes/', label: 'Not Found' }
-//     }
-//   },
-// }
+export const handle: BreadcrumbHandle<NoteProps> = {
+  breadcrumb: ({ data, params }) => {
+    if (data?.note) {
+      return [
+        {
+          path: '/app/notes',
+          label: 'Notes',
+        },
+        {
+          path: `/app/notes/${params.noteId}`,
+          label: data.note.title || 'Title Not Found',
+        },
+        {
+          path: `/app/notes/${params.noteId}/delete`,
+          label: 'Delete',
+        },
+      ]
+    } else {
+      return { path: '/app/notes/', label: 'Not Found' }
+    }
+  },
+}
 
 /**
  * NoteDetailsPage
@@ -118,7 +118,7 @@ export default function NoteDetailsPage() {
             Delete
           </Button>
           <Button asChild intent="secondary">
-            <Link to={`/notes/${data.note.id}`}>Cancel</Link>
+            <Link to={`/app/notes/${data.note.id}`}>Cancel</Link>
           </Button>
         </div>
       </Form>

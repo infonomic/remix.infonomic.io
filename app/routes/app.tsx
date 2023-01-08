@@ -23,7 +23,7 @@ export async function loader({ request }: LoaderArgs) {
  * Index
  * @returns
  */
-export default function Account() {
+export default function AppLayoutPage() {
   return (
     <MainLayout>
       <Section className="flex flex-1 flex-col py-4">

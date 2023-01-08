@@ -2,8 +2,6 @@ import { mergeMeta } from '~/utils/utils'
 
 import { Hero, links as heroLinks } from '~/modules/home/hero'
 
-import FrontLayout from '~/ui/layouts/front-layout'
-
 import styles from '~/styles/app/routes/_landing.index.css'
 
 /**

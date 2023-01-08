@@ -82,7 +82,7 @@ export async function action({ request, params }: ActionArgs) {
       'success',
       `Password for user with email: '${user?.email}' was successfully updated.`
     )
-    return redirect('/account', {
+    return redirect('/app/account', {
       headers: {
         'Set-Cookie': await commitSession(session),
       },
@@ -99,11 +99,11 @@ export const handle: BreadcrumbHandle = {
   breadcrumb: () => {
     return [
       {
-        path: '/account',
+        path: '/app/account',
         label: 'Account',
       },
       {
-        path: '/account/email',
+        path: '/app/account/email',
         label: 'Update Password',
       },
     ]
@@ -205,7 +205,7 @@ export default function UserPasswordEditPage() {
             )}
           </Button>
           <Button asChild intent="secondary">
-            <Link to="/account">Cancel</Link>
+            <Link to="/app/account">Cancel</Link>
           </Button>
         </div>
       </Form>
