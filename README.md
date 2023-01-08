@@ -176,6 +176,83 @@ As mentioned in the introduction to this section, we've intentionally removed an
 
 [Tooltip](https://github.com/infonomic/remix.infonomic.io/tree/develop/app/ui/components/tooltip) - is a functional component wrapper around the [Radix Tailwind project Tooltip](https://github.com/ecklf/tailwindcss-radix/blob/main/demo/components/tooltip.tsx) component.
 
+### Routing
+
+Routing is courtesy [Remix Flat Routes](https://github.com/kiliman/remix-flat-routes). It took a little reading (and some help from [@kiliman](https://twitter.com/kiliman)) to 'grok' the way in which you define routes, but it produces a very nice file structure - which in turn makes for quick filename searches for routes files. For example...
+
+```
+.
+├── _actions+
+│   └── actions.set-theme.tsx
+├── _app+
+│   ├── _app.tsx
+│   ├── account.$userId.email.tsx
+│   ├── account.$userId.password.tsx
+│   ├── account.index.tsx
+│   ├── notes.$noteId.tsx
+│   ├── notes.$noteId_.delete.tsx
+│   ├── notes.$noteId_.edit.tsx
+│   ├── notes.index.tsx
+│   └── notes.new.tsx
+├── _auth+
+│   ├── _auth.tsx
+│   ├── sign-in.tsx
+│   ├── sign-out.tsx
+│   └── sign-up.tsx
+├── _landing+
+│   ├── _landing.tsx
+│   ├── index.css
+│   └── index.tsx
+├── admin+
+│   ├── _admin.tsx
+│   ├── index.tsx
+│   ├── users.tsx
+│   └── users_.$userId.tsx
+├── healthcheck.tsx
+├── theme-radix-dialog.tsx
+├── theme-radix-toast.tsx
+├── theme-tailwind-forms.tsx
+└── theme.tsx
+```
+
+Which produces the following React Router routes...
+
+```
+<Routes>
+  <Route file="root.tsx">
+    <Route path="actions/set-theme" file="routes/_actions+/actions.set-theme.tsx" />
+    <Route file="routes/_app+/_app.tsx">
+      <Route path="account/:userId/email" file="routes/_app+/account.$userId.email.tsx" />
+      <Route path="account/:userId/password" file="routes/_app+/account.$userId.password.tsx" />
+      <Route path="notes/:noteId" file="routes/_app+/notes.$noteId.tsx" />
+      <Route path="notes/:noteId/delete" file="routes/_app+/notes.$noteId_.delete.tsx" />
+      <Route path="notes/:noteId/edit" file="routes/_app+/notes.$noteId_.edit.tsx" />
+      <Route path="notes/new" file="routes/_app+/notes.new.tsx" />
+      <Route path="account/" index file="routes/_app+/account.index.tsx" />
+      <Route path="notes/" index file="routes/_app+/notes.index.tsx" />
+    </Route>
+    <Route file="routes/_auth+/_auth.tsx">
+      <Route path="sign-in" file="routes/_auth+/sign-in.tsx" />
+      <Route path="sign-out" file="routes/_auth+/sign-out.tsx" />
+      <Route path="sign-up" file="routes/_auth+/sign-up.tsx" />
+    </Route>
+    <Route file="routes/_landing+/_landing.tsx">
+      <Route index file="routes/_landing+/index.tsx" />
+    </Route>
+    <Route path="admin" file="routes/admin+/_admin.tsx">
+      <Route index file="routes/admin+/index.tsx" />
+      <Route path="users" file="routes/admin+/users.tsx" />
+      <Route path="users/:userId" file="routes/admin+/users_.$userId.tsx" />
+    </Route>
+    <Route path="healthcheck" file="routes/healthcheck.tsx" />
+    <Route path="theme-radix-dialog" file="routes/theme-radix-dialog.tsx" />
+    <Route path="theme-radix-toast" file="routes/theme-radix-toast.tsx" />
+    <Route path="theme-tailwind-forms" file="routes/theme-tailwind-forms.tsx" />
+    <Route path="theme" file="routes/theme.tsx" />
+  </Route>
+</Routes>
+```
+
 ### Validation and Errors
 
 Data input is validated by both client- and server-side [Zod schemas](https://github.com/colinhacks/zod) and [React Hook Form Zod resolvers](https://github.com/react-hook-form/resolvers) - with errors reported either at field-level for form data errors, or via general alerts for any non-field-based errors. We've tried to implement utility methods for server and client errors returned via Zod, as well as other conditions such as unique constraint violations. You can see an example in the [/account/$userId.email.tsx](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/routes/account/%24userId.email.tsx) route.
