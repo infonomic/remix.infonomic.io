@@ -2,7 +2,7 @@ import { Outlet } from '@remix-run/react'
 
 import { mergeMeta } from '~/utils/utils'
 
-import { Hero, links as heroLinks } from '~/modules/home/hero'
+import { links as heroLinks } from '~/modules/home/hero'
 
 import FrontLayout from '~/ui/layouts/front-layout'
 
@@ -17,18 +17,18 @@ import styles from '~/styles/app/routes/_landing.index.css'
 //  * https://github.com/remix-run/remix/discussions/4462
 //  * V2_MetaFunction interface is currently in v1.10.0-pre.5
 //  */
-// export const meta = ({ matches }: any) => {
-//   const title = 'Home - Infonomic Remix Workbench'
-//   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
-// }
+export const meta = ({ matches }: any) => {
+  const title = 'Home - Infonomic Remix Workbench'
+  return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
+}
 
 // /**
 //  * links
 //  * @returns
 //  */
-// export function links() {
-//   return [...heroLinks(), { rel: 'stylesheet', href: styles }]
-// }
+export function links() {
+  return [...heroLinks(), { rel: 'stylesheet', href: styles }]
+}
 
 /**
  * Index
