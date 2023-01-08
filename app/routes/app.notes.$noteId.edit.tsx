@@ -127,7 +127,6 @@ const fields = ['title', 'body']
  * @returns
  */
 export default function NoteEditPage() {
-  debugger
   const data = useLoaderData<typeof loader>()
   const actionData = useActionData<typeof action>()
   const serverErrors = actionData?.errors

@@ -4,7 +4,7 @@ import { Hero, links as heroLinks } from '~/modules/home/hero'
 
 import FrontLayout from '~/ui/layouts/front-layout'
 
-import styles from '~/styles/app/routes/index.css'
+import styles from '~/styles/app/routes/_landing.index.css'
 
 /**
  * meta
@@ -33,9 +33,5 @@ export function links() {
  * @returns
  */
 export default function Index() {
-  return (
-    <FrontLayout>
-      <Hero />
-    </FrontLayout>
-  )
+  return <Hero />
 }

@@ -86,7 +86,6 @@ export async function loader({ request, params }: LoaderArgs) {
  * @returns
  */
 export default function NoteDetailsPage() {
-  debugger
   const data = useLoaderData<typeof loader>()
 
   const [toast, setToast] = React.useState(!!data.message)
