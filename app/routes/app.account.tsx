@@ -80,10 +80,10 @@ export default function AccountIndexPage() {
       />
       <div className="grid grid-cols-auto-fit-320 gap-4">
         <Card asChild className="text-center">
-          <Link to={`/account/${user.id}/email`}>Email</Link>
+          <Link to={`/app/account/${user.id}/email`}>Email</Link>
         </Card>
         <Card asChild className="text-center">
-          <Link to={`/account/${user.id}/password`}>Password</Link>
+          <Link to={`/app/account/${user.id}/password`}>Password</Link>
         </Card>
       </div>
     </>
