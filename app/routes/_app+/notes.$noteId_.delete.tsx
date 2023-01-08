@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
-import * as React from 'react'
 
-import type { LoaderArgs } from '@remix-run/node'
-import { json } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
 import { Form, Link, useCatch, useLoaderData } from '@remix-run/react'
 
 import invariant from 'tiny-invariant'
-import { getNote } from '~/models/note.server'
+import { deleteNote, getNote } from '~/models/note.server'
 import { requireUserId, getSession, commitSession } from '~/session.server'
 import { mergeMeta, truncate } from '~/utils/utils'
 
 import type { NoteProps } from '~/modules/notes'
 
-import type { BreadcrumbHandle } from '~/ui/components/breadcrumbs/types'
+import type { BreadcrumbHandle } from '~/ui/components/breadcrumbs/types/breadcrumbs'
 import { Button } from '~/ui/components/button'
-import { Toast } from '~/ui/components/notifications'
+import { Alert } from '~/ui/components/notifications'
 import ErrorLayout from '~/ui/layouts/error-layout'
 
 /**
@@ -27,7 +26,11 @@ import ErrorLayout from '~/ui/layouts/error-layout'
  * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
 export const meta = ({ data, matches }: any) => {
-  const title = `Note - ${truncate(data?.note?.title, 50, true)} - Infonomic Remix Workbench App`
+  const title = `Delete Note - ${truncate(
+    data?.note?.title,
+    50,
+    true
+  )} Infonomic Remix Workbench App`
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
 
@@ -38,25 +41,36 @@ export const meta = ({ data, matches }: any) => {
  */
 export async function loader({ request, params }: LoaderArgs) {
   const userId = await requireUserId(request)
-  const session = await getSession(request)
   invariant(params.noteId, 'Expected params.noteId')
 
   const note = await getNote({ userId, id: params.noteId })
   if (!note) {
     throw new Response('Not Found', { status: 404 })
   }
+  return json({ note })
+}
 
-  const message = session.get('success') || null
+/**
+ * action
+ * @param param0
+ * @returns
+ */
+export async function action({ request, params }: ActionArgs) {
+  const userId = await requireUserId(request)
+  const session = await getSession(request)
 
-  return json(
-    { note, message },
-    {
-      headers: {
-        // only necessary with cookieSessionStorage
-        'Set-Cookie': await commitSession(session),
-      },
-    }
-  )
+  invariant(params.noteId, 'Expected params.noteId')
+
+  const note = await getNote({ userId, id: params.noteId })
+  const message = `Note with title: '${note?.title}' was successfully deleted.`
+  await deleteNote({ userId, id: params.noteId })
+
+  session.flash('success', message)
+  return redirect('/notes', {
+    headers: {
+      'Set-Cookie': await commitSession(session),
+    },
+  })
 }
 
 /**
@@ -67,16 +81,20 @@ export const handle: BreadcrumbHandle<NoteProps> = {
     if (data?.note) {
       return [
         {
-          path: '/app/notes',
+          path: '/notes',
           label: 'Notes',
         },
         {
-          path: `/app/notes/${params.noteId}`,
+          path: `/notes/${params.noteId}`,
           label: data.note.title || 'Title Not Found',
+        },
+        {
+          path: `/notes/${params.noteId}/delete`,
+          label: 'Delete',
         },
       ]
     } else {
-      return { path: '/app/notes/', label: 'Not Found' }
+      return { path: '/notes/', label: 'Not Found' }
     }
   },
 }
@@ -88,41 +106,19 @@ export const handle: BreadcrumbHandle<NoteProps> = {
 export default function NoteDetailsPage() {
   const data = useLoaderData<typeof loader>()
 
-  const [toast, setToast] = React.useState(!!data.message)
-
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        maxWidth: '560px',
-        margin: '0 auto',
-      }}
-    >
-      {/* Important!: see comments in app/ui/components/notifications/styles/toast.ts regarding toast position */}
-      <Toast
-        title="Notes"
-        iconType="success"
-        intent="secondary"
-        position="top-right"
-        description={data.message}
-        open={toast}
-        onOpenChange={setToast}
-      />
-      <h3 className="text-2xl font-bold">{data.note.title}</h3>
+    <div className="mx-auto mt-[1vh] flex w-full max-w-[560px] flex-col sm:mt-[4vh]">
+      <Alert intent="warning">Warning: This action cannot be undone.</Alert>
+      <h3 className="my-2 text-2xl font-bold">{data.note.title}</h3>
       <p className="py-6">{data.note.body}</p>
       <hr className="my-4" />
       <Form method="post">
         <div className="form-actions flex flex-row justify-end gap-3">
-          <Button asChild intent="secondary">
-            <Link to="delete">Delete</Link>
+          <Button type="submit" intent="danger">
+            Delete
           </Button>
           <Button asChild intent="secondary">
-            <Link to="edit">Edit</Link>
-          </Button>
-          <Button asChild intent="secondary">
-            <Link to={'/app/notes'}>Close</Link>
+            <Link to={`/notes/${data.note.id}`}>Cancel</Link>
           </Button>
         </div>
       </Form>

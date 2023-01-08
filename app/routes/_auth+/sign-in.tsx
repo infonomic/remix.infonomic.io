@@ -58,7 +58,7 @@ export async function loader({ request }: LoaderArgs) {
  */
 export async function action({ request }: ActionArgs) {
   const formData = await request.formData()
-  const redirectTo = safeRedirect(formData.get('redirectTo'), '/app/notes')
+  const redirectTo = safeRedirect(formData.get('redirectTo'), '/notes')
   const remember = formData.get('remember')
   const gtoken = formData.get('gtoken') as string
 
@@ -113,7 +113,7 @@ export default function SignInPage() {
   const submit = useSubmit()
   const transition = useTransition()
   const [searchParams] = useSearchParams()
-  const redirectTo = searchParams.get('redirectTo') || '/app/notes'
+  const redirectTo = searchParams.get('redirectTo') || '/notes'
   const resolver = zodResolver(signInSchema)
   const {
     register,

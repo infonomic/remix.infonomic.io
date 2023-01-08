@@ -87,7 +87,7 @@ export async function action({ request, params }: ActionArgs) {
   const note = await getNote({ userId, id: params.noteId })
 
   session.flash('success', `Note with title: '${note?.title}' was successfully updated.`)
-  return redirect(`/app/notes/${note?.id}`, {
+  return redirect(`/notes/${note?.id}`, {
     headers: {
       'Set-Cookie': await commitSession(session),
     },
@@ -102,15 +102,15 @@ export const handle: BreadcrumbHandle<NoteProps> = {
     if (data?.note) {
       return [
         {
-          path: '/app/notes',
+          path: '/notes',
           label: 'Notes',
         },
         {
-          path: `/app/notes/${params.noteId}`,
+          path: `/notes/${params.noteId}`,
           label: data.note.title || 'Title Not Found',
         },
         {
-          path: `/app/notes/${params.noteId}/edit`,
+          path: `/notes/${params.noteId}/edit`,
           label: 'Edit',
         },
       ]
@@ -186,7 +186,7 @@ export default function NoteEditPage() {
             {submitting ? '...' : 'Save'}
           </Button>
           <Button asChild intent="secondary">
-            <Link to={`/app/notes/${data.note.id}`}>Cancel</Link>
+            <Link to={`/notes/${data.note.id}`}>Cancel</Link>
           </Button>
         </div>
       </Form>

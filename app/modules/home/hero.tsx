@@ -53,7 +53,7 @@ export function Hero() {
                   size="lg"
                   className="rounded-lg bg-amber-500/70 py-3 px-10 !text-black hover:bg-amber-400/70"
                 >
-                  <Link to="/app/notes">View notes for {user.email}</Link>
+                  <Link to="/notes">View notes for {user.email}</Link>
                 </Button>
               </div>
             ) : (

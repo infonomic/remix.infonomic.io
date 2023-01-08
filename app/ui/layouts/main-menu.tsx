@@ -92,7 +92,7 @@ export const MainMenu = () => {
             <DropdownMenuPrimitive.Separator className="my-1 h-px bg-gray-200 dark:bg-gray-700" />
 
             <DropdownMenuPrimitive.Item asChild className={menuItemClasses}>
-              <Link to="/app/account">
+              <Link to="/account">
                 <MixerHorizontalIcon className="mr-2 h-3.5 w-3.5" />
                 <span className="flex-grow text-gray-700 dark:text-gray-300">Account</span>
                 <span className="text-sm">⌘+A</span>
