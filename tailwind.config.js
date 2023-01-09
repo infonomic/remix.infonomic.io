@@ -54,6 +54,15 @@ module.exports = {
                 paddingTop: theme('spacing[0.5]'),
                 paddingBottom: theme('spacing[0.5]'),
               },
+              'pre code': {
+                  fontSize: '1em !important',
+                  borderWidth: '0',
+                  paddingLeft: '0',
+                  paddingRight: '0',
+                  paddingTop: '0',
+                  paddingBottom: '0',
+                  backgroundColor: 'initial'
+              }
             }
           },
           invert: {
@@ -62,7 +71,10 @@ module.exports = {
                 color: theme('colors.slate.100'),
                 backgroundColor: theme('colors.slate.800'),
                 borderColor: theme('colors.slate.600'),
-              }
+              },
+              'pre code': {
+                backgroundColor: 'initial'
+            }
             }
           }
         }
