@@ -1,8 +1,6 @@
-import * as React from 'react'
 import ReactMarkdown from 'react-markdown'
 
 import { json } from '@remix-run/node'
-import type { LoaderArgs } from '@remix-run/node'
 import { useCatch, useLoaderData } from '@remix-run/react'
 
 import remarkGfm from 'remark-gfm'
