@@ -19,7 +19,7 @@ export const AppBar = forwardRef<Ref, AppBarProps>(({ children, className, ...ot
       ref={ref}
       {...other}
     >
-      <div className="flex w-full items-center px-[18px] py-2.5 text-black dark:text-white">
+      <div className="flex w-full items-center gap-6 px-[18px] py-2.5 text-black dark:text-white">
         {children}
       </div>
     </header>

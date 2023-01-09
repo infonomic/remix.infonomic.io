@@ -35,6 +35,9 @@ const MainLayout = forwardRef<Ref, MainLayoutProps>(({ children, className, ...o
         <Link to={{ pathname: '/' }} className="font-medium">
           Home
         </Link>
+        <Link to={{ pathname: '/about' }} className="font-medium">
+          About
+        </Link>
         <span className="ml-auto mr-8 inline-block w-[90px] overflow-hidden overflow-ellipsis sm:w-auto">
           {user.email}
         </span>

@@ -68,9 +68,9 @@ CSS files in the root level `/shared` directory are processed and placed in the 
 
 The entire system can be illustrated as follows:
 
-Source
+`Source`
 
-<pre>
+```
 /shared
 └── css
     ├── app.css
@@ -89,9 +89,9 @@ Source
     │   ├── global.css
     │   └── layouts.css
     └── tailwind.css
-</pre>
+```
 
-<pre>
+```
 /app
 ├── modules
 │   ├── home
@@ -101,25 +101,24 @@ Source
 └── routes
     ├── index.css
     └── index.tsx
-</pre>
+```
 
-Output
+`Output`
 
-<pre>
+```
 /app
 └── styles
-    ├── app
-    │   ├── modules
-    │   │   └── home
-    │   │       └── hero.css
-    │   └── routes
-    │       └── index.css
-    └── shared
-        └── css
-            ├── app.css
-            └── tailwind.css
-
-</pre>
+   ├── app
+   │   ├── modules
+   │   │   └── home
+   │   │   └── hero.css
+   │   └── routes
+   │   └── index.css
+   └── shared
+   └── css
+   ├── app.css
+   └── tailwind.css
+```
 
 This means of course that you will need to import stylesheets from the `/app/styles` directory, and not the source route, module or shared CSS directories. In order to 'surface' module-level stylesheets in a route, we followed the [styling guide](https://remix.run/docs/en/v1/guides/styling#surfacing-styles) at Remix. It's not a perfect 'co-located' setup - but it works, and it was the best we could come up with for now. Again - suggestions welcome. You can see an example that combines the `Hero.css` stylesheet with the `index.css` stylesheet here in the [index.tsx route](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/routes/index.tsx).
 

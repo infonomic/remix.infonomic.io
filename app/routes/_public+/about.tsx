@@ -45,10 +45,6 @@ export default function AboutPage() {
   return (
     <article className="prose mx-auto mt-[1rem] max-w-[960px] dark:prose-invert md:mt-[3rem] ">
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{data.text}</ReactMarkdown>
-      {/* <div className="prose dark:prose-invert">
-        <h1 className="mb-5 text-[2.25rem]">About</h1>
-      </div>
-      <div>Article here...</div> */}
     </article>
   )
 }
