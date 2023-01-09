@@ -1,4 +1,4 @@
-import type { LoaderArgs } from '@remix-run/node'
+import type { DataFunctionArgs } from '@remix-run/node'
 import { Outlet } from '@remix-run/react'
 import { useCatch } from '@remix-run/react'
 
@@ -14,7 +14,7 @@ import MainLayout from '~/ui/layouts/main-layout'
  * @param param0
  * @returns
  */
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: DataFunctionArgs) {
   await requireUserId(request)
   await requireAdmin(request)
   return null

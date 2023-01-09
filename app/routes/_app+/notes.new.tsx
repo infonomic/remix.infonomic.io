@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import type { ActionArgs } from '@remix-run/node'
+import type { DataFunctionArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import { Form, Link, useActionData, useSubmit, useTransition } from '@remix-run/react'
 
@@ -35,7 +35,7 @@ export const meta = ({ matches }: any) => {
  * @param param0
  * @returns
  */
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: DataFunctionArgs) {
   const [userId, session, formData] = await Promise.all([
     requireUserId(request),
     getSession(request),

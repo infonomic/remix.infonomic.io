@@ -1,4 +1,4 @@
-import type { LoaderArgs } from '@remix-run/node'
+import type { DataFunctionArgs } from '@remix-run/node'
 
 import { requireUserId } from '~/session.server'
 import { mergeMeta } from '~/utils/utils'
@@ -30,7 +30,7 @@ export const meta = ({ matches }: any) => {
  * @param param0
  * @returns
  */
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: DataFunctionArgs) {
   await requireUserId(request)
   return null
 }

@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown'
 
+import type { HeadersFunction, LoaderFunction, DataFunctionArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useCatch, useLoaderData } from '@remix-run/react'
 
@@ -23,17 +24,33 @@ export const meta = ({ matches }: any) => {
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
 
+export const headers: HeadersFunction = ({ loaderHeaders }) => {
+  return {
+    'Cache-Control': loaderHeaders.get('Cache-Control') || 'no-cache',
+  }
+}
+
 /**
  * loader
  * @param param0
  * @returns
  */
-export async function loader() {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const loader: LoaderFunction = async ({ request }: DataFunctionArgs) => {
   const response = await fetch(
     'https://raw.githubusercontent.com/infonomic/remix.infonomic.io/develop/README.md'
   )
   const text = await response.text()
-  return json({ text })
+  return json(
+    { text },
+    {
+      headers: {
+        // max-age controls the browser cache
+        // s-maxage controls a CDN cache
+        'Cache-Control': 'public, max-age=30, s-maxage=30',
+      },
+    }
+  )
 }
 
 /**

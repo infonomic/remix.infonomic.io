@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
 
-import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import type { DataFunctionArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import { Form, Link, useCatch, useLoaderData } from '@remix-run/react'
 
@@ -39,7 +39,7 @@ export const meta = ({ data, matches }: any) => {
  * @param param0
  * @returns
  */
-export async function loader({ request, params }: LoaderArgs) {
+export async function loader({ request, params }: DataFunctionArgs) {
   const userId = await requireUserId(request)
   invariant(params.noteId, 'Expected params.noteId')
 
@@ -55,7 +55,7 @@ export async function loader({ request, params }: LoaderArgs) {
  * @param param0
  * @returns
  */
-export async function action({ request, params }: ActionArgs) {
+export async function action({ request, params }: DataFunctionArgs) {
   const userId = await requireUserId(request)
   const session = await getSession(request)
 

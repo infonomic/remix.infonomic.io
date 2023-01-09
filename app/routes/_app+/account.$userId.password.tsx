@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 
-import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import type { DataFunctionArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import { Link } from '@remix-run/react'
 import { Form, useCatch, useActionData, useSubmit, useTransition } from '@remix-run/react'
@@ -40,7 +40,7 @@ export const meta = ({ matches }: any) => {
  * @param param0
  * @returns
  */
-export async function loader({ request, params }: LoaderArgs) {
+export async function loader({ request, params }: DataFunctionArgs) {
   const userId = await requireUserId(request)
   invariant(params.userId, 'Expected params.userId')
 
@@ -57,7 +57,7 @@ export async function loader({ request, params }: LoaderArgs) {
  * @param param0
  * @returns
  */
-export async function action({ request, params }: ActionArgs) {
+export async function action({ request, params }: DataFunctionArgs) {
   const [userId, session, formData] = await Promise.all([
     requireUserId(request),
     getSession(request),

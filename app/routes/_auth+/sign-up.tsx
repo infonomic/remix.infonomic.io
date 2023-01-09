@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 
-import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import type { DataFunctionArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import {
   Form,
@@ -45,7 +45,7 @@ export const meta = ({ matches }: any) => {
  * @param param0
  * @returns
  */
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: DataFunctionArgs) {
   const userId = await getUserId(request)
   if (userId) return redirect('/')
   return json({})
@@ -56,7 +56,7 @@ export async function loader({ request }: LoaderArgs) {
  * @param param0
  * @returns
  */
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: DataFunctionArgs) {
   const formData = await request.formData()
   const redirectTo = safeRedirect(formData.get('redirectTo'), '/')
   const gtoken = formData.get('gtoken') as string
