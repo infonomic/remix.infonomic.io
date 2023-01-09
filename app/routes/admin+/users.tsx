@@ -1,4 +1,4 @@
-import type { DataFunctionArgs } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData, useNavigate } from '@remix-run/react'
 
@@ -71,7 +71,7 @@ export const meta = ({ matches }: any) => {
  * @param param0
  * @returns
  */
-export async function loader({ request }: DataFunctionArgs) {
+export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url)
 
   // TODO: zod validator for query string params

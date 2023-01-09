@@ -1,6 +1,6 @@
 import ReactMarkdown from 'react-markdown'
 
-import type { HeadersFunction, LoaderFunction, DataFunctionArgs } from '@remix-run/node'
+import type { HeadersFunction, LoaderFunction, LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useCatch, useLoaderData } from '@remix-run/react'
 
@@ -36,7 +36,7 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
  * @returns
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const loader: LoaderFunction = async ({ request }: DataFunctionArgs) => {
+export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
   const response = await fetch(
     'https://raw.githubusercontent.com/infonomic/remix.infonomic.io/develop/README.md'
   )
@@ -58,7 +58,7 @@ export const loader: LoaderFunction = async ({ request }: DataFunctionArgs) => {
  * @returns
  */
 export default function AboutPage() {
-  const data = useLoaderData()
+  const data = useLoaderData<typeof loader>()
 
   return (
     <article

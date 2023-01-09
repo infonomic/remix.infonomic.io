@@ -1,4 +1,4 @@
-import type { DataFunctionArgs } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 
 import { logout } from '~/session.server'
@@ -16,6 +16,6 @@ export async function loader() {
  * @param param0
  * @returns
  */
-export async function action({ request }: DataFunctionArgs) {
+export async function action({ request }: LoaderArgs) {
   return logout(request)
 }

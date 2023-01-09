@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import type { DataFunctionArgs } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 
@@ -32,7 +32,7 @@ export const meta = ({ matches }: any) => {
  * @param param0
  * @returns
  */
-export async function loader({ request }: DataFunctionArgs) {
+export async function loader({ request }: LoaderArgs) {
   const [userId, session] = await Promise.all([requireUserId(request), getSession(request)])
 
   const noteListItems = await getNoteListItems({ userId })
