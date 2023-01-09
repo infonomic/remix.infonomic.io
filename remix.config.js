@@ -66,7 +66,11 @@ module.exports = {
     /^vfile-message.*/,
     /^@apollo\/client.*/,
     /^@sindresorhus\/transliterate.*/,
-    /^trim-lines.*/
+    /^trim-lines.*/,
+    /^is-plain-obj.*/,
+    /^react-is.*/,
+    /^escape-string-regexp.*/
+   
   ],
   routes: async defineRoutes => {
 		return flatRoutes('routes', defineRoutes, {
