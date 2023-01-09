@@ -32,6 +32,41 @@ module.exports = {
       boxShadow: {
         slider: "0 0 0 5px rgba(0, 0, 0, 0.3)",
       },
+      typography (theme) {
+        return {
+          DEFAULT: {
+            css: {
+              'code::before': {
+                content: 'none', // don’t generate the pseudo-element
+                //content: '""', // this is an alternative: generate pseudo element using an empty string
+              },
+              'code::after': {
+                content: 'none'
+              },
+              code: {
+                color: theme('colors.slate.700'),
+                fontWeight: "400",
+                backgroundColor: theme('colors.stone.100/30'),
+                borderRadius: theme('borderRadius.DEFAULT'),
+                borderWidth: '1px',
+                paddingLeft: theme('spacing[1.5]'),
+                paddingRight: theme('spacing[1.5]'),
+                paddingTop: theme('spacing[0.5]'),
+                paddingBottom: theme('spacing[0.5]'),
+              },
+            }
+          },
+          invert: {
+            css: {
+              code: {
+                color: theme('colors.slate.100'),
+                backgroundColor: theme('colors.slate.800'),
+                borderColor: theme('colors.slate.600'),
+              }
+            }
+          }
+        }
+      },
       keyframes: {
         // Dropdown menu
         "scale-in": {

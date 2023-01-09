@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import { json } from '@remix-run/node'
 import { useCatch, useLoaderData } from '@remix-run/react'
 
+import cx from 'classnames'
 import remarkGfm from 'remark-gfm'
 import { mergeMeta } from '~/utils/utils'
 
@@ -43,7 +44,13 @@ export default function AboutPage() {
   const data = useLoaderData()
 
   return (
-    <article className="prose mx-auto mt-[1rem] max-w-[960px] dark:prose-invert md:mt-[3rem] ">
+    <article
+      className={cx(
+        'mx-auto mt-[1rem] max-w-[960px]',
+        'prose prose-lg prose-slate dark:prose-invert',
+        'md:mt-[3rem] md:prose-lg'
+      )}
+    >
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{data.text}</ReactMarkdown>
     </article>
   )
