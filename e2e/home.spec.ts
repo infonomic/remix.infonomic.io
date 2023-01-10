@@ -8,7 +8,7 @@ describe('home page', () => {
     await expect(page).toHaveTitle(/Home - Infonomic Remix Workbench/)
     const signIn = page.getByRole('link', { name: 'Sign In' })
     await expect(signIn).toHaveAttribute('href', '/sign-in')
-    const signUp = page.getByRole('link', { name: 'Sign U' })
+    const signUp = page.getByRole('link', { name: 'Sign Up' })
     await expect(signUp).toHaveAttribute('href', '/sign-up')
   })
 })
