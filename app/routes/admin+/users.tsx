@@ -80,8 +80,9 @@ export async function loader({ request }: LoaderArgs) {
   const pageSizeString =
     url.searchParams.get('pageSize') || SEARCH_PARAMS_DEFAULTS.pageSize.toString()
   const pageSize = parseInt(pageSizeString, 10)
-  const { users, meta: usersMeta } = await getUsers({ ...SEARCH_PARAMS_DEFAULTS, page, pageSize })
-  return json({ users, meta: usersMeta })
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const { users, meta } = await getUsers({ ...SEARCH_PARAMS_DEFAULTS, page, pageSize })
+  return json({ users, meta })
 }
 
 /**

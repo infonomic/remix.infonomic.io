@@ -4,7 +4,7 @@ import type { ButtonHTMLAttributes } from 'react'
 
 interface IBasePaginationProps {
   currentPage: number
-  setCurrentPage: (page: number) => void
+  setCurrentPage?: (page: number) => void
   truncableText?: string
   truncableClassName?: string
 }

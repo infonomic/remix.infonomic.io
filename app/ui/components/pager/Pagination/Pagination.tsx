@@ -6,6 +6,7 @@ import React from 'react'
 
 import { Primitive } from '@radix-ui/react-primitive'
 import cx from 'classnames'
+import { twMerge } from 'tailwind-merge'
 
 import usePagination from '../Hooks/usePagination'
 
@@ -59,16 +60,18 @@ const PrevButton = React.forwardRef<ButtonElement, ButtonProps>(
     }
 
     return (
-      <Primitive.button
-        ref={ref}
-        className={className}
-        {...rest}
-        onClick={() => previous()}
-        disabled={pagination.currentPage === 0}
-        data-testid={dataTestId}
-      >
-        {children}
-      </Primitive.button>
+      <li>
+        <Primitive.button
+          ref={ref}
+          className={className}
+          {...rest}
+          onClick={() => previous()}
+          disabled={pagination.currentPage === 0}
+          data-testid={dataTestId}
+        >
+          {children}
+        </Primitive.button>
+      </li>
     )
   }
 )
@@ -85,16 +88,18 @@ const NextButton = React.forwardRef<ButtonElement, ButtonProps>(
     }
 
     return (
-      <Primitive.button
-        ref={ref}
-        className={className}
-        {...rest}
-        onClick={() => next()}
-        disabled={pagination.currentPage === pagination.pages.length - 1}
-        data-testid={dataTestId}
-      >
-        {children}
-      </Primitive.button>
+      <li>
+        <Primitive.button
+          ref={ref}
+          className={className}
+          {...rest}
+          onClick={() => next()}
+          disabled={pagination.currentPage === pagination.pages.length - 1}
+          data-testid={dataTestId}
+        >
+          {children}
+        </Primitive.button>
+      </li>
     )
   }
 )
@@ -111,7 +116,7 @@ const TruncableElement: FC<ITruncableElementProps> = ({ prev }) => {
   const { isPreviousTruncable, isNextTruncable, truncableText, truncableClassName } = pagination
 
   return (isPreviousTruncable && prev === true) || (isNextTruncable && !prev) ? (
-    <span className={truncableClassName || undefined}>{truncableText}</span>
+    <li className={truncableClassName || undefined}>{truncableText}</li>
   ) : null
 }
 
@@ -130,28 +135,30 @@ const PageButton = React.forwardRef<ButtonElement, PageButtonProps>(
     const pagination: IPagination = React.useContext(PaginationContext)
 
     const renderPageButton = (page: number) => (
-      <Primitive.button
-        ref={ref}
-        key={page}
-        data-testid={
-          cx({
-            [`${dataTestIdActive}-page-button`]:
-              dataTestIdActive && pagination.currentPage + 1 === page,
-            [`${dataTestIdInactive}-page-button-${page}`]:
-              dataTestIdActive && pagination.currentPage + 1 !== page,
-          }) || undefined
-        }
-        onClick={() => pagination.setCurrentPage(page - 1)}
-        className={
-          cx(
-            className,
-            pagination.currentPage + 1 === page ? activeClassName : inactiveClassName
-          ) || undefined
-        }
-        {...rest}
-      >
-        {page}
-      </Primitive.button>
+      <li>
+        <Primitive.button
+          ref={ref}
+          key={page}
+          data-testid={
+            cx({
+              [`${dataTestIdActive}-page-button`]:
+                dataTestIdActive && pagination.currentPage + 1 === page,
+              [`${dataTestIdInactive}-page-button-${page}`]:
+                dataTestIdActive && pagination.currentPage + 1 !== page,
+            }) || undefined
+          }
+          onClick={() => pagination.setCurrentPage(page - 1)}
+          className={
+            cx(
+              className,
+              pagination.currentPage + 1 === page ? activeClassName : inactiveClassName
+            ) || undefined
+          }
+          {...rest}
+        >
+          {page}
+        </Primitive.button>
+      </li>
     )
 
     return (
@@ -173,7 +180,9 @@ export const Pagination = (paginationProps: IPaginationProps) => {
 
   return (
     <PaginationContext.Provider value={pagination}>
-      <div className={paginationProps.className}>{paginationProps.children}</div>
+      <nav className={paginationProps.className} aria-label="Page navigation">
+        <ul className="flex items-center -space-x-px">{paginationProps.children}</ul>
+      </nav>
     </PaginationContext.Provider>
   )
 }

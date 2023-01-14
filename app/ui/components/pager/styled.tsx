@@ -133,7 +133,7 @@ const Pager = React.forwardRef<HTMLElement, PagerProps>(
     )
 
     return (
-      <nav ref={ref} className={classes} aria-label="Table navigation">
+      <nav ref={ref} className={classes} aria-label="Page navigation">
         <div className="mr-auto mb-3 text-sm font-normal text-slate-500 dark:text-slate-400 md:mb-0">
           Showing
           <span className="font-semibold text-slate-900 dark:text-white">

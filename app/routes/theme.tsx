@@ -228,7 +228,7 @@ export default function Theme() {
             truncableClassName="w-10 px-0.5 text-center"
           >
             <Pagination.PrevButton
-              dataTestId="pager-prev-button"
+              dataTestId="pager-prev-page-button"
               className={cx(
                 'mr-2 flex items-center text-gray-500 hover:text-gray-600 focus:outline-none dark:hover:text-gray-200',
                 {
@@ -242,7 +242,8 @@ export default function Theme() {
 
             <div className="flex flex-grow items-center justify-center">
               <Pagination.PageButton
-                dataTestId="pager-page-button"
+                dataTestIdActive="pager-active"
+                dataTestIdInactive="pager-inactive"
                 activeClassName="bg-primary-50 dark:bg-opacity-0 text-primary-600 dark:text-white"
                 inactiveClassName="text-gray-500"
                 className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full"
@@ -250,7 +251,7 @@ export default function Theme() {
             </div>
 
             <Pagination.NextButton
-              dataTestId="pager-next-button"
+              dataTestId="pager-next-page-button"
               className={cx(
                 'mr-2 flex items-center text-gray-500 hover:text-gray-600 focus:outline-none dark:hover:text-gray-200',
                 {
