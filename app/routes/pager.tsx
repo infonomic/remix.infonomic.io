@@ -10,7 +10,7 @@ import { mergeMeta } from '~/utils/utils'
 
 import { Button } from '~/ui/components/button'
 import { Container } from '~/ui/components/container'
-import { usePagination, Pagination } from '~/ui/components/pager'
+import { Pagination } from '~/ui/components/pager'
 import { Section } from '~/ui/components/section'
 import MainLayout from '~/ui/layouts/main-layout'
 
@@ -70,47 +70,17 @@ export async function loader({ request }: LoaderArgs) {
 export default function Pager() {
   const data = useLoaderData<typeof loader>()
 
-  const { items } = usePagination({
-    page: data?.meta?.currentPage,
-    count: data?.meta?.pageTotal,
-  })
-
   return (
     <MainLayout>
       <Section className="py-4">
         <Container>
           Current page: {data?.meta?.currentPage}
-          <Pagination>
-            {items.map(({ page, type, selected, ...item }, index) => {
-              let children = null
-              if (type === 'start-ellipsis' || type === 'end-ellipsis') {
-                children = '…'
-              } else if (type === 'page') {
-                children = (
-                  <Pagination.PageButton
-                    page={page}
-                    currentPage={data?.meta?.currentPage}
-                    lastPage={data?.meta?.pageTotal}
-                    className={selected ? 'bold' : undefined}
-                    activeClassName="active"
-                    inactiveClassName="inactive"
-                    dataTestIdActive="active"
-                    dataTestIdInactive="inactive"
-                    {...item}
-                  >
-                    {page}
-                  </Pagination.PageButton>
-                )
-              } else {
-                children = (
-                  <Button size="sm" type="button" {...item}>
-                    {type}
-                  </Button>
-                )
-              }
-              return <li key={index}>{children}</li>
-            })}
-          </Pagination>
+          <Pagination
+            page={data?.meta?.currentPage}
+            count={data?.meta?.pageTotal}
+            showFirstButton
+            showLastButton
+          />
         </Container>
       </Section>
     </MainLayout>
