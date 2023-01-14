@@ -11,7 +11,6 @@ import { Card } from '~/ui/components/card'
 import { Container } from '~/ui/components/container'
 // import { Checkbox } from '~/ui/components/input'
 import { Alert } from '~/ui/components/notifications'
-import { Pagination } from '~/ui/components/pager'
 import { Section } from '~/ui/components/section'
 import MainLayout from '~/ui/layouts/main-layout'
 
@@ -40,16 +39,10 @@ export async function loader({ request }: LoaderArgs) {
 }
 
 /**
- * ThemeRadixDialog
+ * Theme
  * @returns
  */
 export default function Theme() {
-  const [page, setPage] = React.useState<number>(0)
-
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage)
-  }
-
   return (
     <MainLayout>
       <Section className="flex-1 py-4">
@@ -212,57 +205,6 @@ export default function Theme() {
           <Alert intent="info">This is a info alert - with some additional text here.</Alert>
           <Alert intent="warning">This is a warning alert - with some additional text here.</Alert>
           <Alert intent="danger">This is a danger alert - with some additional text here.</Alert>
-        </Container>
-      </Section>
-      <Section className="py-4">
-        <Container>
-          Current page: {page}
-          <Pagination
-            currentPage={page}
-            setCurrentPage={handlePageChange}
-            totalPages={10}
-            edgePageCount={2}
-            middlePagesSiblingCount={2}
-            className="flex h-10 w-full select-none items-center text-sm"
-            truncableText="..."
-            truncableClassName="w-10 px-0.5 text-center"
-          >
-            <Pagination.PrevButton
-              dataTestId="pager-prev-page-button"
-              className={cx(
-                'mr-2 flex items-center text-gray-500 hover:text-gray-600 focus:outline-none dark:hover:text-gray-200',
-                {
-                  'cursor-pointer': page !== 0,
-                  'opacity-50': page === 0,
-                }
-              )}
-            >
-              Previous
-            </Pagination.PrevButton>
-
-            <div className="flex flex-grow items-center justify-center">
-              <Pagination.PageButton
-                dataTestIdActive="pager-active"
-                dataTestIdInactive="pager-inactive"
-                activeClassName="bg-primary-50 dark:bg-opacity-0 text-primary-600 dark:text-white"
-                inactiveClassName="text-gray-500"
-                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full"
-              />
-            </div>
-
-            <Pagination.NextButton
-              dataTestId="pager-next-page-button"
-              className={cx(
-                'mr-2 flex items-center text-gray-500 hover:text-gray-600 focus:outline-none dark:hover:text-gray-200',
-                {
-                  'cursor-pointer': page !== 10 - 1,
-                  'opacity-50': page === 10 - 1,
-                }
-              )}
-            >
-              Next
-            </Pagination.NextButton>
-          </Pagination>
         </Container>
       </Section>
     </MainLayout>

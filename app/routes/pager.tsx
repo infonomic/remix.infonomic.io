@@ -10,7 +10,7 @@ import { mergeMeta } from '~/utils/utils'
 
 import { Button } from '~/ui/components/button'
 import { Container } from '~/ui/components/container'
-import { Pagination } from '~/ui/components/pager'
+import { usePagination, Pagination } from '~/ui/components/pager'
 import { Section } from '~/ui/components/section'
 import MainLayout from '~/ui/layouts/main-layout'
 
@@ -43,7 +43,7 @@ export async function loader({ request }: LoaderArgs) {
   const page = parseInt(pageString, 10) || 1
 
   const count = 76
-  const pageSize = 20
+  const pageSize = 10
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const meta: {
@@ -64,60 +64,52 @@ export async function loader({ request }: LoaderArgs) {
 }
 
 /**
- * ThemeRadixDialog
+ * Pager
  * @returns
  */
 export default function Pager() {
   const data = useLoaderData<typeof loader>()
+
+  const { items } = usePagination({
+    page: data?.meta?.currentPage,
+    count: data?.meta?.pageTotal,
+  })
 
   return (
     <MainLayout>
       <Section className="py-4">
         <Container>
           Current page: {data?.meta?.currentPage}
-          <Pagination
-            currentPage={data?.meta?.currentPage - 1}
-            totalPages={data?.meta?.pageTotal}
-            edgePageCount={2}
-            middlePagesSiblingCount={2}
-            className="flex h-10 w-full select-none items-center text-sm"
-            truncableText="..."
-            truncableClassName="w-10 px-0.5 text-center"
-          >
-            <Pagination.PrevButton
-              asChild
-              dataTestId="pager-prev-page-button"
-              className={cx({
-                'cursor-pointer': data?.meta?.currentPage !== 0,
-                'opacity-50': data?.meta?.currentPage === 0,
-              })}
-            >
-              <Link to=".?page=1">First</Link>
-            </Pagination.PrevButton>
-
-            <div className="flex flex-grow items-center justify-center">
-              <Pagination.PageButton
-                dataTestIdActive="pager-active"
-                dataTestIdInactive="pager-inactive"
-                activeClassName="bg-primary-50 dark:bg-opacity-0 text-primary-600 dark:text-white"
-                inactiveClassName="text-gray-500"
-                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full"
-              />
-            </div>
-
-            <Pagination.NextButton
-              asChild
-              dataTestId="pager-next-page-button"
-              className={cx(
-                'mr-2 flex items-center text-gray-500 hover:text-gray-600 focus:outline-none dark:hover:text-gray-200',
-                {
-                  'cursor-pointer': data?.meta?.currentPage !== data?.meta?.pageTotal - 1,
-                  'opacity-50': data?.meta?.currentPage === data?.meta?.pageTotal - 1,
-                }
-              )}
-            >
-              <Link to={`.?page=${data?.meta?.pageTotal}`}>Last</Link>
-            </Pagination.NextButton>
+          <Pagination>
+            {items.map(({ page, type, selected, ...item }, index) => {
+              let children = null
+              if (type === 'start-ellipsis' || type === 'end-ellipsis') {
+                children = '…'
+              } else if (type === 'page') {
+                children = (
+                  <Pagination.PageButton
+                    page={page}
+                    currentPage={data?.meta?.currentPage}
+                    lastPage={data?.meta?.pageTotal}
+                    className={selected ? 'bold' : undefined}
+                    activeClassName="active"
+                    inactiveClassName="inactive"
+                    dataTestIdActive="active"
+                    dataTestIdInactive="inactive"
+                    {...item}
+                  >
+                    {page}
+                  </Pagination.PageButton>
+                )
+              } else {
+                children = (
+                  <Button size="sm" type="button" {...item}>
+                    {type}
+                  </Button>
+                )
+              }
+              return <li key={index}>{children}</li>
+            })}
           </Pagination>
         </Container>
       </Section>
