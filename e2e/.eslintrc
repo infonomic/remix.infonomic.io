@@ -1,5 +1,6 @@
 {
 	"rules": {
-		"testing-library/prefer-screen-queries": "off"
+		"testing-library/prefer-screen-queries": "off",
+		"import/no-extraneous-dependencies": ["warn", { "devDependencies": ["**/*.ts"] }]
 	}
 }
