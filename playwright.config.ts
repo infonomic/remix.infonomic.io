@@ -41,8 +41,22 @@ const config: PlaywrightTestConfig = {
   reporter: process.env.CI
     ? [['github'], ['html', { open: 'never' }]]
     : [['html', { open: 'always' }]],
+
+  // Path to global setup file, which exports a setup function to run before all tests.
+  // In this case, used to seed test users and create storageState files for each.
+  globalSetup: require.resolve('./e2e/helpers/global-setup'),
+
+  // Counterpart to globalSetup above.
+  globalTeardown: require.resolve('./e2e/helpers/global-teardown'),
+
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    // Storage state (cookies + local store) to use by default in all tests (can
+    // be overridden).  Especially useful for sharing auth credentials across
+    // multiple tests.  Omitting this for now -- using shared auth credentials
+    // will be opt-in.
+    // storageState: './e2e/mocks/user.json',
+
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
     /* Base URL to use in actions like `await page.goto('/')`. */
