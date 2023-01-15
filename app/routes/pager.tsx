@@ -8,7 +8,7 @@ import { requireUserId } from '~/session.server'
 import { mergeMeta } from '~/utils/utils'
 
 import { Container } from '~/ui/components/container'
-import { Pagination } from '~/ui/components/pager'
+import { Pagination, FirstIcon, PreviousIcon, NextIcon, LastIcon } from '~/ui/components/pager'
 import { Section } from '~/ui/components/section'
 import MainLayout from '~/ui/layouts/main-layout'
 
@@ -80,14 +80,21 @@ export default function Pager() {
             showLastButton
           >
             <Pagination.Root>
-              <Pagination.First asChild>
-                <Link to=".">
-                  <span>First</span>
-                </Link>
-              </Pagination.First>
-              <Pagination.Prev />
-              {/* <Pagination.Pages /> */}
               <Pagination.Pages
+                renderFirst={key => (
+                  <Pagination.First asChild key={key}>
+                    <Link to=".">
+                      <FirstIcon />
+                    </Link>
+                  </Pagination.First>
+                )}
+                renderPrevious={(key, item, disabled) => (
+                  <Pagination.Previous asChild key={key} page={item.page} disabled={disabled}>
+                    <Link to={disabled ? '.' : `.?page=${item.page - 1}`}>
+                      <PreviousIcon />
+                    </Link>
+                  </Pagination.Previous>
+                )}
                 renderPage={(key, item) => (
                   <Pagination.Page
                     asChild
@@ -99,13 +106,23 @@ export default function Pager() {
                     <Link to={`.?page=${item.page}`}>{item.page}</Link>
                   </Pagination.Page>
                 )}
+                renderNext={(key, item, disabled) => (
+                  <Pagination.Next asChild key={key} page={item.page} disabled={disabled}>
+                    <Link
+                      to={disabled ? `.?page=${data?.meta?.pageTotal}` : `.?page=${item.page + 1}`}
+                    >
+                      <NextIcon />
+                    </Link>
+                  </Pagination.Next>
+                )}
+                renderLast={key => (
+                  <Pagination.Last asChild key={key}>
+                    <Link to={`.?page=${data?.meta?.pageTotal}`}>
+                      <LastIcon />
+                    </Link>
+                  </Pagination.Last>
+                )}
               />
-              <Pagination.Next />
-              <Pagination.Last asChild>
-                <Link to={`.?page=${data?.meta?.pageTotal}`}>
-                  <span>Last</span>
-                </Link>
-              </Pagination.Last>
             </Pagination.Root>
           </Pagination>
         </Container>
