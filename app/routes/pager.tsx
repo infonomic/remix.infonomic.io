@@ -4,11 +4,9 @@ import { json } from '@remix-run/node'
 import type { LoaderArgs } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 
-import cx from 'classnames'
 import { requireUserId } from '~/session.server'
 import { mergeMeta } from '~/utils/utils'
 
-import { Button } from '~/ui/components/button'
 import { Container } from '~/ui/components/container'
 import { Pagination } from '~/ui/components/pager'
 import { Section } from '~/ui/components/section'
@@ -42,7 +40,7 @@ export async function loader({ request }: LoaderArgs) {
   const pageString = url.searchParams.get('page') || '1'
   const page = parseInt(pageString, 10) || 1
 
-  const count = 76
+  const count = 232
   const pageSize = 10
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -80,7 +78,36 @@ export default function Pager() {
             count={data?.meta?.pageTotal}
             showFirstButton
             showLastButton
-          />
+          >
+            <Pagination.Root>
+              <Pagination.First asChild>
+                <Link to=".">
+                  <span>First</span>
+                </Link>
+              </Pagination.First>
+              <Pagination.Prev />
+              {/* <Pagination.Pages /> */}
+              <Pagination.Pages
+                renderPage={(key, item) => (
+                  <Pagination.Page
+                    asChild
+                    key={key}
+                    page={item.page}
+                    selected={item.selected}
+                    activeClassName="active"
+                  >
+                    <Link to={`.?page=${item.page}`}>{item.page}</Link>
+                  </Pagination.Page>
+                )}
+              />
+              <Pagination.Next />
+              <Pagination.Last asChild>
+                <Link to={`.?page=${data?.meta?.pageTotal}`}>
+                  <span>Last</span>
+                </Link>
+              </Pagination.Last>
+            </Pagination.Root>
+          </Pagination>
         </Container>
       </Section>
     </MainLayout>

@@ -45,7 +45,7 @@ export interface UsePaginationProps {
   /**
    * The current page.
    */
-  page?: number;
+  page: number;
   /**
    * If `true`, show the first-page button.
    * @default false
@@ -66,7 +66,7 @@ export interface UsePaginationProps {
 export interface UsePaginationItem {
   onClick: React.ReactEventHandler;
   type: 'page' | 'first' | 'last' | 'next' | 'previous' | 'start-ellipsis' | 'end-ellipsis';
-  page: number | null;
+  page: number;
   selected: boolean;
   disabled: boolean;
 }
