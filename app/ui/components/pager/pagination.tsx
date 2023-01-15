@@ -14,9 +14,11 @@ import type * as Radix from '@radix-ui/react-primitive'
 
 const PAGINATION_NAME = 'Pagination'
 const ROOT_NAME = 'Root'
+const FIRST_BUTTON_NAME = 'FirstButton'
 const PREV_BUTTON_NAME = 'PrevButton'
-const NEXT_BUTTON_NAME = 'NextButton'
 const PAGE_BUTTON_NAME = 'PageButton'
+const NEXT_BUTTON_NAME = 'NextButton'
+const LAST_BUTTON_NAME = 'LastButton'
 
 interface PaginationProps {
   page: number
@@ -50,23 +52,99 @@ interface ButtonProps extends PrimitiveButtonProps {
 
 interface PageButtonProps extends ButtonProps {
   activeClassName?: string
-  inactiveClassName?: string
   dataTestIdActive?: string
   dataTestIdInactive?: string
+  selected?: boolean
 }
 
-const PrevButton = React.forwardRef<ButtonElement, ButtonProps>(
-  ({ page, count, currentPage, className, children, dataTestId, ...rest }, ref) => {
+const FirstButton = React.forwardRef<ButtonElement, ButtonProps>(
+  ({ page, count, currentPage, className, ...rest }, ref) => {
+    const classes = twMerge(
+      cx(
+        'first ml-0 flex rounded-l-md py-2 px-2 leading-tight border',
+        'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
+        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white'
+      ),
+      className
+    )
+
     return (
       <Primitive.button
         ref={ref}
-        className={className}
+        className={classes}
+        // onClick={() => previous()}
+        disabled={currentPage === 1}
+        data-testid="first-page-button"
+        {...rest}
+      >
+        <span className="sr-only">First</span>
+        <svg
+          className="h-5 w-5"
+          aria-hidden="true"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+            clipRule="evenodd"
+          ></path>
+        </svg>
+        <svg
+          className="-ml-2 h-5 w-5"
+          aria-hidden="true"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+            clipRule="evenodd"
+          ></path>
+        </svg>
+      </Primitive.button>
+    )
+  }
+)
+
+FirstButton.displayName = FIRST_BUTTON_NAME
+
+const PrevButton = React.forwardRef<ButtonElement, ButtonProps>(
+  ({ page, count, currentPage, className, ...rest }, ref) => {
+    const classes = twMerge(
+      cx(
+        'previous  py-2 px-3 leading-tight border',
+        'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
+        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white'
+      ),
+      className
+    )
+
+    return (
+      <Primitive.button
+        ref={ref}
+        className={classes}
         {...rest}
         // onClick={() => previous()}
         disabled={currentPage === 1}
-        data-testid={dataTestId}
+        data-testid="prev-page-button"
       >
-        {children}
+        <span className="sr-only">Previous</span>
+        <svg
+          className="h-5 w-5"
+          aria-hidden="true"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+            clipRule="evenodd"
+          ></path>
+        </svg>
       </Primitive.button>
     )
   }
@@ -74,18 +152,78 @@ const PrevButton = React.forwardRef<ButtonElement, ButtonProps>(
 
 PrevButton.displayName = PREV_BUTTON_NAME
 
-const NextButton = React.forwardRef<ButtonElement, ButtonProps>(
-  ({ page, count, currentPage, className, children, dataTestId, ...rest }, ref) => {
+const PageButton = React.forwardRef<ButtonElement, PageButtonProps>(
+  ({ page, count, currentPage, className, activeClassName, children, ...rest }, ref) => {
+    const classes = twMerge(
+      cx(
+        'previous py-2 px-3 leading-tight border',
+        'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
+        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white'
+      ),
+      className
+    )
+
+    const active = twMerge(
+      classes,
+      'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-white',
+      activeClassName
+    )
+
     return (
       <Primitive.button
         ref={ref}
-        className={className}
+        key={page}
+        data-testid={
+          cx({
+            'active-page-button': currentPage === page,
+            [`inactive-page-button-${page}`]: currentPage !== page,
+          }) || undefined
+        }
+        // onClick={() => pagination.setCurrentPage(page - 1)}
+        className={cx(currentPage === page ? active : classes) || undefined}
+        {...rest}
+      >
+        {page}
+      </Primitive.button>
+    )
+  }
+)
+
+PageButton.displayName = PAGE_BUTTON_NAME
+
+const NextButton = React.forwardRef<ButtonElement, ButtonProps>(
+  ({ page, count, currentPage, className, children, ...rest }, ref) => {
+    const classes = twMerge(
+      cx(
+        'previous  py-2 px-3 leading-tight border',
+        'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
+        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white'
+      ),
+      className
+    )
+    return (
+      <Primitive.button
+        ref={ref}
+        className={classes}
         {...rest}
         // onClick={() => next()}
         disabled={currentPage === count}
-        data-testid={dataTestId}
+        data-testid="next-page-button"
       >
-        {children}
+        <span className="sr-only">Next</span>
+        <svg
+          className="h-5 w-5"
+          aria-hidden="true"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+            clipRule="evenodd"
+          ></path>
+        </svg>
       </Primitive.button>
     )
   }
@@ -93,45 +231,58 @@ const NextButton = React.forwardRef<ButtonElement, ButtonProps>(
 
 NextButton.displayName = NEXT_BUTTON_NAME
 
-const PageButton = React.forwardRef<ButtonElement, PageButtonProps>(
-  (
-    {
-      page,
-      count,
-      currentPage,
-      className,
-      activeClassName,
-      inactiveClassName,
-      dataTestIdActive,
-      dataTestIdInactive,
-      children,
-      ...rest
-    },
-    ref
-  ) => {
+const LastButton = React.forwardRef<ButtonElement, ButtonProps>(
+  ({ page, count, currentPage, className, ...rest }, ref) => {
+    const classes = twMerge(
+      cx(
+        'last flex rounded-r-md py-2 px-2 leading-tight border',
+        'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
+        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white'
+      ),
+      className
+    )
     return (
       <Primitive.button
         ref={ref}
-        key={page}
-        data-testid={
-          cx({
-            [`${dataTestIdActive}-page-button`]: dataTestIdActive && currentPage === page,
-            [`${dataTestIdInactive}-page-button-${page}`]: dataTestIdActive && currentPage !== page,
-          }) || undefined
-        }
-        // onClick={() => pagination.setCurrentPage(page - 1)}
-        className={
-          cx(className, currentPage === page ? activeClassName : inactiveClassName) || undefined
-        }
+        className={classes}
         {...rest}
+        // onClick={() => next()}
+        disabled={currentPage === count}
+        data-testid="last-page-button"
       >
-        {children}
+        <span className="sr-only">Last</span>
+        <svg
+          className="-mr-2 h-5 w-5"
+          aria-hidden="true"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+            clipRule="evenodd"
+          ></path>
+        </svg>
+        <svg
+          className="h-5 w-5"
+          aria-hidden="true"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+            clipRule="evenodd"
+          ></path>
+        </svg>
       </Primitive.button>
     )
   }
 )
 
-PageButton.displayName = PAGE_BUTTON_NAME
+LastButton.displayName = LAST_BUTTON_NAME
 
 const Root = React.forwardRef<RootElement, RootProps>(
   ({ className, children, dataTestId, ...rest }, ref) => {
@@ -172,75 +323,16 @@ export const Pagination = ({
           case 'start-ellipsis':
           case 'end-ellipsis':
             component = (
-              <button className="border border-slate-300 bg-white py-2 px-3 leading-tight text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white">
+              <div className="cursor-default border border-slate-300 bg-white py-2 px-3 leading-tight text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white">
                 ...
-              </button>
+              </div>
             )
             break
           case 'first':
-            component = (
-              <Pagination.First
-                page={page}
-                count={count}
-                currentPage={currentPage}
-                dataTestId="first-page-button"
-                className="first ml-0 flex rounded-l-md border border-slate-300 bg-white py-2 px-2 leading-tight text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white"
-              >
-                <span className="sr-only">First</span>
-                <svg
-                  className="h-5 w-5"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-                <svg
-                  className="-ml-2 h-5 w-5"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </Pagination.First>
-            )
+            component = <Pagination.First page={page} count={count} currentPage={currentPage} />
             break
           case 'previous':
-            component = (
-              <Pagination.Prev
-                page={page}
-                count={count}
-                currentPage={currentPage}
-                dataTestId="prev-page-button"
-                className="previous border border-slate-300 bg-white py-2 px-3 leading-tight text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white"
-              >
-                <span className="sr-only">Previous</span>
-                <svg
-                  className="h-5 w-5"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </Pagination.Prev>
-            )
+            component = <Pagination.Prev page={page} count={count} currentPage={currentPage} />
             break
           case 'page':
             component = (
@@ -248,84 +340,17 @@ export const Pagination = ({
                 page={page}
                 count={count}
                 currentPage={currentPage}
-                className={cx(
-                  { 'font-bold': selected },
-                  'border border-slate-300 bg-white py-2 px-3 leading-tight text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white'
-                )}
+                selected={selected}
                 activeClassName="active"
-                inactiveClassName="inactive"
-                dataTestIdActive="active"
-                dataTestIdInactive="inactive"
                 {...item}
-              >
-                {page}
-              </Pagination.Page>
+              />
             )
             break
           case 'next':
-            component = (
-              <Pagination.Next
-                page={page}
-                count={count}
-                currentPage={currentPage}
-                dataTestId="next-page-button"
-                className="next border border-slate-300 bg-white py-2 px-3 leading-tight text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white"
-              >
-                <span className="sr-only">Next</span>
-                <svg
-                  className="h-5 w-5"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </Pagination.Next>
-            )
+            component = <Pagination.Next page={page} count={count} currentPage={currentPage} />
             break
           case 'last':
-            component = (
-              <Pagination.Last
-                page={page}
-                count={count}
-                currentPage={currentPage}
-                dataTestId="last-page-button"
-                className="last flex rounded-r-md border border-slate-300 bg-white py-2 px-2 leading-tight text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white"
-              >
-                <span className="sr-only">Last</span>
-                <svg
-                  className="-mr-2 h-5 w-5"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-                <svg
-                  className="h-5 w-5"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </Pagination.Last>
-            )
+            component = <Pagination.Last page={page} count={count} currentPage={currentPage} />
             break
           default:
             component = (
@@ -334,7 +359,11 @@ export const Pagination = ({
               </button>
             )
         }
-        return <li key={index}>{component}</li>
+        return (
+          <li className="flex" key={index}>
+            {component}
+          </li>
+        )
       })}
     </Pagination.Root>
   )
@@ -345,8 +374,8 @@ export const Pagination = ({
 Pagination.displayName = PAGINATION_NAME
 
 Pagination.Root = Root
-Pagination.First = PrevButton
+Pagination.First = FirstButton
 Pagination.Prev = PrevButton
 Pagination.Page = PageButton
 Pagination.Next = NextButton
-Pagination.Last = NextButton
+Pagination.Last = LastButton
