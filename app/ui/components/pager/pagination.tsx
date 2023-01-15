@@ -1,17 +1,13 @@
-// Adapted from https://github.com/fullhdpixel/react-headless-pagination
-// https://github.com/fullhdpixel/react-headless-pagination/blob/main/LICENSE
 /* eslint-disable react/jsx-pascal-case */
-import type { FC } from 'react'
 import * as React from 'react'
 
 import { Primitive } from '@radix-ui/react-primitive'
 import cx from 'classnames'
 import { twMerge } from 'tailwind-merge'
-import { TypeOf } from 'zod'
 
 import { usePagination } from './hooks/usePagination'
 
-import type { UsePaginationItem } from './hooks/types/usePagination'
+import type { UsePaginationItem } from './hooks/usePagination'
 import type * as Radix from '@radix-ui/react-primitive'
 
 type PagerContextType = {

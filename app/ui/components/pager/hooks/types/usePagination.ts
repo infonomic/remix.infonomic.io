@@ -1,3 +1,6 @@
+// https://github.com/mui/material-ui/blob/master/packages/mui-material/src/usePagination/usePagination.js
+// https://github.com/mui/material-ui/blob/master/LICENSE
+
 import type * as React from 'react'
 
 export interface UsePaginationProps {
