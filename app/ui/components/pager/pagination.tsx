@@ -17,7 +17,6 @@ import type * as Radix from '@radix-ui/react-primitive'
 type PagerContextType = {
   count: number
   currentPage: number
-  items: UsePaginationItem[]
   showFirstButton: boolean
   showLastButton: boolean
 }
@@ -25,7 +24,6 @@ type PagerContextType = {
 const PagerContext = React.createContext<PagerContextType>({
   count: 10,
   currentPage: 1,
-  items: [],
   showFirstButton: false,
   showLastButton: false,
 })
@@ -86,16 +84,9 @@ export const Pagination = ({
   showLastButton = false,
   children,
 }: PaginationProps) => {
-  const { items } = usePagination({
-    page: currentPage,
-    count,
-    showFirstButton,
-    showLastButton,
-  })
-
   const context = React.useMemo(() => {
-    return { items, count, currentPage, showFirstButton, showLastButton }
-  }, [items, count, currentPage, showFirstButton, showLastButton])
+    return { count, currentPage, showFirstButton, showLastButton }
+  }, [count, currentPage, showFirstButton, showLastButton])
 
   return <PagerContext.Provider value={context}>{children}</PagerContext.Provider>
 }
@@ -372,8 +363,13 @@ const Pages = ({
     <Pagination.Page key={key} page={item.page} selected={item.selected} activeClassName="active" />
   ),
 }: PagesProps) => {
-  debugger
-  const { items } = React.useContext(PagerContext)
+  const { count, currentPage, showFirstButton, showLastButton } = React.useContext(PagerContext)
+  const { items } = usePagination({
+    page: currentPage,
+    count,
+    showFirstButton,
+    showLastButton,
+  })
 
   return (
     <>

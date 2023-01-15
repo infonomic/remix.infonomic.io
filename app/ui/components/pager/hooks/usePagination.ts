@@ -1,33 +1,24 @@
 // https://github.com/mui/material-ui/blob/master/packages/mui-material/src/usePagination/usePagination.js
 // https://github.com/mui/material-ui/blob/master/LICENSE
 
-import { useState } from 'react'
-
 import type { UsePaginationResult, UsePaginationProps, UsePaginationItem } from './types/usePagination'
 
 export function usePagination(props: UsePaginationProps): UsePaginationResult {
-  // keep default values in sync with @default tags in Pagination.propTypes
   const {
     boundaryCount = 1,
     count = 1,
-    defaultPage = 1,
     disabled = false,
     hideNextButton = false,
     hidePrevButton = false,
     onChange: handleChange,
-    page: pageProp = 1,
+    page = 1,
     showFirstButton = false,
     showLastButton = false,
     siblingCount = 1,
     ...other
   } = props
 
-  const [page, setPageState] = useState(pageProp)
-
   const handleClick = (event: any, value: number) => {
-    if (!pageProp) {
-      setPageState(value)
-    }
     if (handleChange) {
       handleChange(event, value)
     }
