@@ -7,7 +7,7 @@ import { twMerge } from 'tailwind-merge'
 
 import { usePagination } from './hooks/usePagination'
 
-import type { UsePaginationItem } from './hooks/usePagination'
+import type { UsePaginationItem } from './hooks/types/usePagination'
 import type * as Radix from '@radix-ui/react-primitive'
 
 type PagerContextType = {
@@ -103,7 +103,7 @@ const FirstButton = React.forwardRef<ButtonElement, ButtonProps>(({ className, .
   )
 
   return (
-    <li>
+    <li className="flex">
       <Primitive.button
         ref={ref}
         className={classes}
@@ -166,7 +166,7 @@ const PrevButton = React.forwardRef<ButtonElement, ButtonProps>(({ className, ..
   )
 
   return (
-    <li>
+    <li className="flex">
       <Primitive.button
         ref={ref}
         className={classes}
@@ -221,7 +221,7 @@ const PageButton = React.forwardRef<ButtonElement, PageButtonProps>(
     )
 
     return (
-      <li key={page}>
+      <li className="flex" key={page}>
         <Primitive.button
           ref={ref}
           data-testid={
@@ -256,7 +256,7 @@ const NextButton = React.forwardRef<ButtonElement, ButtonProps>(({ className, ..
     className
   )
   return (
-    <li>
+    <li className="flex">
       <Primitive.button
         ref={ref}
         className={classes}
@@ -305,7 +305,7 @@ const LastButton = React.forwardRef<ButtonElement, ButtonProps>(({ className, ..
     className
   )
   return (
-    <li>
+    <li className="flex">
       <Primitive.button
         ref={ref}
         className={classes}
