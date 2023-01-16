@@ -167,8 +167,8 @@ const PageNumberButton = React.forwardRef<ButtonElement, PageNumberButtonProps>(
     )
 
     const active = twMerge(
-      classes,
       'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-white',
+      classes,
       activeClassName
     )
 
