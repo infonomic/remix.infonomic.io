@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 import * as React from 'react'
 
-import { render } from '@headlessui/react/dist/utils/render'
 import { Primitive } from '@radix-ui/react-primitive'
 import cx from 'classnames'
 import { twMerge } from 'tailwind-merge'
@@ -16,8 +15,8 @@ const PAGINATION_NAME = 'Pagination'
 const ROOT_NAME = 'Root'
 const FIRST_BUTTON_NAME = 'FirstButton'
 const PREV_BUTTON_NAME = 'PreviousButton'
-const PAGES_NAME = 'Pages'
-const PAGE_BUTTON_NAME = 'PageButton'
+const PAGER_NAME = 'Pager'
+const PAGE_NUMBER_BUTTON_NAME = 'PageNumberButton'
 const NEXT_BUTTON_NAME = 'NextButton'
 const LAST_BUTTON_NAME = 'LastButton'
 
@@ -72,56 +71,53 @@ export const Pagination = ({
 Pagination.displayName = PAGINATION_NAME
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// First, Pre, Next, Last, Pages Buttons
+// First, Previous, Next, Last and Page number buttons
 export type ButtonElement = React.ElementRef<typeof Primitive.button>
 type PrimitiveButtonProps = Radix.ComponentPropsWithoutRef<typeof Primitive.button>
 
 export interface ButtonProps extends PrimitiveButtonProps {
   className?: string
-  dataTestId?: string
+  disabled: boolean
   children?: React.ReactNode
 }
 
-const FirstButton = React.forwardRef<ButtonElement, ButtonProps>(({ className, ...rest }, ref) => {
-  const { currentPage } = React.useContext(PagerContext)
-  const disabled = currentPage === 1
-  const classes = twMerge(
-    cx(
-      'first ml-0 flex rounded-l-md py-2 px-2 leading-tight border',
-      'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
-      'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
-      { 'cursor-default': disabled }
-    ),
-    className
-  )
+const FirstButton = React.forwardRef<ButtonElement, ButtonProps>(
+  ({ className, disabled, ...rest }, ref) => {
+    const classes = twMerge(
+      cx(
+        'first ml-0 flex rounded-l-md py-2 px-2 leading-tight border',
+        'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
+        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
+        { 'cursor-default': disabled }
+      ),
+      className
+    )
 
-  return (
-    <li className="flex">
-      <Primitive.button
-        ref={ref}
-        className={classes}
-        // onClick={() => previous()}
-        disabled={disabled}
-        data-testid="first-page-button"
-        {...rest}
-      >
-        {rest.asChild ? rest.children : <FirstIcon />}
-      </Primitive.button>
-    </li>
-  )
-})
+    return (
+      <li className="flex">
+        <Primitive.button
+          ref={ref}
+          className={classes}
+          // onClick={() => previous()}
+          disabled={disabled}
+          data-testid="first-page-button"
+          {...rest}
+        >
+          {rest.asChild ? rest.children : <FirstIcon />}
+        </Primitive.button>
+      </li>
+    )
+  }
+)
 
 FirstButton.displayName = FIRST_BUTTON_NAME
 
 export interface PreviousButtonProps extends ButtonProps {
   page: number | null
-  disabled: boolean
 }
 
 const PreviousButton = React.forwardRef<ButtonElement, PreviousButtonProps>(
   ({ className, page, disabled, ...rest }, ref) => {
-    const { currentPage } = React.useContext(PagerContext)
-    disabled = currentPage === 1
     const classes = twMerge(
       cx(
         'previous  py-2 px-3 leading-tight border',
@@ -137,10 +133,10 @@ const PreviousButton = React.forwardRef<ButtonElement, PreviousButtonProps>(
         <Primitive.button
           ref={ref}
           className={classes}
-          {...rest}
           // onClick={() => previous()}
           disabled={disabled}
           data-testid="prev-page-button"
+          {...rest}
         >
           {rest.asChild ? rest.children : <PreviousIcon />}
         </Primitive.button>
@@ -151,22 +147,21 @@ const PreviousButton = React.forwardRef<ButtonElement, PreviousButtonProps>(
 
 PreviousButton.displayName = PREV_BUTTON_NAME
 
-export interface PageButtonProps extends ButtonProps {
+export interface PageNumberButtonProps extends ButtonProps {
   page: number | null
   activeClassName?: string
-  dataTestIdActive?: string
-  dataTestIdInactive?: string
   selected?: boolean
 }
 
-const PageButton = React.forwardRef<ButtonElement, PageButtonProps>(
-  ({ page, className, activeClassName, ...rest }, ref) => {
+const PageNumberButton = React.forwardRef<ButtonElement, PageNumberButtonProps>(
+  ({ page, className, disabled, activeClassName, ...rest }, ref) => {
     const { currentPage } = React.useContext(PagerContext)
     const classes = twMerge(
       cx(
         'block min-w-[42px] py-2 px-2 leading-tight text-center border',
         'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
-        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white'
+        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
+        { 'cursor-default': disabled }
       ),
       className
     )
@@ -181,14 +176,15 @@ const PageButton = React.forwardRef<ButtonElement, PageButtonProps>(
       <li className="flex">
         <Primitive.button
           ref={ref}
+          // onClick={() => pagination.setCurrentPage(page - 1)}
+          className={cx(currentPage === page ? active : classes) || undefined}
           data-testid={
             cx({
               'active-page-button': currentPage === page,
               [`inactive-page-button-${page}`]: currentPage !== page,
             }) || undefined
           }
-          // onClick={() => pagination.setCurrentPage(page - 1)}
-          className={cx(currentPage === page ? active : classes) || undefined}
+          disabled={disabled}
           {...rest}
         >
           {rest.asChild ? rest.children : <>{page}</>}
@@ -198,17 +194,14 @@ const PageButton = React.forwardRef<ButtonElement, PageButtonProps>(
   }
 )
 
-PageButton.displayName = PAGE_BUTTON_NAME
+PageNumberButton.displayName = PAGE_NUMBER_BUTTON_NAME
 
 export interface NextButtonProps extends ButtonProps {
   page: number | null
-  disabled: boolean
 }
 
 const NextButton = React.forwardRef<ButtonElement, NextButtonProps>(
   ({ className, page, disabled, ...rest }, ref) => {
-    const { count, currentPage } = React.useContext(PagerContext)
-    disabled = currentPage === count
     const classes = twMerge(
       cx(
         'previous  py-2 px-3 leading-tight border',
@@ -223,10 +216,10 @@ const NextButton = React.forwardRef<ButtonElement, NextButtonProps>(
         <Primitive.button
           ref={ref}
           className={classes}
-          {...rest}
           // onClick={() => next()}
           disabled={disabled}
           data-testid="next-page-button"
+          {...rest}
         >
           {rest.asChild ? rest.children : <NextIcon />}
         </Primitive.button>
@@ -237,89 +230,101 @@ const NextButton = React.forwardRef<ButtonElement, NextButtonProps>(
 
 NextButton.displayName = NEXT_BUTTON_NAME
 
-const LastButton = React.forwardRef<ButtonElement, ButtonProps>(({ className, ...rest }, ref) => {
-  const { count, currentPage } = React.useContext(PagerContext)
-  const disabled = currentPage === count
-  const classes = twMerge(
-    cx(
-      'last flex rounded-r-md py-2 px-2 leading-tight border',
-      'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
-      'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
-      { 'cursor-default': disabled }
-    ),
-    className
-  )
-  return (
-    <li className="flex">
-      <Primitive.button
-        ref={ref}
-        className={classes}
-        {...rest}
-        // onClick={() => next()}
-        disabled={disabled}
-        data-testid="last-page-button"
-      >
-        {rest.asChild ? rest.children : <LastIcon />}
-      </Primitive.button>
-    </li>
-  )
-})
+const LastButton = React.forwardRef<ButtonElement, ButtonProps>(
+  ({ className, disabled, ...rest }, ref) => {
+    const classes = twMerge(
+      cx(
+        'last flex rounded-r-md py-2 px-2 leading-tight border',
+        'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
+        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
+        { 'cursor-default': disabled }
+      ),
+      className
+    )
+    return (
+      <li className="flex">
+        <Primitive.button
+          ref={ref}
+          className={classes}
+          // onClick={() => next()}
+          disabled={disabled}
+          data-testid="last-page-button"
+          {...rest}
+        >
+          {rest.asChild ? rest.children : <LastIcon />}
+        </Primitive.button>
+      </li>
+    )
+  }
+)
 
 LastButton.displayName = LAST_BUTTON_NAME
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Pages container component
-export interface PagesProps {
+// Pager container component
+export interface PagerProps {
   children?: React.ReactNode
-  renderFirst?: (key: string) => React.ReactNode
+  renderFirst?: (key: string, disabled: boolean) => React.ReactNode
   renderPrevious?: (key: string, item: UsePaginationItem, disabled: boolean) => React.ReactNode
-  renderPage?: (key: string, item: UsePaginationItem) => React.ReactNode
+  renderPageNumber?: (key: string, item: UsePaginationItem, disabled: boolean) => React.ReactNode
   renderNext?: (key: string, item: UsePaginationItem, disabled: boolean) => React.ReactNode
-  renderLast?: (key: string) => React.ReactNode
+  renderLast?: (key: string, disabled: boolean) => React.ReactNode
 }
 
-const Pages = ({
-  renderFirst = key => <Pagination.First key={key} />,
+const Pager = ({
+  renderFirst = (key, disabled) => <Pagination.First key={key} disabled={disabled} />,
   renderPrevious = (key, item, disabled) => (
     <Pagination.Previous key={key} page={item.page} disabled={disabled} />
   ),
-  renderPage = (key, item) => (
-    <Pagination.Page key={key} page={item.page} selected={item.selected} activeClassName="active" />
+  renderPageNumber = (key, item, disabled) => (
+    <Pagination.PageNumber
+      key={key}
+      page={item.page}
+      disabled={disabled}
+      selected={item.selected}
+      activeClassName="active"
+    />
   ),
   renderNext = (key, item, disabled) => (
     <Pagination.Next key={key} page={item.page} disabled={disabled} />
   ),
-  renderLast = key => <Pagination.Last key={key} />,
-}: PagesProps) => {
+  renderLast = key => <Pagination.Last key={key} disabled={disabled} />,
+}: PagerProps) => {
   const { items, count, currentPage } = React.useContext(PagerContext)
 
   return (
     <>
       {items.map((item, index) => {
         const key = `${item.page}-${index}`
-        let disabled = false
         switch (item.type) {
           case 'start-ellipsis':
           case 'end-ellipsis':
             return (
+              // TODO - extract ellipses component
               <li className="flex" key={key}>
-                <div className="min-w-[44px] cursor-default border border-slate-300 bg-white py-2 px-3 leading-tight text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white">
+                <div
+                  className={cx(
+                    'min-w-[44px] cursor-default border py-2 px-3 leading-tight',
+                    'border-slate-300 bg-white  text-slate-500',
+                    'hover:bg-slate-100 hover:text-slate-700',
+                    'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400',
+                    'dark:hover:bg-slate-700 dark:hover:text-white'
+                  )}
+                >
                   ...
                 </div>
               </li>
             )
           case 'first':
-            return renderFirst(key)
+            return renderFirst(key, currentPage === 1)
           case 'previous':
-            disabled = currentPage === 1
-            return renderPrevious(key, item, disabled)
+            return renderPrevious(key, item, currentPage === 1)
           case 'page':
-            return renderPage(key, item)
+            return renderPageNumber(key, item, item.page === currentPage)
           case 'next':
-            disabled = currentPage === count
-            return renderNext(key, item, disabled)
+            return renderNext(key, item, currentPage === count)
           case 'last':
-            return renderLast(key)
+            return renderLast(key, currentPage === count)
           default:
             return null
         }
@@ -328,7 +333,7 @@ const Pages = ({
   )
 }
 
-Pages.displayName = PAGES_NAME
+Pager.displayName = PAGER_NAME
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Root
@@ -364,9 +369,9 @@ const Root = React.forwardRef<RootElement, RootProps>(
 Root.displayName = ROOT_NAME
 
 Pagination.Root = Root
+Pagination.Pager = Pager
 Pagination.First = FirstButton
 Pagination.Previous = PreviousButton
-Pagination.Pages = Pages
-Pagination.Page = PageButton
+Pagination.PageNumber = PageNumberButton
 Pagination.Next = NextButton
 Pagination.Last = LastButton

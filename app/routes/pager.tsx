@@ -80,46 +80,74 @@ export default function Pager() {
             showLastButton
           >
             <Pagination.Root>
-              <Pagination.Pages
-                renderFirst={key => (
-                  <Pagination.First asChild key={key}>
-                    <Link to=".">
-                      <FirstIcon />
-                    </Link>
+              <Pagination.Pager
+                renderFirst={(key, disabled) => (
+                  <Pagination.First asChild key={key} disabled={disabled}>
+                    {disabled ? (
+                      <div>
+                        <FirstIcon />
+                      </div>
+                    ) : (
+                      <Link to=".">
+                        <FirstIcon />
+                      </Link>
+                    )}
                   </Pagination.First>
                 )}
                 renderPrevious={(key, item, disabled) => (
                   <Pagination.Previous asChild key={key} page={item.page} disabled={disabled}>
-                    <Link to={disabled ? '.' : `.?page=${item.page - 1}`}>
-                      <PreviousIcon />
-                    </Link>
+                    {disabled ? (
+                      <div>
+                        <PreviousIcon />
+                      </div>
+                    ) : (
+                      <Link to={`.?page=${item.page - 1}`}>
+                        <PreviousIcon />
+                      </Link>
+                    )}
                   </Pagination.Previous>
                 )}
-                renderPage={(key, item) => (
-                  <Pagination.Page
+                renderPageNumber={(key, item, disabled) => (
+                  <Pagination.PageNumber
                     asChild
                     key={key}
                     page={item.page}
                     selected={item.selected}
+                    disabled={disabled}
                     activeClassName="active"
                   >
-                    <Link to={`.?page=${item.page}`}>{item.page}</Link>
-                  </Pagination.Page>
+                    {disabled ? (
+                      <div>{item.page}</div>
+                    ) : (
+                      <Link to={`.?page=${item.page}`}>{item.page}</Link>
+                    )}
+                  </Pagination.PageNumber>
                 )}
                 renderNext={(key, item, disabled) => (
                   <Pagination.Next asChild key={key} page={item.page} disabled={disabled}>
-                    <Link
-                      to={disabled ? `.?page=${data?.meta?.pageTotal}` : `.?page=${item.page + 1}`}
-                    >
-                      <NextIcon />
-                    </Link>
+                    {disabled ? (
+                      <div>
+                        <NextIcon />
+                      </div>
+                    ) : (
+                      <Link to={`.?page=${item.page + 1}`}>
+                        <NextIcon />
+                      </Link>
+                    )}
                   </Pagination.Next>
                 )}
-                renderLast={key => (
-                  <Pagination.Last asChild key={key}>
-                    <Link to={`.?page=${data?.meta?.pageTotal}`}>
-                      <LastIcon />
-                    </Link>
+                renderLast={(key, disabled) => (
+                  <Pagination.Last asChild key={key} disabled={disabled}>
+                    {disabled ? (
+                      <div>
+                        {' '}
+                        <LastIcon />
+                      </div>
+                    ) : (
+                      <Link to={`.?page=${data?.meta?.pageTotal}`}>
+                        <LastIcon />
+                      </Link>
+                    )}
                   </Pagination.Last>
                 )}
               />
