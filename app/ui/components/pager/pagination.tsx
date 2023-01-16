@@ -288,7 +288,7 @@ const Pager = ({
   renderNext = (key, item, disabled) => (
     <Pagination.Next key={key} page={item.page} disabled={disabled} />
   ),
-  renderLast = key => <Pagination.Last key={key} disabled={disabled} />,
+  renderLast = (key, disabled) => <Pagination.Last key={key} disabled={disabled} />,
 }: PagerProps) => {
   const { items, count, currentPage } = React.useContext(PagerContext)
 
