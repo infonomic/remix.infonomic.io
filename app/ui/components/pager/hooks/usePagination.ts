@@ -112,7 +112,7 @@ export function usePagination(props: UsePaginationProps): UsePaginationResult {
         type: 'page',
         page: item,
         selected: item === page,
-        disabled,
+        disabled: item === page,
         'aria-current': item === page ? 'true' : undefined,
       } as UsePaginationItem
       : {

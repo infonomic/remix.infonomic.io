@@ -15,9 +15,9 @@ export const RouterPager = ({ ...rest }: PaginationProps) => {
     <Pagination {...rest}>
       <Pagination.Root>
         <Pagination.Pager
-          renderFirst={(key, disabled) => (
-            <Pagination.First asChild key={key} disabled={disabled}>
-              {disabled ? (
+          renderFirst={(key, item) => (
+            <Pagination.First asChild key={key} disabled={item.disabled}>
+              {item.disabled ? (
                 <div>
                   <FirstIcon />
                 </div>
@@ -28,9 +28,9 @@ export const RouterPager = ({ ...rest }: PaginationProps) => {
               )}
             </Pagination.First>
           )}
-          renderPrevious={(key, item, disabled) => (
-            <Pagination.Previous asChild key={key} page={item.page} disabled={disabled}>
-              {disabled ? (
+          renderPrevious={(key, item) => (
+            <Pagination.Previous asChild key={key} page={item.page} disabled={item.disabled}>
+              {item.disabled ? (
                 <div>
                   <PreviousIcon />
                 </div>
@@ -41,25 +41,25 @@ export const RouterPager = ({ ...rest }: PaginationProps) => {
               )}
             </Pagination.Previous>
           )}
-          renderPageNumber={(key, item, disabled) => (
+          renderPageNumber={(key, item) => (
             <Pagination.PageNumber
               asChild
               key={key}
               page={item.page}
               selected={item.selected}
-              disabled={disabled}
+              disabled={item.disabled}
               activeClassName="active"
             >
-              {disabled ? (
+              {item.disabled ? (
                 <div>{item.page}</div>
               ) : (
                 <Link to={`.?page=${item.page}`}>{item.page}</Link>
               )}
             </Pagination.PageNumber>
           )}
-          renderNext={(key, item, disabled) => (
-            <Pagination.Next asChild key={key} page={item.page} disabled={disabled}>
-              {disabled ? (
+          renderNext={(key, item) => (
+            <Pagination.Next asChild key={key} page={item.page} disabled={item.disabled}>
+              {item.disabled ? (
                 <div>
                   <NextIcon />
                 </div>
@@ -70,9 +70,9 @@ export const RouterPager = ({ ...rest }: PaginationProps) => {
               )}
             </Pagination.Next>
           )}
-          renderLast={(key, count, disabled) => (
-            <Pagination.Last asChild key={key} disabled={disabled}>
-              {disabled ? (
+          renderLast={(key, item, count) => (
+            <Pagination.Last asChild key={key} disabled={item.disabled} count={count}>
+              {item.disabled ? (
                 <div>
                   {' '}
                   <LastIcon />

@@ -90,6 +90,7 @@ export interface ButtonProps extends PrimitiveButtonProps {
   className?: string
   disabled: boolean
   children?: React.ReactNode
+  onClick?: React.ReactEventHandler
 }
 
 const FirstButton = React.forwardRef<ButtonElement, ButtonProps>(
@@ -123,12 +124,8 @@ const FirstButton = React.forwardRef<ButtonElement, ButtonProps>(
 
 FirstButton.displayName = FIRST_BUTTON_NAME
 
-export interface PreviousButtonProps extends ButtonProps {
-  page: number | null
-}
-
-const PreviousButton = React.forwardRef<ButtonElement, PreviousButtonProps>(
-  ({ className, page, disabled, ...rest }, ref) => {
+const PreviousButton = React.forwardRef<ButtonElement, ButtonProps>(
+  ({ className, disabled, ...rest }, ref) => {
     const classes = twMerge(
       cx(
         'previous  py-2 px-3 leading-tight border',
@@ -241,8 +238,12 @@ const NextButton = React.forwardRef<ButtonElement, NextButtonProps>(
 
 NextButton.displayName = NEXT_BUTTON_NAME
 
-const LastButton = React.forwardRef<ButtonElement, ButtonProps>(
-  ({ className, disabled, ...rest }, ref) => {
+export interface LastButtonProps extends ButtonProps {
+  count: number
+}
+
+const LastButton = React.forwardRef<ButtonElement, LastButtonProps>(
+  ({ className, disabled, count, ...rest }, ref) => {
     const classes = twMerge(
       cx(
         'last flex rounded-r-md py-2 px-2 leading-tight border',
@@ -275,33 +276,38 @@ LastButton.displayName = LAST_BUTTON_NAME
 // Pager container component
 export interface PagerProps {
   children?: React.ReactNode
-  renderFirst?: (key: string, disabled: boolean) => React.ReactNode
-  renderPrevious?: (key: string, item: UsePaginationItem, disabled: boolean) => React.ReactNode
-  renderPageNumber?: (key: string, item: UsePaginationItem, disabled: boolean) => React.ReactNode
-  renderNext?: (key: string, item: UsePaginationItem, disabled: boolean) => React.ReactNode
-  renderLast?: (key: string, count: number, disabled: boolean) => React.ReactNode
+  renderFirst?: (key: string, item: UsePaginationItem) => React.ReactNode
+  renderPrevious?: (key: string, item: UsePaginationItem) => React.ReactNode
+  renderPageNumber?: (key: string, item: UsePaginationItem) => React.ReactNode
+  renderNext?: (key: string, item: UsePaginationItem) => React.ReactNode
+  renderLast?: (key: string, item: UsePaginationItem, count: number) => React.ReactNode
 }
 
 const Pager = ({
-  renderFirst = (key, disabled) => <Pagination.First key={key} disabled={disabled} />,
-  renderPrevious = (key, item, disabled) => (
-    <Pagination.Previous key={key} page={item.page} disabled={disabled} />
+  renderFirst = (key, item) => (
+    <Pagination.First key={key} disabled={item.disabled} onClick={item.onClick} />
   ),
-  renderPageNumber = (key, item, disabled) => (
+  renderPrevious = (key, item) => (
+    <Pagination.Previous key={key} disabled={item.disabled} onClick={item.onClick} />
+  ),
+  renderPageNumber = (key, item) => (
     <Pagination.PageNumber
       key={key}
       page={item.page}
-      disabled={disabled}
+      disabled={item.disabled}
       selected={item.selected}
       activeClassName="active"
+      onClick={item.onClick}
     />
   ),
-  renderNext = (key, item, disabled) => (
-    <Pagination.Next key={key} page={item.page} disabled={disabled} />
+  renderNext = (key, item) => (
+    <Pagination.Next key={key} page={item.page} disabled={item.disabled} onClick={item.onClick} />
   ),
-  renderLast = (key, count, disabled) => <Pagination.Last key={key} disabled={disabled} />,
+  renderLast = (key, item, count) => (
+    <Pagination.Last key={key} disabled={item.disabled} count={count} onClick={item.onClick} />
+  ),
 }: PagerProps) => {
-  const { items, count, currentPage } = React.useContext(PagerContext)
+  const { items, count } = React.useContext(PagerContext)
 
   return (
     <>
@@ -327,15 +333,15 @@ const Pager = ({
               </li>
             )
           case 'first':
-            return renderFirst(key, currentPage === 1)
+            return renderFirst(key, item)
           case 'previous':
-            return renderPrevious(key, item, currentPage === 1)
+            return renderPrevious(key, item)
           case 'page':
-            return renderPageNumber(key, item, item.page === currentPage)
+            return renderPageNumber(key, item)
           case 'next':
-            return renderNext(key, item, currentPage === count)
+            return renderNext(key, item)
           case 'last':
-            return renderLast(key, count, currentPage === count)
+            return renderLast(key, item, count)
           default:
             return null
         }
