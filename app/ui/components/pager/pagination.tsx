@@ -8,7 +8,7 @@ import { twMerge } from 'tailwind-merge'
 import { usePagination } from './hooks/usePagination'
 import { FirstIcon, PreviousIcon, NextIcon, LastIcon } from './icons'
 
-import type { UsePaginationItem } from './hooks/types/usePagination'
+import type { UsePaginationProps, UsePaginationItem } from './hooks/types/usePagination'
 import type * as Radix from '@radix-ui/react-primitive'
 
 const PAGINATION_NAME = 'Pagination'
@@ -21,16 +21,20 @@ const NEXT_BUTTON_NAME = 'NextButton'
 const LAST_BUTTON_NAME = 'LastButton'
 
 type PagerContextType = {
-  count: number
+  count?: number
   currentPage: number
+  hideNextButton?: boolean
+  hidePrevButton?: boolean
   items: UsePaginationItem[]
-  showFirstButton: boolean
-  showLastButton: boolean
+  showFirstButton?: boolean
+  showLastButton?: boolean
 }
 
 const PagerContext = React.createContext<PagerContextType>({
-  count: 10,
+  count: 1,
   currentPage: 1,
+  hideNextButton: false,
+  hidePrevButton: false,
   items: [],
   showFirstButton: false,
   showLastButton: false,
@@ -38,32 +42,39 @@ const PagerContext = React.createContext<PagerContextType>({
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Pagination
-export interface PaginationProps {
-  page: number
-  count: number
-  className?: string
-  showFirstButton?: boolean
-  showLastButton?: boolean
+
+/**
+ * See ./hooks/types/usePagination.ts
+ */
+export interface PaginationProps extends UsePaginationProps {
   children?: React.ReactNode
 }
 
-export const Pagination = ({
-  page: currentPage,
-  count,
-  showFirstButton = false,
-  showLastButton = false,
-  children,
-}: PaginationProps) => {
+export const Pagination = ({ children, ...rest }: PaginationProps) => {
   const { items } = usePagination({
-    page: currentPage,
-    count,
-    showFirstButton,
-    showLastButton,
+    ...rest,
   })
 
+  const {
+    count,
+    page: currentPage,
+    hideNextButton,
+    hidePrevButton,
+    showFirstButton,
+    showLastButton,
+  } = rest
+
   const context = React.useMemo(() => {
-    return { count, currentPage, items, showFirstButton, showLastButton }
-  }, [count, currentPage, items, showFirstButton, showLastButton])
+    return {
+      items,
+      count,
+      currentPage,
+      hideNextButton,
+      hidePrevButton,
+      showFirstButton,
+      showLastButton,
+    }
+  }, [items, count, currentPage, hideNextButton, hidePrevButton, showFirstButton, showLastButton])
 
   return <PagerContext.Provider value={context}>{children}</PagerContext.Provider>
 }
