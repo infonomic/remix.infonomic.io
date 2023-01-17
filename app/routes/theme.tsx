@@ -1,8 +1,5 @@
-import * as React from 'react'
-
 import type { LoaderArgs } from '@remix-run/node'
 
-import cx from 'classnames'
 import { requireUserId } from '~/session.server'
 import { mergeMeta } from '~/utils/utils'
 
