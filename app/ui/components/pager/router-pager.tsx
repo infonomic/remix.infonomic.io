@@ -29,7 +29,7 @@ export const RouterPager = ({ ...rest }: PaginationProps) => {
             </Pagination.First>
           )}
           renderPrevious={(key, item) => (
-            <Pagination.Previous asChild key={key} page={item.page} disabled={item.disabled}>
+            <Pagination.Previous asChild key={key} disabled={item.disabled}>
               {item.disabled ? (
                 <div>
                   <PreviousIcon />

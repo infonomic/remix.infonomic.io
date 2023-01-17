@@ -2,13 +2,13 @@ import * as React from 'react'
 
 import { json } from '@remix-run/node'
 import type { LoaderArgs } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 
 import { requireUserId } from '~/session.server'
 import { mergeMeta } from '~/utils/utils'
 
 import { Container } from '~/ui/components/container'
-import { RouterPager } from '~/ui/components/pager'
+import { RouterPager, Pagination } from '~/ui/components/pager'
 import { Section } from '~/ui/components/section'
 import MainLayout from '~/ui/layouts/main-layout'
 
@@ -68,11 +68,24 @@ export async function loader({ request }: LoaderArgs) {
 export default function Pager() {
   const data = useLoaderData<typeof loader>()
 
+  const [page, setPage] = React.useState(1)
+
+  const handlePage = (event, page) => {
+    setPage(page)
+  }
+
   return (
     <MainLayout>
       <Section className="py-4">
         <Container>
-          Current page: {data?.meta?.currentPage}
+          <p>Statefull Pager: Current page: {page}</p>
+          <Pagination page={page} count={24} onChange={handlePage} showFirstButton showLastButton>
+            <Pagination.Root>
+              <Pagination.Pager />
+            </Pagination.Root>
+          </Pagination>
+          <p>Stateless Pager: Current page: {data?.meta?.currentPage}</p>
+
           <RouterPager
             page={data?.meta?.currentPage}
             count={data?.meta?.pageTotal}
