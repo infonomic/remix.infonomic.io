@@ -21,7 +21,7 @@ const NEXT_BUTTON_NAME = 'NextButton'
 const LAST_BUTTON_NAME = 'LastButton'
 
 type PagerContextType = {
-  count?: number
+  count: number
   currentPage: number
   hideNextButton?: boolean
   hidePrevButton?: boolean
@@ -279,7 +279,7 @@ export interface PagerProps {
   renderPrevious?: (key: string, item: UsePaginationItem, disabled: boolean) => React.ReactNode
   renderPageNumber?: (key: string, item: UsePaginationItem, disabled: boolean) => React.ReactNode
   renderNext?: (key: string, item: UsePaginationItem, disabled: boolean) => React.ReactNode
-  renderLast?: (key: string, disabled: boolean) => React.ReactNode
+  renderLast?: (key: string, count: number, disabled: boolean) => React.ReactNode
 }
 
 const Pager = ({
@@ -299,7 +299,7 @@ const Pager = ({
   renderNext = (key, item, disabled) => (
     <Pagination.Next key={key} page={item.page} disabled={disabled} />
   ),
-  renderLast = (key, disabled) => <Pagination.Last key={key} disabled={disabled} />,
+  renderLast = (key, count, disabled) => <Pagination.Last key={key} disabled={disabled} />,
 }: PagerProps) => {
   const { items, count, currentPage } = React.useContext(PagerContext)
 
@@ -335,7 +335,7 @@ const Pager = ({
           case 'next':
             return renderNext(key, item, currentPage === count)
           case 'last':
-            return renderLast(key, currentPage === count)
+            return renderLast(key, count, currentPage === count)
           default:
             return null
         }

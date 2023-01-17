@@ -1,13 +1,7 @@
 import { Link } from '@remix-run/react'
 
 import { Pagination, FirstIcon, PreviousIcon, NextIcon, LastIcon } from '~/ui/components/pager'
-
-export interface RouterPagerProps {
-  page: number
-  count: number
-  showFirstButton?: boolean
-  showLastButton?: boolean
-}
+import type { PaginationProps } from '~/ui/components/pager'
 
 /**
  * A convenience Remix Router pager, wrapped around Pagination with
@@ -16,19 +10,9 @@ export interface RouterPagerProps {
  * (including styles) of the default component (First, Previous, PageNumber,
  * Nest, Last buttons etc.)
  */
-export const RouterPager = ({
-  page,
-  count,
-  showFirstButton = true,
-  showLastButton = true,
-}: RouterPagerProps) => {
+export const RouterPager = ({ ...rest }: PaginationProps) => {
   return (
-    <Pagination
-      page={page}
-      count={count}
-      showFirstButton={showFirstButton}
-      showLastButton={showLastButton}
-    >
+    <Pagination {...rest}>
       <Pagination.Root>
         <Pagination.Pager
           renderFirst={(key, disabled) => (
@@ -86,7 +70,7 @@ export const RouterPager = ({
               )}
             </Pagination.Next>
           )}
-          renderLast={(key, disabled) => (
+          renderLast={(key, count, disabled) => (
             <Pagination.Last asChild key={key} disabled={disabled}>
               {disabled ? (
                 <div>
