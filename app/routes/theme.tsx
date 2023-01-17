@@ -1,4 +1,8 @@
+import * as React from 'react'
+
 import type { LoaderArgs } from '@remix-run/node'
+import { json } from '@remix-run/node'
+import { useLoaderData } from '@remix-run/react'
 
 import { requireUserId } from '~/session.server'
 import { mergeMeta } from '~/utils/utils'
@@ -8,6 +12,7 @@ import { Card } from '~/ui/components/card'
 import { Container } from '~/ui/components/container'
 // import { Checkbox } from '~/ui/components/input'
 import { Alert } from '~/ui/components/notifications'
+import { RouterPager, EventPager } from '~/ui/components/pager'
 import { Section } from '~/ui/components/section'
 import MainLayout from '~/ui/layouts/main-layout'
 
@@ -32,7 +37,32 @@ export const meta = ({ matches }: any) => {
  */
 export async function loader({ request }: LoaderArgs) {
   await requireUserId(request)
-  return null
+
+  const url = new URL(request.url)
+
+  // TODO: zod validator for query string params
+  const pageString = url.searchParams.get('page') || '1'
+  const page = parseInt(pageString, 10) || 1
+
+  const count = 232
+  const pageSize = 10
+
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const meta: {
+    total: number
+    pageSize: number
+    pageTotal: number
+    currentPage: number
+  } = {
+    total: count,
+    pageSize,
+    pageTotal: Math.ceil(count / pageSize),
+    currentPage: page,
+  }
+
+  const users: { name: string; age: number }[] = []
+
+  return json({ users, meta })
 }
 
 /**
@@ -40,8 +70,48 @@ export async function loader({ request }: LoaderArgs) {
  * @returns
  */
 export default function Theme() {
+  const data = useLoaderData<typeof loader>()
+
+  const [page, setPage] = React.useState(1)
+
+  const handlePageChange = (event: any, number: number) => {
+    setPage(number)
+  }
+
   return (
     <MainLayout>
+      <Section className="py-4">
+        <Container>
+          <p>Stateful Pagers: Current page: {page}</p>
+          <EventPager
+            page={page}
+            count={24}
+            onChange={handlePageChange}
+            showFirstButton
+            showLastButton
+            componentName="pager1"
+          />
+          <EventPager page={page} count={24} onChange={handlePageChange} componentName="pager2" />
+          <EventPager
+            page={page}
+            count={24}
+            onChange={handlePageChange}
+            componentName="pager3"
+            hideNextButton
+            hidePrevButton
+          />
+
+          <p>Stateless Pager: Current page: {data?.meta?.currentPage}</p>
+
+          <RouterPager
+            page={data?.meta?.currentPage}
+            count={data?.meta?.pageTotal}
+            showFirstButton
+            showLastButton
+            componentName="pager4"
+          />
+        </Container>
+      </Section>
       <Section className="flex-1 py-4">
         <Container className="text-black">
           <div className="grid-cols-2 mx-auto max-w-[420px] gap-4 lg:grid lg:max-w-none">
