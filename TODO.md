@@ -14,7 +14,7 @@
 ## Components
 
 - [ ] Button: add 'busy' state and loader indicator (as in sign-in.tsx)
-- [ ] Pager: implement general purpose pager component
+- [x] Pager: implement general purpose pager component
 - [ ] Table: implement sortable columns and filter / search
 - [ ] Menu: extract and create MenuItem component to DRY-up main-menu.tsx
 - [ ] Input: consider implementing variants for Inputs

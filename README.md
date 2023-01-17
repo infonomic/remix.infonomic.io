@@ -159,7 +159,7 @@ As mentioned in the introduction to this section, we've intentionally removed an
 
 [Input](https://github.com/infonomic/remix.infonomic.io/tree/develop/app/ui/components/input) - inputs include Input, Checkbox, and TextArea components. Input and TextArea support labels, help text and error messages. We've not yet implemented a 'variant' system for these components. CheckBox is a functional component wrapper around the [Radix Tailwind project Checkbox](https://github.com/ecklf/tailwindcss-radix/blob/main/demo/components/checkbox.tsx) component.
 
-[Pager](https://github.com/infonomic/remix.infonomic.io/tree/develop/app/ui/components/pager) - is a styled 'placeholder' component for a general purpose pager. It has not been fully implemented - unlike TablePager below. Initial Pager styling courtesy of [Flowbite Pager](https://flowbite.com/docs/components/pagination/).
+[Pager](https://github.com/infonomic/remix.infonomic.io/tree/develop/app/ui/components/pager) - a general purpose pager component, supporting both stateful and stateless Remix router modes. Initial styling courtesy of [Flowbite Pager](https://flowbite.com/docs/components/pagination/).
 
 [ScrollToTop](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/ui/components/scroll-to-top.tsx) - is a simple and dynamic 'scroll to top' component. It will only appear after scrolling down. This is a CSS-styled component with the component stylesheet located at `/shared/css/components/scroll-to-top.css`.
 
