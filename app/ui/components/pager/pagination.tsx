@@ -28,6 +28,7 @@ type PagerContextType = {
   items: UsePaginationItem[]
   showFirstButton?: boolean
   showLastButton?: boolean
+  eventsEnabled?: boolean
 }
 
 const PagerContext = React.createContext<PagerContextType>({
@@ -38,6 +39,7 @@ const PagerContext = React.createContext<PagerContextType>({
   items: [],
   showFirstButton: false,
   showLastButton: false,
+  eventsEnabled: false,
 })
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -62,7 +64,10 @@ export const Pagination = ({ children, ...rest }: PaginationProps) => {
     hidePrevButton,
     showFirstButton,
     showLastButton,
+    onChange,
   } = rest
+
+  const eventsEnabled = !!onChange
 
   const context = React.useMemo(() => {
     return {
@@ -73,8 +78,18 @@ export const Pagination = ({ children, ...rest }: PaginationProps) => {
       hidePrevButton,
       showFirstButton,
       showLastButton,
+      eventsEnabled,
     }
-  }, [items, count, currentPage, hideNextButton, hidePrevButton, showFirstButton, showLastButton])
+  }, [
+    items,
+    count,
+    currentPage,
+    hideNextButton,
+    hidePrevButton,
+    showFirstButton,
+    showLastButton,
+    eventsEnabled,
+  ])
 
   return <PagerContext.Provider value={context}>{children}</PagerContext.Provider>
 }
@@ -90,11 +105,12 @@ export interface ButtonProps extends PrimitiveButtonProps {
   className?: string
   disabled: boolean
   children?: React.ReactNode
-  onClick?: React.ReactEventHandler
+  onClick?: React.ReactEventHandler<Element> | undefined
 }
 
 const FirstButton = React.forwardRef<ButtonElement, ButtonProps>(
-  ({ className, disabled, ...rest }, ref) => {
+  ({ className, disabled, onClick, ...rest }, ref) => {
+    const { eventsEnabled } = React.useContext(PagerContext)
     const classes = twMerge(
       cx(
         'first ml-0 flex rounded-l-md py-2 px-2 leading-tight border',
@@ -110,7 +126,7 @@ const FirstButton = React.forwardRef<ButtonElement, ButtonProps>(
         <Primitive.button
           ref={ref}
           className={classes}
-          // onClick={() => previous()}
+          onClick={eventsEnabled ? onClick : undefined}
           disabled={disabled}
           data-testid="first-page-button"
           {...rest}
@@ -125,7 +141,8 @@ const FirstButton = React.forwardRef<ButtonElement, ButtonProps>(
 FirstButton.displayName = FIRST_BUTTON_NAME
 
 const PreviousButton = React.forwardRef<ButtonElement, ButtonProps>(
-  ({ className, disabled, ...rest }, ref) => {
+  ({ className, disabled, onClick, ...rest }, ref) => {
+    const { eventsEnabled } = React.useContext(PagerContext)
     const classes = twMerge(
       cx(
         'previous  py-2 px-3 leading-tight border',
@@ -141,7 +158,7 @@ const PreviousButton = React.forwardRef<ButtonElement, ButtonProps>(
         <Primitive.button
           ref={ref}
           className={classes}
-          // onClick={() => previous()}
+          onClick={eventsEnabled ? onClick : undefined}
           disabled={disabled}
           data-testid="prev-page-button"
           {...rest}
@@ -162,11 +179,11 @@ export interface PageNumberButtonProps extends ButtonProps {
 }
 
 const PageNumberButton = React.forwardRef<ButtonElement, PageNumberButtonProps>(
-  ({ page, className, disabled, activeClassName, ...rest }, ref) => {
-    const { currentPage } = React.useContext(PagerContext)
+  ({ page, className, disabled, onClick, activeClassName, ...rest }, ref) => {
+    const { currentPage, eventsEnabled } = React.useContext(PagerContext)
     const classes = twMerge(
       cx(
-        'block min-w-[42px] py-2 px-2 leading-tight text-center border',
+        'block min-w-[42px] py-2 px-2 leading-tight text-center border select-none',
         'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
         'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
         { 'cursor-default': disabled }
@@ -184,8 +201,8 @@ const PageNumberButton = React.forwardRef<ButtonElement, PageNumberButtonProps>(
       <li className="flex">
         <Primitive.button
           ref={ref}
-          // onClick={() => pagination.setCurrentPage(page - 1)}
           className={cx(currentPage === page ? active : classes) || undefined}
+          onClick={eventsEnabled ? onClick : undefined}
           data-testid={
             cx({
               'active-page-button': currentPage === page,
@@ -209,7 +226,8 @@ export interface NextButtonProps extends ButtonProps {
 }
 
 const NextButton = React.forwardRef<ButtonElement, NextButtonProps>(
-  ({ className, page, disabled, ...rest }, ref) => {
+  ({ className, page, disabled, onClick, ...rest }, ref) => {
+    const { eventsEnabled } = React.useContext(PagerContext)
     const classes = twMerge(
       cx(
         'previous  py-2 px-3 leading-tight border',
@@ -224,7 +242,7 @@ const NextButton = React.forwardRef<ButtonElement, NextButtonProps>(
         <Primitive.button
           ref={ref}
           className={classes}
-          // onClick={() => next()}
+          onClick={eventsEnabled ? onClick : undefined}
           disabled={disabled}
           data-testid="next-page-button"
           {...rest}
@@ -243,7 +261,8 @@ export interface LastButtonProps extends ButtonProps {
 }
 
 const LastButton = React.forwardRef<ButtonElement, LastButtonProps>(
-  ({ className, disabled, count, ...rest }, ref) => {
+  ({ className, disabled, count, onClick, ...rest }, ref) => {
+    const { eventsEnabled } = React.useContext(PagerContext)
     const classes = twMerge(
       cx(
         'last flex rounded-r-md py-2 px-2 leading-tight border',
@@ -258,7 +277,7 @@ const LastButton = React.forwardRef<ButtonElement, LastButtonProps>(
         <Primitive.button
           ref={ref}
           className={classes}
-          // onClick={() => next()}
+          onClick={eventsEnabled ? onClick : undefined}
           disabled={disabled}
           data-testid="last-page-button"
           {...rest}
@@ -321,7 +340,7 @@ const Pager = ({
               <li className="flex" key={key}>
                 <div
                   className={cx(
-                    'min-w-[44px] cursor-default border py-2 px-3 leading-tight',
+                    'min-w-[44px] cursor-default select-none border py-2 px-3 leading-tight',
                     'border-slate-300 bg-white  text-slate-500',
                     'hover:bg-slate-100 hover:text-slate-700',
                     'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400',
