@@ -8,7 +8,7 @@ import { requireUserId } from '~/session.server'
 import { mergeMeta } from '~/utils/utils'
 
 import { Container } from '~/ui/components/container'
-import { RouterPager, Pagination } from '~/ui/components/pager'
+import { RouterPager, EventPager } from '~/ui/components/pager'
 import { Section } from '~/ui/components/section'
 import MainLayout from '~/ui/layouts/main-layout'
 
@@ -70,20 +70,33 @@ export default function Pager() {
 
   const [page, setPage] = React.useState(1)
 
-  const handlePage = (event, page) => {
-    setPage(page)
+  const handlePageChange = (event: any, number: number) => {
+    setPage(number)
   }
 
   return (
     <MainLayout>
       <Section className="py-4">
         <Container>
-          <p>Statefull Pager: Current page: {page}</p>
-          <Pagination page={page} count={24} onChange={handlePage} showFirstButton showLastButton>
-            <Pagination.Root>
-              <Pagination.Pager />
-            </Pagination.Root>
-          </Pagination>
+          <p>Stateful Pagers: Current page: {page}</p>
+          <EventPager
+            page={page}
+            count={24}
+            onChange={handlePageChange}
+            showFirstButton
+            showLastButton
+            componentName="pager1"
+          />
+          <EventPager page={page} count={24} onChange={handlePageChange} componentName="pager2" />
+          <EventPager
+            page={page}
+            count={24}
+            onChange={handlePageChange}
+            componentName="pager3"
+            hideNextButton
+            hidePrevButton
+          />
+
           <p>Stateless Pager: Current page: {data?.meta?.currentPage}</p>
 
           <RouterPager
@@ -91,6 +104,7 @@ export default function Pager() {
             count={data?.meta?.pageTotal}
             showFirstButton
             showLastButton
+            componentName="pager4"
           />
         </Container>
       </Section>

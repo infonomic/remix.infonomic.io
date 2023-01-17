@@ -10,9 +10,9 @@ import type { PaginationProps } from '~/ui/components/pager'
  * (including styles) of the default component (First, Previous, PageNumber,
  * Nest, Last buttons etc.)
  */
-export const RouterPager = ({ ...rest }: PaginationProps) => {
+export const RouterPager = (props: PaginationProps) => {
   return (
-    <Pagination {...rest}>
+    <Pagination {...props}>
       <Pagination.Root>
         <Pagination.Pager
           renderFirst={(key, item) => (

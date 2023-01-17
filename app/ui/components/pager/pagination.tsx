@@ -142,13 +142,14 @@ FirstButton.displayName = FIRST_BUTTON_NAME
 
 const PreviousButton = React.forwardRef<ButtonElement, ButtonProps>(
   ({ className, disabled, onClick, ...rest }, ref) => {
-    const { eventsEnabled } = React.useContext(PagerContext)
+    const { eventsEnabled, showFirstButton } = React.useContext(PagerContext)
     const classes = twMerge(
       cx(
         'previous  py-2 px-3 leading-tight border',
         'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
         'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
-        { 'cursor-default': disabled }
+        { 'cursor-default': disabled },
+        { 'rounded-l-md': !showFirstButton }
       ),
       className
     )
@@ -180,13 +181,27 @@ export interface PageNumberButtonProps extends ButtonProps {
 
 const PageNumberButton = React.forwardRef<ButtonElement, PageNumberButtonProps>(
   ({ page, className, disabled, onClick, activeClassName, ...rest }, ref) => {
-    const { currentPage, eventsEnabled } = React.useContext(PagerContext)
+    const {
+      currentPage,
+      count,
+      eventsEnabled,
+      showFirstButton,
+      showLastButton,
+      hideNextButton,
+      hidePrevButton,
+    } = React.useContext(PagerContext)
+
+    const roundedFirst = page === 1 && !showFirstButton && hidePrevButton
+    const roundedLast = page === count && !showLastButton && hideNextButton
+
     const classes = twMerge(
       cx(
         'block min-w-[42px] py-2 px-2 leading-tight text-center border select-none',
         'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
         'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
-        { 'cursor-default': disabled }
+        { 'cursor-default': disabled },
+        { 'rounded-l-md': roundedFirst },
+        { 'rounded-r-md': roundedLast }
       ),
       className
     )
@@ -227,13 +242,14 @@ export interface NextButtonProps extends ButtonProps {
 
 const NextButton = React.forwardRef<ButtonElement, NextButtonProps>(
   ({ className, page, disabled, onClick, ...rest }, ref) => {
-    const { eventsEnabled } = React.useContext(PagerContext)
+    const { eventsEnabled, showLastButton } = React.useContext(PagerContext)
     const classes = twMerge(
       cx(
         'previous  py-2 px-3 leading-tight border',
         'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
         'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
-        { 'cursor-default': disabled }
+        { 'cursor-default': disabled },
+        { 'rounded-r-md': !showLastButton }
       ),
       className
     )
