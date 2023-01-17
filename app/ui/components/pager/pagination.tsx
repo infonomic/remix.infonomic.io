@@ -1,3 +1,8 @@
+// Initial styling adapted from https://flowbite.com/docs/components/pagination/
+// https://github.com/themesberg/flowbite/blob/main/LICENSE.md
+// usePagination hook from...
+// https://github.com/mui/material-ui/blob/master/packages/mui-material/src/usePagination/usePagination.js
+// https://github.com/mui/material-ui/blob/master/LICENSE
 /* eslint-disable react/jsx-pascal-case */
 import * as React from 'react'
 
