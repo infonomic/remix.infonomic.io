@@ -126,7 +126,7 @@ This means of course that you will need to import stylesheets from the `/app/sty
 
 Building a complete design system including design language and tokens is not a small task and we've barely scratched the surface. We've mostly relied on Tailwind CSS utility classes and Tailwind plugins for typography, spacing and color. No effort was made to extract a configurable theme system (apart from the light and dark mode switcher). We simply built what worked. We also think there's value in 'intents' - such as 'primary', 'secondary', 'info', 'success', 'warning', 'danger' - and so button, alert and toast components implement an 'intent' system. We may create mapping definitions for these in `tailwind.config.js` to make swapping out a base color theme and color system easier.
 
-Below is a brief introduction to the core components, where they came from, and how they've been configured. And here's what's on our current [TODO](./TODO.md) list if you felt like lending a hand (take a look at the [Contributions](#contributions) section).
+Below is a brief introduction to the core components, where they came from, and how they've been configured. And here's what's on our current [TODO](https://github.com/infonomic/remix.infonomic.io/blob/develop/TODO.md) list if you felt like lending a hand (take a look at the [Contributions](#contributions) section).
 
 [Alert](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/ui/components/notifications/alert.tsx) - supports 'intents', and is based on the Radix `@radix-ui/react-primitive` - which in turn means it supports 'slots' and the `asChild` prop - allowing you to takeover the alert completely, merging default alert styles and props with your own styles and props ('slot' uses `React.cloneElement` and `mergeProps` under the hood. It's very cool). Alerts are animated via [Headless UI Transition](https://headlessui.com/react/transition).
 
@@ -292,7 +292,7 @@ Assuming this effort doesn't suck, and after a little more work it turns out the
 
 ## Contributions
 
-Feedback, thoughts and suggestions are most welcome. Issues and even PRs would be super too! We've created [TODO list](TODO.md).
+Feedback, thoughts and suggestions are most welcome. Issues and even PRs would be super too! We've created [TODO list](https://github.com/infonomic/remix.infonomic.io/blob/develop/TODO.md).
 
 We use a husky task and [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for our commit messages.
 
