@@ -198,30 +198,34 @@ const PageNumberButton = React.forwardRef<ButtonElement, PageNumberButtonProps>(
 
     const roundedFirst = page === 1 && !showFirstButton && hidePrevButton
     const roundedLast = page === count && !showLastButton && hideNextButton
+    const active = page === currentPage
+
+    const defaultBackground = cx(
+      'bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
+      'dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white'
+    )
+    const activeBackground = cx(
+      'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-white',
+      activeClassName
+    )
 
     const classes = twMerge(
       cx(
-        'block min-w-[42px] py-2 px-2 leading-tight text-center border select-none',
-        'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
-        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
+        'block min-w-[42px] py-2 px-2 leading-tight text-center border border-slate-300 select-none dark:border-slate-700',
         { 'cursor-default': disabled },
         { 'rounded-l-md': roundedFirst },
-        { 'rounded-r-md': roundedLast }
+        { 'rounded-r-md': roundedLast },
+        { [defaultBackground]: !active },
+        { [activeBackground]: active }
       ),
       className
-    )
-
-    const active = twMerge(
-      'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-white',
-      classes,
-      activeClassName
     )
 
     return (
       <li className="flex">
         <Primitive.button
           ref={ref}
-          className={cx(currentPage === page ? active : classes) || undefined}
+          className={classes}
           onClick={eventsEnabled ? onClick : undefined}
           data-testid={
             cx({

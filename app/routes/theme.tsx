@@ -82,7 +82,7 @@ export default function Theme() {
     <PublicLayout>
       <Section className="py-4">
         <Container>
-          <p>Stateful Pagers: Current page: {page}</p>
+          <p className="prose dark:prose-invert">Stateful Pagers: Current page: {page}</p>
           <EventPager
             page={page}
             count={24}
@@ -101,7 +101,9 @@ export default function Theme() {
             hidePrevButton
           />
 
-          <p>Stateless Pager: Current page: {data?.meta?.currentPage}</p>
+          <p className="prose dark:prose-invert">
+            Stateless Pager: Current page: {data?.meta?.currentPage}
+          </p>
 
           <RouterPager
             page={data?.meta?.currentPage}
