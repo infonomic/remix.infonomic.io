@@ -4,7 +4,7 @@ import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
-import { requireUserId } from '~/session.server'
+// import { requireUserId } from '~/session.server'
 import { mergeMeta } from '~/utils/utils'
 
 import { Button } from '~/ui/components/button'
@@ -36,7 +36,7 @@ export const meta = ({ matches }: any) => {
  * @returns
  */
 export async function loader({ request }: LoaderArgs) {
-  await requireUserId(request)
+  // await requireUserId(request) // Make public for the moment
 
   const url = new URL(request.url)
 
