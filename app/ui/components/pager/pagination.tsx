@@ -116,12 +116,17 @@ export interface ButtonProps extends PrimitiveButtonProps {
 const FirstButton = React.forwardRef<ButtonElement, ButtonProps>(
   ({ className, disabled, onClick, ...rest }, ref) => {
     const { eventsEnabled } = React.useContext(PagerContext)
+
+    const hoverClasses =
+      'hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-white'
+
     const classes = twMerge(
       cx(
         'first ml-0 flex rounded-l-md py-2 px-2 leading-tight border',
-        'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
-        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
-        { 'cursor-default': disabled }
+        'border-slate-300 bg-white text-slate-500',
+        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400',
+        { 'cursor-default': disabled },
+        { [hoverClasses]: !disabled }
       ),
       className
     )
@@ -148,12 +153,17 @@ FirstButton.displayName = FIRST_BUTTON_NAME
 const PreviousButton = React.forwardRef<ButtonElement, ButtonProps>(
   ({ className, disabled, onClick, ...rest }, ref) => {
     const { eventsEnabled, showFirstButton } = React.useContext(PagerContext)
+
+    const hoverClasses =
+      'hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-white'
+
     const classes = twMerge(
       cx(
         'previous  py-2 px-3 leading-tight border',
-        'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
-        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
+        'border-slate-300 bg-white text-slate-500',
+        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400',
         { 'cursor-default': disabled },
+        { [hoverClasses]: !disabled },
         { 'rounded-l-md': !showFirstButton }
       ),
       className
@@ -252,12 +262,17 @@ export interface NextButtonProps extends ButtonProps {
 const NextButton = React.forwardRef<ButtonElement, NextButtonProps>(
   ({ className, page, disabled, onClick, ...rest }, ref) => {
     const { eventsEnabled, showLastButton } = React.useContext(PagerContext)
+
+    const hoverClasses =
+      'hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-white'
+
     const classes = twMerge(
       cx(
         'previous  py-2 px-3 leading-tight border',
-        'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
-        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
+        'border-slate-300 bg-white text-slate-500',
+        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400',
         { 'cursor-default': disabled },
+        { [hoverClasses]: !disabled },
         { 'rounded-r-md': !showLastButton }
       ),
       className
@@ -288,12 +303,17 @@ export interface LastButtonProps extends ButtonProps {
 const LastButton = React.forwardRef<ButtonElement, LastButtonProps>(
   ({ className, disabled, count, onClick, ...rest }, ref) => {
     const { eventsEnabled } = React.useContext(PagerContext)
+
+    const hoverClasses =
+      'hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-white'
+
     const classes = twMerge(
       cx(
         'last flex rounded-r-md py-2 px-2 leading-tight border',
-        'border-slate-300 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
-        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
-        { 'cursor-default': disabled }
+        'border-slate-300 bg-white text-slate-500',
+        'dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400',
+        { 'cursor-default': disabled },
+        { [hoverClasses]: !disabled }
       ),
       className
     )
