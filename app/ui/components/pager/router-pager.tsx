@@ -35,7 +35,7 @@ export const RouterPager = (props: PaginationProps) => {
             )
           }}
           renderPrevious={(key, item) => {
-            searchParams.set('page', (item.page - 1).toString())
+            searchParams.set('page', item.page.toString())
             return (
               <Pagination.Previous asChild key={key} disabled={item.disabled}>
                 {item.disabled ? (
@@ -70,7 +70,7 @@ export const RouterPager = (props: PaginationProps) => {
             )
           }}
           renderNext={(key, item) => {
-            searchParams.set('page', (item.page + 1).toString())
+            searchParams.set('page', item.page.toString())
             return (
               <Pagination.Next asChild key={key} page={item.page} disabled={item.disabled}>
                 {item.disabled ? (
