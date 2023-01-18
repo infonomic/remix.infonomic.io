@@ -14,7 +14,7 @@ import { Container } from '~/ui/components/container'
 import { Alert } from '~/ui/components/notifications'
 import { RouterPager, EventPager } from '~/ui/components/pager'
 import { Section } from '~/ui/components/section'
-import MainLayout from '~/ui/layouts/main-layout'
+import PublicLayout from '~/ui/layouts/public-layout'
 
 /**
  * meta
@@ -79,7 +79,7 @@ export default function Theme() {
   }
 
   return (
-    <MainLayout>
+    <PublicLayout>
       <Section className="py-4">
         <Container>
           <p>Stateful Pagers: Current page: {page}</p>
@@ -274,6 +274,6 @@ export default function Theme() {
           <Alert intent="danger">This is a danger alert - with some additional text here.</Alert>
         </Container>
       </Section>
-    </MainLayout>
+    </PublicLayout>
   )
 }
