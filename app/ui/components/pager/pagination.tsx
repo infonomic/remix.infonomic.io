@@ -132,7 +132,7 @@ const FirstButton = React.forwardRef<ButtonElement, ButtonProps>(
     )
 
     return (
-      <li className="flex">
+      <li className="hidden sm:flex">
         <Primitive.button
           ref={ref}
           className={classes}
@@ -170,7 +170,7 @@ const PreviousButton = React.forwardRef<ButtonElement, ButtonProps>(
     )
 
     return (
-      <li className="flex">
+      <li className="hidden sm:flex">
         <Primitive.button
           ref={ref}
           className={classes}
@@ -206,9 +206,21 @@ const PageNumberButton = React.forwardRef<ButtonElement, PageNumberButtonProps>(
       hidePrevButton,
     } = React.useContext(PagerContext)
 
-    const roundedFirst = page === 1 && !showFirstButton && hidePrevButton
-    const roundedLast = page === count && !showLastButton && hideNextButton
     const active = page === currentPage
+
+    let roundedFirstClasses = ''
+    if (page === 1 && !showFirstButton && hidePrevButton) {
+      roundedFirstClasses = 'rounded-l-md'
+    } else if (page === 1) {
+      roundedFirstClasses = 'rounded-l-md sm:rounded-none' // opinionated mobile
+    }
+
+    let roundedLastClasses = ''
+    if (page === count && !showLastButton && hideNextButton) {
+      roundedLastClasses = 'rounded-r-md'
+    } else if (page === count) {
+      roundedLastClasses = 'rounded-r-md sm:rounded-none' // opinionated mobile
+    }
 
     const defaultBackground = cx(
       'bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-700',
@@ -223,8 +235,8 @@ const PageNumberButton = React.forwardRef<ButtonElement, PageNumberButtonProps>(
       cx(
         'block min-w-[42px] py-2 px-2 leading-tight text-center border border-slate-300 select-none dark:border-slate-700',
         { 'cursor-default': disabled },
-        { 'rounded-l-md': roundedFirst },
-        { 'rounded-r-md': roundedLast },
+        roundedFirstClasses,
+        roundedLastClasses,
         { [defaultBackground]: !active },
         { [activeBackground]: active }
       ),
@@ -278,7 +290,7 @@ const NextButton = React.forwardRef<ButtonElement, NextButtonProps>(
       className
     )
     return (
-      <li className="flex">
+      <li className="hidden sm:flex">
         <Primitive.button
           ref={ref}
           className={classes}
@@ -318,7 +330,7 @@ const LastButton = React.forwardRef<ButtonElement, LastButtonProps>(
       className
     )
     return (
-      <li className="flex">
+      <li className="hidden sm:flex">
         <Primitive.button
           ref={ref}
           className={classes}
