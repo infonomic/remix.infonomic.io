@@ -39,6 +39,7 @@ Remix is pretty cool, and we've tried to do things the Remix way - but, obviousl
 [https://github.com/jacob-ebey/remix-ecommerce](https://github.com/jacob-ebey/remix-ecommerce)<br>
 [https://github.com/kentcdodds/kentcdodds.com](https://github.com/kentcdodds/kentcdodds.com)<br>
 [https://github.com/epicweb-dev/rocket-rental](https://github.com/epicweb-dev/rocket-rental)<br>
+[https://github.com/mcansh/mcan.sh](https://github.com/mcansh/mcan.sh)<br>
 
 ### Directory Structure
 
