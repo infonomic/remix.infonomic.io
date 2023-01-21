@@ -1,0 +1,13 @@
+registry.fly.io/remix-infonomic-io-c6b7:main-636ae23bddc729c68eb78eac0443e6a99b821c38
+
+ args: 'deploy --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}'
+ 
+ deploy --image registry.fly.io/remix-infonomic-io-c6b7:main-636ae23bddc729c68eb78eac0443e6a99b821c38
+ 
+ push registry.fly.io/remix-infonomic-io-c6b7:main-636ae23bddc729c68eb78eac0443e6a99b821c38
+ 
+ 
+ # Manual deploy
+ 
+ flyctl deploy . --push 
+ registry.fly.io/remix-infonomic-io-c6b7:deployment-01GQBAGM105Z8A0ME574J8HBFW
