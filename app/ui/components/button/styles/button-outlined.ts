@@ -16,7 +16,7 @@ const buttonOutlined: object = {
   },
   secondary: {
     border: 'border border-gray-500',
-    color: 'text-gray-500',
+    color: 'text-gray-600 dark:text-gray-300',
     hover: 'outline-none hover:bg-gray-400/10',
     focus:
       'focus:outline-none focus:ring-gray-500 focus:ring-1 focus:ring-offset-2 dark:ring-offset-slate-900',
