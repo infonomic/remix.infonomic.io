@@ -1,7 +1,7 @@
 /** 
   Note: This is a modified version of the Material Tailwind input found here...
-  https://github.com/creativetimofficial/material-tailwind It will be further
-  updated / refactored to remove most of that project's code.
+  https://github.com/creativetimofficial/material-tailwind 
+  https://github.com/creativetimofficial/material-tailwind/blob/main/LICENSE
   The material-tailwind project is a great effort, but its theming 
   configuration adds another layer to the project. The goal of this 
   project is to take only headless, or lightly css- or tailwind-styled 
