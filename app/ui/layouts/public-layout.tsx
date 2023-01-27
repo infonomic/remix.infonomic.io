@@ -46,7 +46,7 @@ const PublicLayout = forwardRef<Ref, PublicLayoutProps>(
             <Link to={{ pathname: '/about' }}>About</Link>
           </Button>
 
-          <ThemeSwitch style={{ marginLeft: 'auto' }} />
+          <ThemeSwitch className="mr-6 ml-auto" />
         </AppBar>
         <main id="main-content" className="flex flex-1 flex-col pt-[63px]">
           {children}

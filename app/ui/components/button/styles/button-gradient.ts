@@ -7,7 +7,7 @@ const buttonGradient: object = {
     active: 'active:bg-white/80',
   },
   primary: {
-    background: 'bg-gradient-to-tr from-amber-600 to-amber-400',
+    background: 'bg-gradient-to-tr from-amber-500 to-amber-300 dark:from-amber-600 dark:to-amber-400',
     color: 'text-black',
     hover: 'hover:opacity-[0.85]',
     focus:

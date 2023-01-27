@@ -53,7 +53,7 @@ const MainLayout = forwardRef<Ref, MainLayoutProps>(({ children, className, ...o
         <span className="ml-auto mr-8 inline-block w-[90px] overflow-hidden overflow-ellipsis sm:w-auto">
           {user.email}
         </span>
-        <ThemeSwitch style={{ marginRight: '1rem' }} />
+        <ThemeSwitch className="mr-6" />
         <MainMenu />
       </AppBar>
       <main id="main-content" className="flex flex-1 flex-col pt-[63px]">

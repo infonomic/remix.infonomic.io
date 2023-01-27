@@ -13,7 +13,7 @@ export const AppBar = forwardRef<Ref, AppBarProps>(({ children, className, ...ot
   return (
     <header
       className={cx(
-        'app-bar fixed z-[1100] flex w-full bg-amber-500 shadow-md dark:bg-slate-800',
+        'app-bar fixed z-[1100] flex w-full bg-[#f2b21d] shadow-md dark:bg-slate-800',
         className
       )}
       ref={ref}
