@@ -50,10 +50,10 @@ const MainLayout = forwardRef<Ref, MainLayoutProps>(({ children, className, ...o
         >
           <Link to={{ pathname: '/about' }}>About</Link>
         </Button>
-        <span className="ml-auto mr-8 inline-block w-[90px] overflow-hidden overflow-ellipsis sm:w-auto">
+        <span className="ml-auto mr-8 hidden w-[90px] overflow-hidden overflow-ellipsis sm:inline-block sm:w-auto">
           {user.email}
         </span>
-        <ThemeSwitch className="mr-6" />
+        <ThemeSwitch className="mr-6 ml-auto sm:ml-0" />
         <MainMenu />
       </AppBar>
       <main id="main-content" className="flex flex-1 flex-col pt-[63px]">
