@@ -8,9 +8,9 @@ const buttonFilled: object = {
     active: 'active:bg-white/80',
   },
   primary: {
-    background: 'bg-amber-500',
+    background: 'bg-amber-400 dark:bg-amber-500',
     color: 'text-black',
-    hover: 'hover:bg-amber-600/70 dark:hover:bg-amber-500/80',
+    hover: 'hover:bg-amber-500/80 dark:hover:bg-amber-500/80',
     focus:
       'focus:outline-none focus:ring-amber-500 focus:ring-1 focus:ring-offset-2 dark:ring-offset-slate-900',
     active: 'active:bg-amber-600/60',

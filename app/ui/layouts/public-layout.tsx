@@ -28,11 +28,21 @@ const PublicLayout = forwardRef<Ref, PublicLayoutProps>(
       >
         <a href="#main-content">Skip to main content</a>
         <AppBar>
-          <Button asChild variant="text" intent="secondary" className="text-base">
+          <Button
+            asChild
+            variant="text"
+            intent="secondary"
+            className="text-base hover:bg-amber-400/50 dark:hover:bg-gray-500/20"
+          >
             <Link to={{ pathname: '/' }}>Home</Link>
           </Button>
 
-          <Button asChild variant="text" intent="secondary" className="text-base">
+          <Button
+            asChild
+            variant="text"
+            intent="secondary"
+            className="text-base hover:bg-amber-400/50 dark:hover:bg-gray-500/20"
+          >
             <Link to={{ pathname: '/about' }}>About</Link>
           </Button>
 

@@ -33,11 +33,21 @@ const MainLayout = forwardRef<Ref, MainLayoutProps>(({ children, className, ...o
     >
       <a href="#main-content">Skip to main content</a>
       <AppBar>
-        <Button asChild variant="text" intent="secondary" className="text-base">
+        <Button
+          asChild
+          variant="text"
+          intent="secondary"
+          className="text-base hover:bg-amber-400/50 dark:hover:bg-gray-500/20"
+        >
           <Link to={{ pathname: '/' }}>Home</Link>
         </Button>
 
-        <Button asChild variant="text" intent="secondary" className="text-base">
+        <Button
+          asChild
+          variant="text"
+          intent="secondary"
+          className="text-base hover:bg-amber-400/50 dark:hover:bg-gray-500/20"
+        >
           <Link to={{ pathname: '/about' }}>About</Link>
         </Button>
         <span className="ml-auto mr-8 inline-block w-[90px] overflow-hidden overflow-ellipsis sm:w-auto">
