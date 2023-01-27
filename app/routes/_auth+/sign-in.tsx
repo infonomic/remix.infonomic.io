@@ -9,7 +9,7 @@ import {
   useActionData,
   useSearchParams,
   useSubmit,
-  useTransition,
+  useNavigation,
 } from '@remix-run/react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -111,7 +111,7 @@ export default function SignInPage() {
   const actionData = useActionData<typeof action>()
   const serverErrors = actionData?.errors
   const submit = useSubmit()
-  const transition = useTransition()
+  const navigation = useNavigation()
   const [searchParams] = useSearchParams()
   const redirectTo = searchParams.get('redirectTo') || '/notes'
   const resolver = zodResolver(signInSchema)
@@ -121,7 +121,7 @@ export default function SignInPage() {
     formState: { errors },
     setFocus,
   } = useForm({ resolver })
-  const busy = isBusy(transition)
+  const busy = isBusy(navigation)
 
   /**
    * handleOnSubmit - js submission of form so that we can create a

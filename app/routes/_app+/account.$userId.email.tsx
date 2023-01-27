@@ -10,7 +10,7 @@ import {
   useActionData,
   useLoaderData,
   useSubmit,
-  useTransition,
+  useNavigation,
 } from '@remix-run/react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -132,7 +132,7 @@ export default function UserEmailEditPage() {
   const actionData = useActionData<typeof action>()
   const serverErrors = actionData?.errors
   const submit = useSubmit()
-  const transition = useTransition()
+  const navigation = useNavigation()
   const resolver = zodResolver(emailSchema)
   const {
     register,
@@ -141,7 +141,7 @@ export default function UserEmailEditPage() {
     setFocus,
   } = useForm({ resolver })
 
-  const busy = isBusy(transition)
+  const busy = isBusy(navigation)
 
   useEffect(() => {
     if (serverErrors) {

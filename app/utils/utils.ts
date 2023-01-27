@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 import { useMatches } from '@remix-run/react'
-import type { Transition } from '@remix-run/react/dist/transition'
+import type { Navigation } from '@remix-run/router'
 
 import type { User } from '~/models/user.server'
 
@@ -77,17 +77,12 @@ export function truncate(str: string, length: number, useWordBoundary: boolean) 
   return (useWordBoundary ? subString.slice(0, subString.lastIndexOf(' ')) : subString) + '...'
 }
 
-export function isBusy(transition: Transition) {
-  const loading = {
-    actionRedirect: true,
-    actionReload: true,
-  }
-
+export function isBusy(navigation: Navigation) {
   // prettier-ignore
-  return transition.state === 'submitting'
+  return navigation.state === 'submitting'
     ? true
-    : transition.state === 'loading'
-      ? loading[transition.type as keyof typeof loading]
+    : navigation.state === 'loading'
+      ? navigation.formMethod === 'post'
       : false
 }
 

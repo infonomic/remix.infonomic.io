@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import type { LoaderArgs, ActionArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import { Link } from '@remix-run/react'
-import { Form, useCatch, useActionData, useSubmit, useTransition } from '@remix-run/react'
+import { Form, useCatch, useActionData, useSubmit, useNavigation } from '@remix-run/react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import Loader from 'react-spinners/BeatLoader'
@@ -120,7 +120,7 @@ export default function UserPasswordEditPage() {
   const actionData = useActionData<typeof action>()
   const serverErrors = actionData?.errors
   const submit = useSubmit()
-  const transition = useTransition()
+  const navigation = useNavigation()
   const resolver = zodResolver(passwordSchema)
   const {
     register,
@@ -128,7 +128,7 @@ export default function UserPasswordEditPage() {
     formState: { errors },
     setFocus,
   } = useForm({ resolver })
-  const busy = isBusy(transition)
+  const busy = isBusy(navigation)
 
   React.useEffect(() => {
     if (!serverErrors) return

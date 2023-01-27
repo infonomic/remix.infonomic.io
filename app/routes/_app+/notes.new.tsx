@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import type { ActionArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { Form, Link, useActionData, useSubmit, useTransition } from '@remix-run/react'
+import { Form, Link, useActionData, useSubmit, useNavigation } from '@remix-run/react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createNote } from '~/models/note.server'
@@ -89,8 +89,8 @@ export default function NewNotePage() {
   const actionData = useActionData<typeof action>()
   const serverErrors = actionData?.errors
   const submit = useSubmit()
-  const transition = useTransition()
-  const submitting = Boolean(transition.submission)
+  const navigation = useNavigation()
+  const submitting = navigation.state === 'submitting'
   const resolver = zodResolver(schema)
   const {
     register,

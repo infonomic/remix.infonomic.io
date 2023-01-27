@@ -9,7 +9,7 @@ import {
   useActionData,
   useSearchParams,
   useSubmit,
-  useTransition,
+  useNavigation,
 } from '@remix-run/react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -117,7 +117,7 @@ export default function SignUpPage() {
   const actionData = useActionData<typeof action>()
   const serverErrors = actionData?.errors
   const submit = useSubmit()
-  const transition = useTransition()
+  const navigation = useNavigation()
   const [searchParams] = useSearchParams()
   const redirectTo = searchParams.get('redirectTo') ?? undefined
   const resolver = zodResolver(signUpSchema)
@@ -127,7 +127,7 @@ export default function SignUpPage() {
     formState: { errors },
     setFocus,
   } = useForm({ resolver })
-  const busy = isBusy(transition)
+  const busy = isBusy(navigation)
 
   /**
    * handleOnSubmit - js submission of form so that we can create a

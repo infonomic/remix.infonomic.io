@@ -9,7 +9,7 @@ import {
   useActionData,
   useLoaderData,
   useSubmit,
-  useTransition,
+  useNavigation,
 } from '@remix-run/react'
 import { Link } from '@remix-run/react'
 
@@ -131,8 +131,8 @@ export default function NoteEditPage() {
   const actionData = useActionData<typeof action>()
   const serverErrors = actionData?.errors
   const submit = useSubmit()
-  const transition = useTransition()
-  const submitting = Boolean(transition.submission)
+  const navigation = useNavigation()
+  const submitting = navigation.state === 'submitting'
   const resolver = zodResolver(schema)
   const {
     register,
