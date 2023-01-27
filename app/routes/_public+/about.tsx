@@ -63,7 +63,7 @@ export default function AboutPage() {
   return (
     <article
       className={cx(
-        'mx-auto mt-[1rem] max-w-[960px]',
+        'mx-auto mt-[2.5rem] max-w-[960px]',
         'prose prose-lg prose-slate dark:prose-invert',
         'md:mt-[3rem] md:prose-lg'
       )}

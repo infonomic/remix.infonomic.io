@@ -17,7 +17,7 @@
   bottom: 45px;
   right: 30px;
   @apply text-gray-800;
-  @apply bg-amber-500;
+  @apply bg-amber-400;
   transition-property: all, color;
   transition-duration: 0.3s, 1ms;
   transition-timing-function: cubic-bezier(0.25, 0.8, 0.5, 1), ease;
