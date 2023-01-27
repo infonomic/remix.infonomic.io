@@ -62,13 +62,13 @@ const intentStyles: object = {
 
 const positionStyles: object = {
   'top-left': {
-    position: 'bottom-4 md:top-[68px] md:left-4 md:right-auto md:bottom-auto md:w-full md:max-w-sm',
+    position: 'bottom-4 md:top-[72px] md:left-4 md:right-auto md:bottom-auto md:w-full md:max-w-sm',
     transition:
       'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-left',
     swipe: 'radix-swipe-end:animate-toast-swipe-out-left',
   },
   'top-right': {
-    position: 'bottom-4 md:top-[68px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
+    position: 'bottom-4 md:top-[72px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
     transition:
       'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-right',
     swipe: 'radix-swipe-end:animate-toast-swipe-out-right',

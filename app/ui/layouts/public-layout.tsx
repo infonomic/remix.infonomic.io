@@ -5,6 +5,7 @@ import { Link } from '@remix-run/react'
 
 import cx from 'classnames'
 
+import { Button } from '~/ui/components/button'
 import { ScrollToTop } from '~/ui/components/scroll-to-top'
 import { ThemeSwitch } from '~/ui/components/theme-switch'
 import AppBar from '~/ui/layouts/app-bar'
@@ -27,15 +28,17 @@ const PublicLayout = forwardRef<Ref, PublicLayoutProps>(
       >
         <a href="#main-content">Skip to main content</a>
         <AppBar>
-          <Link to={{ pathname: '/' }} className="font-medium">
-            Home
-          </Link>
-          <Link to={{ pathname: '/about' }} className="font-medium">
-            About
-          </Link>
+          <Button asChild variant="text" intent="secondary" className="text-base">
+            <Link to={{ pathname: '/' }}>Home</Link>
+          </Button>
+
+          <Button asChild variant="text" intent="secondary" className="text-base">
+            <Link to={{ pathname: '/about' }}>About</Link>
+          </Button>
+
           <ThemeSwitch style={{ marginLeft: 'auto' }} />
         </AppBar>
-        <main id="main-content" className="flex flex-1 flex-col pt-[52px]">
+        <main id="main-content" className="flex flex-1 flex-col pt-[63px]">
           {children}
         </main>
         <PublicFooter />

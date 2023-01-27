@@ -7,6 +7,7 @@ import cx from 'classnames'
 import { useUser } from '~/utils/utils'
 
 import { BreadcrumbTrail } from '~/ui/components/breadcrumbs/breadcrumb-trail'
+import { Button } from '~/ui/components/button'
 import { Container } from '~/ui/components/container'
 import { ScrollToTop } from '~/ui/components/scroll-to-top'
 import { Section } from '~/ui/components/section'
@@ -32,19 +33,20 @@ const MainLayout = forwardRef<Ref, MainLayoutProps>(({ children, className, ...o
     >
       <a href="#main-content">Skip to main content</a>
       <AppBar>
-        <Link to={{ pathname: '/' }} className="font-medium">
-          Home
-        </Link>
-        <Link to={{ pathname: '/about' }} className="font-medium">
-          About
-        </Link>
+        <Button asChild variant="text" intent="secondary" className="text-base">
+          <Link to={{ pathname: '/' }}>Home</Link>
+        </Button>
+
+        <Button asChild variant="text" intent="secondary" className="text-base">
+          <Link to={{ pathname: '/about' }}>About</Link>
+        </Button>
         <span className="ml-auto mr-8 inline-block w-[90px] overflow-hidden overflow-ellipsis sm:w-auto">
           {user.email}
         </span>
         <ThemeSwitch style={{ marginRight: '1rem' }} />
         <MainMenu />
       </AppBar>
-      <main id="main-content" className="flex flex-1 flex-col pt-[58px]">
+      <main id="main-content" className="flex flex-1 flex-col pt-[63px]">
         <Section className="breadcrumb-trail pt-4">
           <Container className="prose dark:prose-invert">
             <BreadcrumbTrail />

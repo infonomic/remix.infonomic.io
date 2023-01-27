@@ -10,7 +10,7 @@ const buttonText: object = {
     active: 'active:bg-amber-500/30',
   },
   secondary: {
-    color: 'text-gray-600 dark:text-gray-300',
+    color: 'text-gray-800 dark:text-gray-300',
     hover: 'hover:bg-gray-400/20 dark:hover:bg-gray-500/20',
     active: 'active:bg-gray-400/30 dark:active:bg-gray-500/30',
   },
