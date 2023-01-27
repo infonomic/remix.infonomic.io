@@ -1,6 +1,12 @@
 import type * as React from 'react'
 
-import type { LinksFunction, LoaderArgs, LoaderFunction } from '@remix-run/node'
+import type {
+  LinksFunction,
+  LoaderArgs,
+  LoaderFunction,
+  V2_MetaFunction,
+  V2_HtmlMetaDescriptor,
+} from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import {
@@ -61,13 +67,8 @@ export const links: LinksFunction = () => {
 /**
  * meta
  * @returns V2_MetaFunction
- * TODO: ts type for meta
- * New v2 meta api
- * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
- * https://github.com/remix-run/remix/discussions/4462
- * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
-export const meta = ({ data }: any) => {
+export const meta: V2_MetaFunction = ({ data }): V2_HtmlMetaDescriptor[] => {
   return [
     { charset: 'utf-8' },
     { title: 'Infonomic Remix Workbench App' },

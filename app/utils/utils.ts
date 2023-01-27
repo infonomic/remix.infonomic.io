@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 
+import type { V2_HtmlMetaDescriptor } from '@remix-run/node'
 import { useMatches } from '@remix-run/react'
 import type { Navigation } from '@remix-run/router'
 
@@ -114,7 +115,7 @@ export function getUrl(origin: string, path: string) {
  * https://github.com/remix-run/remix/discussions/4462
  * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
-export function mergeMeta(matches: any, tags: any[] = []) {
+export function mergeMeta(matches: any, tags: V2_HtmlMetaDescriptor[] = []): V2_HtmlMetaDescriptor[] {
   function findMatch(upperTag: any, tag: any) {
     let found = false
     const rules = [
@@ -132,7 +133,6 @@ export function mergeMeta(matches: any, tags: any[] = []) {
         break
       }
     }
-
     return found
   }
 

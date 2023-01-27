@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
 import * as React from 'react'
 
-import type { LoaderArgs } from '@remix-run/node'
+import type { LoaderArgs, V2_MetaFunction, V2_HtmlMetaDescriptor } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Form, Link, useCatch, useLoaderData } from '@remix-run/react'
 
@@ -20,13 +20,8 @@ import ErrorLayout from '~/ui/layouts/error-layout'
 /**
  * meta
  * @returns V2_MetaFunction
- * TODO: ts type for meta
- * New v2 meta api
- * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
- * https://github.com/remix-run/remix/discussions/4462
- * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
-export const meta = ({ data, matches }: any) => {
+export const meta: V2_MetaFunction = ({ data, matches }): V2_HtmlMetaDescriptor[] => {
   const title = `Note - ${truncate(data?.note?.title, 50, true)} - Infonomic Remix Workbench App`
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
