@@ -107,9 +107,9 @@ export function getUrl(origin: string, path: string) {
 /**
  * mergeMeta
  * @returns V2_HtmlMetaDescriptor[] merged metatags
- * This a utility method for the new v2 meta api. It will
+ * This is a utility method for the new v2 meta API. It will
  * merge (filter) root metatags - replacing any that match
- * with the supplied route module meta function tags.
+ * with the supplied route module meta tags.
  * It may not be complete or the best way to do this 
  * but it works for the moment.
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
@@ -128,8 +128,7 @@ export function mergeMeta(matches: any, tags: V2_HtmlMetaDescriptor[] = []): V2_
       { k: 'httpEquiv', f: () => rootTag.httpEquiv === tag.httpEquiv },
     ]
 
-    for (let index = 0; index < rules.length; index += 1) {
-      const rule = rules[index]
+    for (const rule of rules) {
       if (rootTag[rule.k] !== undefined) {
         return rule.f()
       }
@@ -138,7 +137,7 @@ export function mergeMeta(matches: any, tags: V2_HtmlMetaDescriptor[] = []): V2_
   }
 
   if (rootMeta) {
-    const filteredMeta = rootMeta
+    const filteredRootMeta = rootMeta
       // eslint-disable-next-line array-callback-return
       .filter((rootTag: V2_HtmlMetaDescriptor) => {
         for (const tag of tags) {
@@ -151,7 +150,7 @@ export function mergeMeta(matches: any, tags: V2_HtmlMetaDescriptor[] = []): V2_
         }
       })
 
-    return [...filteredMeta, tags]
+    return [...filteredRootMeta, tags]
   } else {
     return tags
   }
