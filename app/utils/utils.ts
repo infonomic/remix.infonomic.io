@@ -105,15 +105,14 @@ export function getUrl(origin: string, path: string) {
 }
 
 /**
- * mergeMeta
- * @returns V2_HtmlMetaDescriptor[] merged metatags
- * This is a utility method for the new v2 meta API. It will
+ * A utility function for the v2 meta API. It will
  * merge (filter) root metatags - replacing any that match
- * with the supplied route module meta tags.
- * It may not be complete or the best way to do this 
- * but it works for the moment.
+ * the supplied route module meta tags. It may not be complete 
+ * or the best way to do this but it works for the moment.
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462
+ * 
+ * @returns {V2_HtmlMetaDescriptor[]} Merged metatags
  */
 export function mergeMeta(matches: any, tags: V2_HtmlMetaDescriptor[] = []): V2_HtmlMetaDescriptor[] {
   const rootModule = matches.find((match: any) => match.route.id === 'root')
@@ -138,16 +137,13 @@ export function mergeMeta(matches: any, tags: V2_HtmlMetaDescriptor[] = []): V2_
 
   if (rootMeta) {
     const filteredRootMeta = rootMeta
-      // eslint-disable-next-line array-callback-return
       .filter((rootTag: V2_HtmlMetaDescriptor) => {
         for (const tag of tags) {
-          const found = findMatch(rootTag, tag)
-          if (found) {
+          if (findMatch(rootTag, tag)) {
             return false
-          } else {
-            return true
           }
         }
+        return true
       })
 
     return [...filteredRootMeta, tags]
