@@ -106,50 +106,53 @@ export function getUrl(origin: string, path: string) {
 
 /**
  * mergeMeta
- * @returns [] merged metatags
- * TODO: this is a temporary merge meta function for the
- * new v2 meta api. It may not be complete or the best way
- * to do this - but it works for the moment.
- * TODO: types
+ * @returns V2_HtmlMetaDescriptor[] merged metatags
+ * This a utility method for the new v2 meta api. It will
+ * merge (filter) root metatags - replacing any that match
+ * with the supplied route module meta function tags.
+ * It may not be complete or the best way to do this 
+ * but it works for the moment.
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462
- * V2_MetaFunction interface is currently in v1.10.0-pre.5
  */
 export function mergeMeta(matches: any, tags: V2_HtmlMetaDescriptor[] = []): V2_HtmlMetaDescriptor[] {
-  function findMatch(upperTag: any, tag: any) {
-    let found = false
+  const rootModule = matches.find((match: any) => match.route.id === 'root')
+  const rootMeta = rootModule.meta 
+
+  function findMatch(rootTag: any, tag: any) {
     const rules = [
       { k: 'charSet', f: () => !!tag.charSet },
       { k: 'title', f: () => !!tag.title },
-      { k: 'name', f: () => upperTag.name === tag.name },
-      { k: 'property', f: () => upperTag.property === tag.property },
-      { k: 'httpEquiv', f: () => upperTag.httpEquiv === tag.httpEquiv },
+      { k: 'name', f: () => rootTag.name === tag.name },
+      { k: 'property', f: () => rootTag.property === tag.property },
+      { k: 'httpEquiv', f: () => rootTag.httpEquiv === tag.httpEquiv },
     ]
 
     for (let index = 0; index < rules.length; index += 1) {
       const rule = rules[index]
-      if (upperTag[rule.k] !== undefined) {
-        found = rule.f()
-        break
+      if (rootTag[rule.k] !== undefined) {
+        return rule.f()
       }
     }
-    return found
+    return false
   }
 
-  const filteredMeta = matches
-    .map((match: any) => match.meta)
-    .map((upperTags: any[]) => {
-      const filteredUpperTags: any[] = []
-      for (const upperTag of upperTags) {
-        let found = false
+  if (rootMeta) {
+    const filteredMeta = rootMeta
+      // eslint-disable-next-line array-callback-return
+      .filter((rootTag: V2_HtmlMetaDescriptor) => {
         for (const tag of tags) {
-          found = findMatch(upperTag, tag)
-          if (found) break
+          const found = findMatch(rootTag, tag)
+          if (found) {
+            return false
+          } else {
+            return true
+          }
         }
-        if (!found) filteredUpperTags.push(upperTag)
-      }
-      return filteredUpperTags
-    })
+      })
 
-  return [...filteredMeta, tags]
+    return [...filteredMeta, tags]
+  } else {
+    return tags
+  }
 }
