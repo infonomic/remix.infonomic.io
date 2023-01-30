@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import type { V2_MetaFunction, V2_HtmlMetaDescriptor } from '@remix-run/node'
+
 import * as ToastPrimitive from '@radix-ui/react-toast'
 import cx from 'classnames'
 import { mergeMeta } from '~/utils/utils'
@@ -11,14 +13,9 @@ import PublicLayout from '~/ui/layouts/public-layout'
 
 /**
  * meta
- * @returns V2_MetaFunction
- * TODO: ts type for meta
- * New v2 meta api
- * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
- * https://github.com/remix-run/remix/discussions/4462
- * V2_MetaFunction interface is currently in v1.10.0-pre.5
+ * @returns {V2_MetaFunction}
  */
-export const meta = ({ matches }: any) => {
+export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
   const title = 'Radix Toast - Infonomic Remix Workbench'
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }

@@ -1,4 +1,4 @@
-import type { V2_MetaFunction } from '@remix-run/node'
+import type { V2_MetaFunction, V2_HtmlMetaDescriptor } from '@remix-run/node'
 
 import { mergeMeta } from '~/utils/utils'
 
@@ -8,9 +8,9 @@ import styles from '~/styles/app/routes/_landing+/index.css'
 
 /**
  * meta
- * @returns V2_MetaFunction
+ * @returns {V2_MetaFunction}
  */
-export const meta: V2_MetaFunction = ({ matches }) => {
+export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
   const title = 'Home - Infonomic Remix Workbench'
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import type { ActionArgs } from '@remix-run/node'
+import type { ActionArgs, V2_HtmlMetaDescriptor, V2_MetaFunction } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import { Form, Link, useActionData, useSubmit, useNavigation } from '@remix-run/react'
 
@@ -18,14 +18,9 @@ import { Input, TextArea, hasErrors, getErrorText } from '~/ui/components/input'
 
 /**
  * meta
- * @returns V2_MetaFunction
- * TODO: ts type for meta
- * New v2 meta api
- * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
- * https://github.com/remix-run/remix/discussions/4462
- * V2_MetaFunction interface is currently in v1.10.0-pre.5
+ * @returns {V2_MetaFunction}
  */
-export const meta = ({ matches }: any) => {
+export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
   const title = 'New Note - Infonomic Remix Workbench App'
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
