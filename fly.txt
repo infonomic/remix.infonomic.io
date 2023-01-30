@@ -11,3 +11,9 @@ registry.fly.io/remix-infonomic-io-c6b7:main-636ae23bddc729c68eb78eac0443e6a99b8
  
  flyctl deploy . --push 
  registry.fly.io/remix-infonomic-io-c6b7:deployment-01GQBAGM105Z8A0ME574J8HBFW
+
+ # Specify working directory
+ fly deploy .
+
+ # Deploy using local Dockerfile build only
+ fly deploy . --local-only
