@@ -68,7 +68,7 @@ export const links: LinksFunction = () => {
 
 /**
  * meta
- * @returns V2_MetaFunction
+ * @returns {V2_HtmlMetaDescriptor[]}
  */
 export const meta: V2_MetaFunction = ({ data }): V2_HtmlMetaDescriptor[] => {
   return [

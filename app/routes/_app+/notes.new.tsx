@@ -18,7 +18,7 @@ import { Input, TextArea, hasErrors, getErrorText } from '~/ui/components/input'
 
 /**
  * meta
- * @returns {V2_MetaFunction}
+ * @returns {V2_HtmlMetaDescriptor[]}
  */
 export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
   const title = 'New Note - Infonomic Remix Workbench App'

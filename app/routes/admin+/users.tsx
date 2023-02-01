@@ -54,7 +54,7 @@ const columns = [
 
 /**
  * meta
- * @returns {V2_MetaFunction}
+ * @returns {V2_HtmlMetaDescriptor[]}
  */
 export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
   const title = 'Admin - Users - Infonomic Remix Workbench'

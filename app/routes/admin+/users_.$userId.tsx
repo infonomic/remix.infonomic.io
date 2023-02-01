@@ -15,7 +15,7 @@ import ErrorLayout from '~/ui/layouts/error-layout'
 
 /**
  * meta
- * @returns {V2_MetaFunction}
+ * @returns {V2_HtmlMetaDescriptor[]}
  */
 export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
   const title = 'Admin - User - Infonomic Remix Workbench'
