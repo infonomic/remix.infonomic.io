@@ -22,7 +22,6 @@ import {
 } from '@remix-run/react'
 
 import * as ToastPrimitive from '@radix-ui/react-toast'
-import cx from 'classnames'
 import { ClientOnly } from 'remix-utils'
 
 import { getUser } from './session.server'
@@ -30,7 +29,7 @@ import { getThemeSession } from './theme.server'
 import ErrorLayout from './ui/layouts/error-layout'
 import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/utils'
 
-import { NonFlashOfWrongThemeEls, ThemeProvider, useTheme } from '~/ui/theme/theme-provider'
+import { NonFlashOfWrongThemeEls, ThemeProvider } from '~/ui/theme/theme-provider'
 import type { Theme } from '~/ui/theme/theme-provider'
 
 import appStyles from '~/styles/shared/css/app.css'
