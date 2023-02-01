@@ -1,4 +1,4 @@
-import type * as React from 'react'
+import * as React from 'react'
 import { createPortal } from 'react-dom'
 
 import type {
@@ -128,9 +128,16 @@ export function Head({ title }: HeadProps) {
   // for all route changes (unlike the og:url meta tag above)
   const { pathname } = useLocation()
   const canonicalUrl = removeTrailingSlash(`${data?.origin}${pathname}`)
+  // Add useEffect to manually set the theme class on the html element
+  // since we no longer render the full document from Remix
+  React.useEffect(() => {
+    let html = document.querySelector('html')!
+    html.classList.toggle('dark', data.theme === 'dark')
+    html.classList.toggle('light', data.theme === 'light')
+  }, [data.theme])
   return (
     <>
-      {/* <NonFlashOfWrongThemeEls ssrTheme={Boolean(data.theme)} /> */}
+      <NonFlashOfWrongThemeEls ssrTheme={Boolean(data.theme)} />
       {title ? <title>{title}</title> : null}
       <Meta />
       <link rel="canonical" href={canonicalUrl} />
