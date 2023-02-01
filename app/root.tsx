@@ -1,4 +1,5 @@
 import type * as React from 'react'
+import { createPortal } from 'react-dom'
 
 import type {
   LinksFunction,
@@ -22,6 +23,7 @@ import {
 
 import * as ToastPrimitive from '@radix-ui/react-toast'
 import cx from 'classnames'
+import { ClientOnly } from 'remix-utils'
 
 import { getUser } from './session.server'
 import { getThemeSession } from './theme.server'
@@ -116,47 +118,52 @@ export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
   return json(data)
 }
 
+interface HeadProps {
+  title?: string
+}
+
+export function Head({ title }: HeadProps) {
+  const data = useLoaderData<LoaderData>()
+  // Note: useLocation will force the canonical URL to update
+  // for all route changes (unlike the og:url meta tag above)
+  const { pathname } = useLocation()
+  const canonicalUrl = removeTrailingSlash(`${data?.origin}${pathname}`)
+  return (
+    <>
+      {/* <NonFlashOfWrongThemeEls ssrTheme={Boolean(data.theme)} /> */}
+      {title ? <title>{title}</title> : null}
+      <Meta />
+      <link rel="canonical" href={canonicalUrl} />
+      <Links />
+    </>
+  )
+}
+
 interface DocumentProps {
   children: React.ReactNode
   title?: string
 }
 
-const Document = ({ children, title }: DocumentProps) => {
-  const tcx = useTheme()
+const Document = ({ children }: DocumentProps) => {
   const data = useLoaderData<LoaderData>()
-
-  // Note: useLocation will force the canonical URL to update
-  // for all route changes (unlike the og:url meta tag above)
-  const { pathname } = useLocation()
-  const canonicalUrl = removeTrailingSlash(`${data?.origin}${pathname}`)
-
   return (
-    <html lang="en" className={cx(tcx.theme)}>
-      <head>
-        <NonFlashOfWrongThemeEls ssrTheme={Boolean(data.theme)} />
-        {title ? <title>{title}</title> : null}
-        <Meta />
-        <link rel="canonical" href={canonicalUrl} />
-        <Links />
-      </head>
-      <body className="bg-white selection:bg-amber-400 dark:bg-gray-900 dark:selection:text-black">
-        {children}
-        <ScrollRestoration />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-          }}
-        />
-        <Scripts />
-        <LiveReload />
-      </body>
-    </html>
+    <>
+      <ClientOnly>{() => createPortal(<Head />, document.head)}</ClientOnly>
+      {children}
+      <ScrollRestoration />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+        }}
+      />
+      <Scripts />
+      <LiveReload />
+    </>
   )
 }
 
 export default function App() {
   const data = useLoaderData<LoaderData>()
-
   return (
     <ThemeProvider specifiedTheme={data.theme}>
       <Document>
@@ -171,18 +178,13 @@ export default function App() {
 
 const ErrorDocument = ({ children, title }: DocumentProps) => {
   return (
-    <html lang="en" className="dark">
-      <head>
-        {title ? <title>{title}</title> : null}
-        <Meta />
-        <Links />
-      </head>
-      <body className="bg-white dark:bg-gray-900">
-        {children}
-        <Scripts />
-        <LiveReload />
-      </body>
-    </html>
+    <>
+      <ClientOnly>{() => createPortal(<Head title={title} />, document.head)}</ClientOnly>
+      {children}
+      <ScrollRestoration />
+      <Scripts />
+      <LiveReload />
+    </>
   )
 }
 
@@ -190,17 +192,15 @@ export function ErrorBoundary({ error }: { error: Error }) {
   // eslint-disable-next-line no-console
   console.error(error)
   return (
-    <ThemeProvider specifiedTheme={null}>
-      <ErrorDocument title="Error! - Infonomic Remix Workbench App">
-        <ErrorLayout>
-          <div>
-            <h1>There was an error</h1>
-            <p>{error.message}</p>
-            <p>Oops. Something went wrong. We&apos;re looking into it.</p>
-          </div>
-        </ErrorLayout>
-      </ErrorDocument>
-    </ThemeProvider>
+    <ErrorDocument title="Error! - Infonomic Remix Workbench App">
+      <ErrorLayout>
+        <div>
+          <h1>There was an error</h1>
+          <p>{error.message}</p>
+          <p>Oops. Something went wrong. We&apos;re looking into it.</p>
+        </div>
+      </ErrorLayout>
+    </ErrorDocument>
   )
 }
 
@@ -221,15 +221,13 @@ export function CatchBoundary() {
   }
 
   return (
-    <ThemeProvider specifiedTheme={null}>
-      <ErrorDocument title={`${caught.status} ${caught.statusText}`}>
-        <ErrorLayout>
-          <h1>
-            {caught.status}: {caught.statusText}
-          </h1>
-          {message}
-        </ErrorLayout>
-      </ErrorDocument>
-    </ThemeProvider>
+    <ErrorDocument title={`${caught.status} ${caught.statusText}`}>
+      <ErrorLayout>
+        <h1>
+          {caught.status}: {caught.statusText}
+        </h1>
+        {message}
+      </ErrorLayout>
+    </ErrorDocument>
   )
 }

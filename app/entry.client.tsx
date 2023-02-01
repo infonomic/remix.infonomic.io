@@ -8,13 +8,25 @@ import { registerFocusTrap } from '~/ui/elements/focus-trap.client'
 
 registerFocusTrap()
 
-const hydrate = () => {
+function RemixApp() {
+  return (
+    <StrictMode>
+      <RemixBrowser />
+    </StrictMode>
+  )
+}
+
+function hydrate() {
   startTransition(() => {
-    hydrateRoot(
-      document,
-      <StrictMode>
-        <RemixBrowser />
-      </StrictMode>
+    // @ts-expect-error
+    hydrateRoot(document.getElementById('root'), <RemixApp />)
+    // since <Head> is wrapped in <ClientOnly> it will
+    // not render until after hydration
+    // so we need to remove the server rendered head
+    // in preparation for the client side render
+    document.head.innerHTML = document.head.innerHTML.replace(
+      /<!--start head-->.+<!--end head-->/,
+      ''
     )
   })
 }

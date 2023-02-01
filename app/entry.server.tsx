@@ -5,7 +5,8 @@ import { Response } from '@remix-run/node'
 import { RemixServer } from '@remix-run/react'
 
 import isbot from 'isbot'
-import { renderToPipeableStream } from 'react-dom/server'
+import { renderToPipeableStream, renderToString } from 'react-dom/server'
+import { Head } from '~/root'
 
 const ABORT_DELAY = 5000
 
@@ -16,6 +17,18 @@ export default function handleRequest(
   remixContext: EntryContext
 ) {
   const callbackName = isbot(request.headers.get('user-agent')) ? 'onAllReady' : 'onShellReady'
+
+  // swap out default component with <Head>
+  const defaultRoot = remixContext.routeModules.root
+  remixContext.routeModules.root = {
+    ...defaultRoot,
+    default: Head,
+  }
+
+  let head = renderToString(<RemixServer context={remixContext} url={request.url} />)
+
+  // restore the default root component
+  remixContext.routeModules.root = defaultRoot
 
   return new Promise((resolve, reject) => {
     let didError = false
@@ -34,8 +47,15 @@ export default function handleRequest(
               status: didError ? 500 : responseStatusCode,
             })
           )
-
+          body.write(
+            `<!DOCTYPE html>
+              <html lang="en" class="dark">
+                <head><!--start head-->${head}<!--end head--></head>
+                <body class="bg-white selection:bg-amber-400 dark:bg-gray-900 dark:selection:text-black">
+                <div id="root">`
+          )
           pipe(body)
+          body.write('</div></body></html>')
         },
         onShellError: (err: unknown) => {
           reject(err)
