@@ -11,7 +11,7 @@ enum Theme {
 
 // Helper to find system preference
 const prefersDarkMQ = '(prefers-color-scheme: dark)'
-const getPreferredTheme = () =>
+const getSystemPrefersTheme = () =>
   window.matchMedia(prefersDarkMQ).matches ? Theme.DARK : Theme.LIGHT
 
 // Helper to type check Theme value
@@ -44,7 +44,7 @@ function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme 
     if (typeof window !== 'object') {
       return null
     }
-    return getPreferredTheme()
+    return getSystemPrefersTheme()
   })
 
   const persistTheme = useFetcher()
