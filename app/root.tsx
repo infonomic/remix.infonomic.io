@@ -130,7 +130,7 @@ export function Head({ title }: HeadProps) {
   // Add useEffect to manually set the theme class on the html element
   // since we no longer render the full document from Remix
   React.useEffect(() => {
-    let html = document.querySelector('html')!
+    let html = document.documentElement
     html.classList.toggle('dark', data.theme === 'dark')
     html.classList.toggle('light', data.theme === 'light')
   }, [data.theme])
