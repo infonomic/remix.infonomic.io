@@ -22,7 +22,7 @@ export default function handleRequest(
 
   // get root loader data to set theme in SSR html
   const rootLoaderData = remixContext.staticHandlerContext.loaderData.root
-  const theme = rootLoaderData.theme ?? 'Theme.DARK'
+  const theme = rootLoaderData.theme ?? Theme.DARK
 
   // swap out default component with <Head>
   const defaultRoot = remixContext.routeModules.root
