@@ -30,17 +30,11 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 // ThemeProvider
-function ThemeProvider({
-  children,
-  specifiedTheme,
-}: {
-  children: ReactNode
-  specifiedTheme: Theme | null
-}) {
-  const [theme, setTheme] = useState<Theme | null>(() => {
-    if (specifiedTheme) {
-      if (themes.includes(specifiedTheme)) {
-        return specifiedTheme
+function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme | null }) {
+  const [themeInState, setThemeInState] = useState<Theme | null>(() => {
+    if (theme) {
+      if (themes.includes(theme)) {
+        return theme
       } else {
         return null
       }
@@ -67,22 +61,28 @@ function ThemeProvider({
       mountRun.current = true
       return
     }
-    if (!theme) {
+    if (!themeInState) {
       return
     }
-    persistThemeRef.current.submit({ theme }, { action: 'actions/set-theme', method: 'post' })
-  }, [theme])
+    persistThemeRef.current.submit(
+      { theme: themeInState },
+      { action: 'actions/set-theme', method: 'post' }
+    )
+  }, [themeInState])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(prefersDarkMQ)
     const handleChange = () => {
-      setTheme(mediaQuery.matches ? Theme.DARK : Theme.LIGHT)
+      setThemeInState(mediaQuery.matches ? Theme.DARK : Theme.LIGHT)
     }
     mediaQuery.addEventListener('change', handleChange)
     return () => mediaQuery.removeEventListener('change', handleChange)
   }, [])
 
-  const contextValue = useMemo(() => ({ theme, setTheme }), [theme, setTheme])
+  const contextValue = useMemo(
+    () => ({ theme: themeInState, setTheme: setThemeInState }),
+    [themeInState, setThemeInState]
+  )
 
   return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>
 }

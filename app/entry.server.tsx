@@ -28,7 +28,11 @@ export default function handleRequest(
   const defaultRoot = remixContext.routeModules.root
   remixContext.routeModules.root = {
     ...defaultRoot,
-    default: () => <ThemeProvider specifiedTheme={theme}><Head /></ThemeProvider>,
+    default: () => (
+      <ThemeProvider theme={theme}>
+        <Head />
+      </ThemeProvider>
+    ),
   }
 
   let head = renderToString(<RemixServer context={remixContext} url={request.url} />)
@@ -55,7 +59,7 @@ export default function handleRequest(
           )
           body.write(
             `<!DOCTYPE html>
-              <html lang="en" class="${ theme }">
+              <html lang="en" class="${theme}">
                 <head><!--start head-->${head}<!--end head--></head>
                 <body class="bg-white selection:bg-amber-400 dark:bg-gray-900 dark:selection:text-black">
                 <div id="root">`

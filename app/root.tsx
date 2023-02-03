@@ -171,7 +171,7 @@ const Document = ({ children }: DocumentProps) => {
 export default function App() {
   const data = useLoaderData<LoaderData>()
   return (
-    <ThemeProvider specifiedTheme={data.theme}>
+    <ThemeProvider theme={data.theme}>
       <Document>
         <ToastPrimitive.Provider swipeDirection="right">
           <Outlet />
