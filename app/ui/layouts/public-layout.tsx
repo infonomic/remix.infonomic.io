@@ -7,9 +7,9 @@ import cx from 'classnames'
 
 import { Button } from '~/ui/components/button'
 import { ScrollToTop } from '~/ui/components/scroll-to-top'
-import { ThemeSwitch } from '~/ui/components/theme-switch'
 import AppBar from '~/ui/layouts/app-bar'
 import { PublicFooter } from '~/ui/layouts/public-footer'
+import { ThemeSwitch } from '~/ui/theme/theme-provider'
 
 interface PublicLayoutProps {
   children?: ReactNode

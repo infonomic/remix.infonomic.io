@@ -33,17 +33,8 @@ const clientThemeCode = `
 })();
 `
 
-let renderCount = 0
-
 function PrerenderPrefersSystem({ ssrTheme }: { ssrTheme: string | null }) {
-  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    renderCount += 1
-    console.log(`${PrerenderPrefersSystem.name}. renderCount: `, renderCount)
-  }
-
   const colorScheme = getPrefersColorScheme(ssrTheme)
-  console.log(`ThemeMetaAndPrefs - prefers-color-scheme from :${colorScheme}`)
-
   return (
     <>
       <meta name="color-scheme" content={colorScheme} />

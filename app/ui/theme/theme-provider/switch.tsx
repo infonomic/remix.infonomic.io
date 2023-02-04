@@ -13,11 +13,11 @@ interface ThemeSwitchProps extends ThemeSwitchIntrinsicProps {
 
 const ThemeSwitch = React.forwardRef<HTMLDivElement, ThemeSwitchProps>(
   ({ className, ...rest }, ref) => {
-    const tcx = useTheme()
-    const isDark = tcx.theme == Theme.DARK
+    const themeContext = useTheme()
+    const isDark = themeContext.theme == Theme.DARK
 
     const handleThemeChange = () => {
-      tcx.setTheme(previous => (previous === Theme.LIGHT ? Theme.DARK : Theme.LIGHT))
+      themeContext.setTheme(previous => (previous === Theme.LIGHT ? Theme.DARK : Theme.LIGHT))
     }
 
     const classes = cx('theme-switch', className)

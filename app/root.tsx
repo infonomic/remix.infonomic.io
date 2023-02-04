@@ -122,14 +122,7 @@ interface DocumentProps {
   title?: string
 }
 
-let renderCount = 0
-
 const Document = ({ children, title }: DocumentProps) => {
-  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    renderCount += 1
-    console.log(`${Document.name}. renderCount: `, renderCount)
-  }
-
   const data = useLoaderData<LoaderData>()
 
   // Note: useLocation will force the canonical URL to update
@@ -137,8 +130,6 @@ const Document = ({ children, title }: DocumentProps) => {
   const { pathname } = useLocation()
   const canonicalUrl = removeTrailingSlash(`${data?.origin}${pathname}`)
   const theme = setPrefersTheme(data.theme)
-
-  console.log(`Document - prefers-color-scheme from :${theme}`)
 
   return (
     <html lang="en" data-theme-noprefs={!data.theme} className={theme}>

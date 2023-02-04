@@ -12,10 +12,9 @@ const hydrate = () => {
   startTransition(() => {
     hydrateRoot(
       document,
-      // <StrictMode>
-      //   <RemixBrowser />
-      // </StrictMode>
-      <RemixBrowser />
+      <StrictMode>
+        <RemixBrowser />
+      </StrictMode>
     )
   })
 }

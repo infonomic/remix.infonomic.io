@@ -11,10 +11,10 @@ import { Button } from '~/ui/components/button'
 import { Container } from '~/ui/components/container'
 import { ScrollToTop } from '~/ui/components/scroll-to-top'
 import { Section } from '~/ui/components/section'
-import { ThemeSwitch } from '~/ui/components/theme-switch'
 import { AppBar } from '~/ui/layouts/app-bar'
 import { Footer } from '~/ui/layouts/footer'
 import { MainMenu } from '~/ui/layouts/main-menu'
+import { ThemeSwitch } from '~/ui/theme/theme-provider'
 
 interface MainLayoutProps {
   children?: ReactNode
