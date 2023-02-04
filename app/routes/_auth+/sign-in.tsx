@@ -107,7 +107,7 @@ const fields = ['email', 'password']
  * @returns
  */
 export default function SignInPage() {
-  useReCaptcha()
+  // useReCaptcha()
   const actionData = useActionData<typeof action>()
   const serverErrors = actionData?.errors
   const submit = useSubmit()

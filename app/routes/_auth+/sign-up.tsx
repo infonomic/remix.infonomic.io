@@ -113,7 +113,7 @@ const fields = ['email', 'password']
  * @returns
  */
 export default function SignUpPage() {
-  useReCaptcha()
+  // useReCaptcha()
   const actionData = useActionData<typeof action>()
   const serverErrors = actionData?.errors
   const submit = useSubmit()

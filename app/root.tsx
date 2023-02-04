@@ -29,8 +29,8 @@ import { getThemeSession } from './theme.server'
 import ErrorLayout from './ui/layouts/error-layout'
 import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/utils'
 
-import { ThemeMetaAndPrefs, ThemeProvider } from '~/ui/theme/theme-provider'
-import { Theme } from '~/ui/theme/theme-provider'
+import type { Theme } from '~/ui/theme/theme-provider'
+import { PrerenderPrefersSystem, ThemeProvider, setPrefersTheme } from '~/ui/theme/theme-provider'
 
 import appStyles from '~/styles/shared/css/app.css'
 import tailwindStyles from '~/styles/shared/css/tailwind.css'
@@ -122,32 +122,28 @@ interface DocumentProps {
   title?: string
 }
 
+let renderCount = 0
+
 const Document = ({ children, title }: DocumentProps) => {
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    renderCount += 1
+    console.log(`${Document.name}. renderCount: `, renderCount)
+  }
+
   const data = useLoaderData<LoaderData>()
 
   // Note: useLocation will force the canonical URL to update
   // for all route changes (unlike the og:url meta tag above)
   const { pathname } = useLocation()
   const canonicalUrl = removeTrailingSlash(`${data?.origin}${pathname}`)
+  const theme = setPrefersTheme(data.theme)
 
-  let theme = 'light'
-  if (data.theme) {
-    theme = data.theme
-  } else {
-    if (typeof window === 'object') {
-      const prefersDarkMQ = '(prefers-color-scheme: dark)'
-      theme = window.matchMedia(prefersDarkMQ).matches ? Theme.DARK : Theme.LIGHT
-      const head = document.documentElement
-      head.classList.toggle('dark', theme === 'dark')
-      head.classList.toggle('light', theme === 'light')
-      console.log(theme)
-    }
-  }
+  console.log(`Document - prefers-color-scheme from :${theme}`)
 
   return (
     <html lang="en" data-theme-noprefs={!data.theme} className={theme}>
       <head>
-        <ThemeMetaAndPrefs ssrTheme={data.theme} />
+        <PrerenderPrefersSystem ssrTheme={data.theme} />
         {title ? <title>{title}</title> : null}
         <Meta />
         <link rel="canonical" href={canonicalUrl} />
