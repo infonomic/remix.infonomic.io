@@ -10,7 +10,30 @@ enum Theme {
 }
 
 // Helper to find system preference
+
 const prefersDarkMQ = '(prefers-color-scheme: dark)'
+
+function setHeadAndMeta() {
+  const head = document.documentElement
+  if (head.dataset.themeNoprefs === 'true') {
+    const theme = window.matchMedia(prefersDarkMQ).matches ? Theme.DARK : Theme.LIGHT
+
+    head.classList.toggle('dark', theme === Theme.DARK)
+    head.classList.toggle('light', theme === Theme.LIGHT)
+
+    const meta: any = document.querySelector('meta[name=color-scheme]')
+    if (meta) {
+      if (theme === 'dark') {
+        meta.content = 'dark light'
+      } else if (theme === 'light') {
+        meta.content = 'light dark'
+      }
+    } else {
+      console.warn('meta tag name="color-scheme" not found')
+    }
+  }
+}
+
 const getSystemPrefersTheme = () =>
   window.matchMedia(prefersDarkMQ).matches ? Theme.DARK : Theme.LIGHT
 
@@ -25,8 +48,6 @@ type ThemeContextType = {
   theme: Theme | null
   setTheme: Dispatch<SetStateAction<Theme | null>>
 }
-// type ThemeContextType = (Theme | Dispatch<SetStateAction<Theme | null>> | null)[]
-// type ThemeContextType = [Theme | null, Dispatch<SetStateAction<Theme | null>>];
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 // ThemeProvider
@@ -38,42 +59,45 @@ function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme 
       } else {
         return null
       }
+    } else {
+      return null
     }
     // // there's no way for us to know what the theme should be in this context
     // // the client will have to figure it out before hydration.
-    if (typeof window !== 'object') {
-      return null
-    }
-    return getSystemPrefersTheme()
+    // if (typeof window !== 'object') {
+    //   return null
+    // }
+    // return getSystemPrefersTheme()
   })
 
   const persistTheme = useFetcher()
   // TODO: remove this when useFetcher/persistTheme is memoized properly
   const persistThemeRef = useRef(persistTheme)
-  useEffect(() => {
-    persistThemeRef.current = persistTheme
-  }, [persistTheme])
+  // useEffect(() => {
+  //   persistThemeRef.current = persistTheme
+  // }, [persistTheme])
 
-  const mountRun = useRef(false)
+  // const mountRun = useRef(false)
 
-  useEffect(() => {
-    if (!mountRun.current) {
-      mountRun.current = true
-      return
-    }
-    if (!themeInState) {
-      return
-    }
-    persistThemeRef.current.submit(
-      { theme: themeInState },
-      { action: 'actions/set-theme', method: 'post' }
-    )
-  }, [themeInState])
+  // useEffect(() => {
+  //   if (!mountRun.current) {
+  //     mountRun.current = true
+  //     return
+  //   }
+  //   if (!themeInState) {
+  //     return
+  //   }
+  //   persistThemeRef.current.submit(
+  //     { theme: themeInState },
+  //     { action: 'actions/set-theme', method: 'post' }
+  //   )
+  // }, [themeInState])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(prefersDarkMQ)
     const handleChange = () => {
       setThemeInState(mediaQuery.matches ? Theme.DARK : Theme.LIGHT)
+      setHeadAndMeta()
     }
     mediaQuery.addEventListener('change', handleChange)
     return () => mediaQuery.removeEventListener('change', handleChange)
@@ -98,11 +122,14 @@ function useTheme() {
 
 // JavaScript - needs to be run BEFORE React. See root.tsx
 // Sets the system preference theme if no SSR theme / cookie
-// has been set.
+// has been set. Note that this will only execute once - before
+// entry.client.tsx hydrate - and so will only execute on a
+// first or full page reload.
 const clientThemeCode = `
 ;(() => {
+  console.log('clientThemCode executed');
   const head = document.documentElement;
-  if(head.dataset.themeNoprefs) {
+  if(head.dataset.themeNoprefs === "true") {
     const theme = window.matchMedia(${JSON.stringify(prefersDarkMQ)}).matches
       ? 'dark'
       : 'light';
@@ -127,12 +154,21 @@ const clientThemeCode = `
 `
 
 function ThemeMetaAndPrefs({ ssrTheme }: { ssrTheme: string | null }) {
-  // Default or fallback - must agree with default theme
-  // set in html element in entry.server.tsx
-  console.log(ssrTheme)
+  // Fallback or default colorScheme - must match
+  // the fallback theme in root.tsx
   let colorScheme = 'light dark'
   if (ssrTheme && ssrTheme === 'dark') {
     colorScheme = 'dark light'
+  } else {
+    let preferredTheme
+    if (typeof window === 'object') {
+      preferredTheme = window.matchMedia(prefersDarkMQ).matches ? Theme.DARK : Theme.LIGHT
+      const head = document.documentElement
+      head.classList.toggle('dark', preferredTheme === 'dark')
+      head.classList.toggle('light', preferredTheme === 'light')
+      colorScheme = preferredTheme === 'dark' ? 'dark light' : 'light dark'
+      console.log(preferredTheme)
+    }
   }
   return (
     <>
