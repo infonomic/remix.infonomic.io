@@ -1,6 +1,6 @@
 // Based initially on https://www.mattstobbs.com/remix-dark-mode/
-import { createContext, useContext, useState, useEffect, useMemo } from 'react'
-import type { ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, useRef, useMemo } from 'react'
+import type { Dispatch, ReactNode, SetStateAction } from 'react'
 
 import type { FetcherWithComponents } from '@remix-run/react'
 import { useFetcher } from '@remix-run/react'
@@ -10,7 +10,7 @@ import { Theme, prefersDarkMQ, getPrefers, setPrefersSystem, isTheme } from './u
 // ThemeContext
 type ThemeContextType = {
   theme: Theme | null
-  setTheme: Function
+  setTheme: Dispatch<SetStateAction<Theme | null>>
 }
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
@@ -32,12 +32,27 @@ function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme 
     return getPrefers()
   })
 
-  // const persistTheme = useFetcher()
+  const persistTheme: FetcherWithComponents<any> = useFetcher()
   // TODO: remove this when useFetcher/persistTheme is memoized properly
-  // const persistThemeRef = useRef(persistTheme)
-  // useEffect(() => {
-  //   persistThemeRef.current = persistTheme
-  // }, [persistTheme])
+  const persistThemeRef = useRef(persistTheme)
+  useEffect(() => {
+    persistThemeRef.current = persistTheme
+  }, [persistTheme])
+
+  const mountRun = useRef(false)
+  useEffect(() => {
+    if (!mountRun.current) {
+      mountRun.current = true
+      return
+    }
+    if (!themeInState) {
+      return
+    }
+    persistThemeRef.current.submit(
+      { theme: themeInState },
+      { action: 'actions/set-theme', method: 'post' }
+    )
+  }, [themeInState])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(prefersDarkMQ)
@@ -48,14 +63,9 @@ function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme 
     return () => mediaQuery.removeEventListener('change', handleChange)
   }, [])
 
-  const persistTheme: FetcherWithComponents<any> = useFetcher()
   const contextValue = useMemo(() => {
-    function setTheme(newTheme: Theme) {
-      persistTheme.submit({ theme: newTheme }, { action: 'actions/set-theme', method: 'post' })
-      setThemeInState(newTheme)
-    }
-    return { theme: themeInState, setTheme }
-  }, [themeInState, persistTheme])
+    return { theme: themeInState, setTheme: setThemeInState }
+  }, [themeInState])
 
   return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>
 }
