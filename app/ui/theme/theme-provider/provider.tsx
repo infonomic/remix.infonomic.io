@@ -1,15 +1,16 @@
 // Based initially on https://www.mattstobbs.com/remix-dark-mode/
-import { createContext, useContext, useState, useEffect, useRef, useMemo } from 'react'
-import type { Dispatch, ReactNode, SetStateAction } from 'react'
+import { createContext, useContext, useState, useEffect, useMemo } from 'react'
+import type { ReactNode } from 'react'
 
+import type { FetcherWithComponents } from '@remix-run/react'
 import { useFetcher } from '@remix-run/react'
 
-import { Theme, prefersDarkMQ, setPrefersSystem, isTheme } from './utils'
+import { Theme, prefersDarkMQ, getPrefers, setPrefersSystem, isTheme } from './utils'
 
 // ThemeContext
 type ThemeContextType = {
   theme: Theme | null
-  setTheme: Dispatch<SetStateAction<Theme | null>>
+  setTheme: Function
 }
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
@@ -22,15 +23,13 @@ function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme 
       } else {
         return null
       }
-    } else {
+    }
+    // there's no way for us to know what the theme should be in this context
+    // the client will have to figure it out before hydration.
+    if (typeof window !== 'object') {
       return null
     }
-    // // there's no way for us to know what the theme should be in this context
-    // // the client will have to figure it out before hydration.
-    // if (typeof window !== 'object') {
-    //   return null
-    // }
-    // return getSystemPrefers()
+    return getPrefers()
   })
 
   // const persistTheme = useFetcher()
@@ -41,20 +40,22 @@ function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme 
   // }, [persistTheme])
 
   useEffect(() => {
-    if (!themeInState) {
-      const mediaQuery = window.matchMedia(prefersDarkMQ)
-      const handleChange = () => {
-        setPrefersSystem()
-      }
-      mediaQuery.addEventListener('change', handleChange)
-      return () => mediaQuery.removeEventListener('change', handleChange)
+    const mediaQuery = window.matchMedia(prefersDarkMQ)
+    const handleChange = () => {
+      setPrefersSystem()
     }
-  }, [themeInState])
+    mediaQuery.addEventListener('change', handleChange)
+    return () => mediaQuery.removeEventListener('change', handleChange)
+  }, [])
 
-  const contextValue = useMemo(
-    () => ({ theme: themeInState, setTheme: setThemeInState }),
-    [themeInState, setThemeInState]
-  )
+  const persistTheme: FetcherWithComponents<any> = useFetcher()
+  const contextValue = useMemo(() => {
+    function setTheme(newTheme: Theme) {
+      persistTheme.submit({ theme: newTheme }, { action: 'actions/set-theme', method: 'post' })
+      setThemeInState(newTheme)
+    }
+    return { theme: themeInState, setTheme }
+  }, [themeInState, persistTheme])
 
   return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>
 }

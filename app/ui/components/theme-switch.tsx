@@ -4,7 +4,7 @@ import cx from 'classnames'
 
 import LightIcon from '~/ui/icons/light-icon'
 import MoonIcon from '~/ui/icons/moon-icon'
-import { Theme, useTheme } from '~/ui/theme/theme-provider'
+import { Theme, useTheme, getPrefers } from '~/ui/theme/theme-provider'
 
 type ThemeSwitchIntrinsicProps = JSX.IntrinsicElements['div']
 interface ThemeSwitchProps extends ThemeSwitchIntrinsicProps {
@@ -14,10 +14,17 @@ interface ThemeSwitchProps extends ThemeSwitchIntrinsicProps {
 const ThemeSwitch = React.forwardRef<HTMLDivElement, ThemeSwitchProps>(
   ({ className, ...rest }, ref) => {
     const tcx = useTheme()
-    const isDark = tcx.theme == Theme.DARK
+    const currentTheme = tcx.theme ? tcx.theme : getPrefers()
+    const isDark = currentTheme === Theme.DARK
 
     const handleThemeChange = () => {
-      tcx.setTheme(previous => (previous === Theme.LIGHT ? Theme.DARK : Theme.LIGHT))
+      let newTheme
+      if (tcx.theme) {
+        newTheme = tcx.theme === Theme.DARK ? Theme.LIGHT : Theme.DARK
+      } else {
+        newTheme = Theme.LIGHT
+      }
+      tcx.setTheme(newTheme)
     }
 
     const classes = cx('theme-switch', className)
