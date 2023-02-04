@@ -28,8 +28,12 @@ import { getThemeSession } from './theme.server'
 import ErrorLayout from './ui/layouts/error-layout'
 import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/utils'
 
-import type { Theme } from '~/ui/theme/theme-provider'
-import { PrerenderPrefersSystem, ThemeProvider, setPrefersTheme } from '~/ui/theme/theme-provider'
+import {
+  Theme,
+  PrerenderPrefersSystem,
+  ThemeProvider,
+  setPrefersTheme,
+} from '~/ui/theme/theme-provider'
 
 import appStyles from '~/styles/shared/css/app.css'
 import tailwindStyles from '~/styles/shared/css/tailwind.css'
@@ -123,7 +127,6 @@ interface DocumentProps {
 
 const Document = ({ children, title }: DocumentProps) => {
   const data = useLoaderData<LoaderData>()
-
   // Note: useLocation will force the canonical URL to update
   // for all route changes (unlike the og:url meta tag above)
   const { pathname } = useLocation()
@@ -170,9 +173,11 @@ export default function App() {
 }
 
 const ErrorDocument = ({ children, title }: DocumentProps) => {
+  const theme = setPrefersTheme(Theme.DARK)
   return (
-    <html lang="en" className="dark">
+    <html lang="en" data-theme-noprefs={true} className={theme}>
       <head>
+        <PrerenderPrefersSystem ssrTheme={theme} />
         {title ? <title>{title}</title> : null}
         <Meta />
         <Links />
