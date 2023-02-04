@@ -1,3 +1,4 @@
+// Based Matt on Matt Stobbs' excellent article https://www.mattstobbs.com/remix-dark-mode/
 import { prefersDarkMQ, getPrefersColorScheme } from './utils'
 
 // JavaScript - needs to be run BEFORE React. See root.tsx
