@@ -26,7 +26,7 @@ function hydrate() {
     // in preparation for the client side render.
     //
     // https://stackoverflow.com/questions/28262715/replace-multiline-text-between-two-strings
-    // Makes this a little less brittle - should anyone change the format of the
+    // Makes this a little less brittle should anyone change the format of the
     // head string in entry.server.tsx
     document.head.innerHTML = document.head.innerHTML.replace(
       /<!--start head-->[\s\S]*?<!--end head-->/g,
