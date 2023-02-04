@@ -39,8 +39,8 @@ function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme 
         return null
       }
     }
-    // there's no way for us to know what the theme should be in this context
-    // the client will have to figure it out before hydration.
+    // // there's no way for us to know what the theme should be in this context
+    // // the client will have to figure it out before hydration.
     if (typeof window !== 'object') {
       return null
     }
@@ -97,47 +97,49 @@ function useTheme() {
 }
 
 // JavaScript - needs to be run BEFORE React. See root.tsx
-// Sets initial class for theme on <html class="theme"> based
-// on system preference.
+// Sets the system preference theme if no SSR theme / cookie
+// has been set.
 const clientThemeCode = `
 ;(() => {
-  const theme = window.matchMedia(${JSON.stringify(prefersDarkMQ)}).matches
-    ? 'dark'
-    : 'light';
-  const cl = document.documentElement.classList;
-  const themeAlreadyApplied = cl.contains('light') || cl.contains('dark');
-  if (themeAlreadyApplied) {
-    // this script shouldn't exist if the theme is already applied!
-    console.warn(
-      "Theme already applied (this should not happen).",
-    );
-  } else {
-    cl.add(theme);
-  }
+  const head = document.documentElement;
+  if(head.dataset.themeNoprefs) {
+    const theme = window.matchMedia(${JSON.stringify(prefersDarkMQ)}).matches
+      ? 'dark'
+      : 'light';
+    
+    head.classList.toggle('dark', theme === 'dark');
+    head.classList.toggle('light', theme === 'light');
 
-  const meta = document.querySelector('meta[name=color-scheme]');
-  if (meta) {
-    if (theme === 'dark') {
-      meta.content = 'dark light';
-    } else if (theme === 'light') {
-      meta.content = 'light dark';
+    const meta = document.querySelector('meta[name=color-scheme]');
+    if (meta) {
+      if (theme === 'dark') {
+        meta.content = 'dark light';
+      } else if (theme === 'light') {
+        meta.content = 'light dark';
+      }
+    } else {
+      console.warn(
+        "meta tag name='color-scheme' not found",
+      );
     }
-  } else {
-    console.warn(
-      "meta tag name='color-scheme' not found",
-    );
   }
 })();
 `
 
-function NonFlashOfWrongThemeEls({ ssrTheme }: { ssrTheme: boolean }) {
-  const tcx = useTheme()
+function ThemeMetaAndPrefs({ ssrTheme }: { ssrTheme: string | null }) {
+  // Default or fallback - must agree with default theme
+  // set in html element in entry.server.tsx
+  console.log(ssrTheme)
+  let colorScheme = 'light dark'
+  if (ssrTheme && ssrTheme === 'dark') {
+    colorScheme = 'dark light'
+  }
   return (
     <>
-      <meta name="color-scheme" content={tcx.theme === 'light' ? 'light dark' : 'dark light'} />
+      <meta name="color-scheme" content={colorScheme} />
       {ssrTheme ? null : <script dangerouslySetInnerHTML={{ __html: clientThemeCode }} />}
     </>
   )
 }
 
-export { Theme, ThemeProvider, useTheme, NonFlashOfWrongThemeEls, isTheme }
+export { Theme, ThemeProvider, useTheme, ThemeMetaAndPrefs, isTheme }

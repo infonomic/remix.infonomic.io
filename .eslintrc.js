@@ -231,6 +231,10 @@ module.exports = {
 
     // Updated 2023-01-06 - let prettier handle no-extra-semi
     'no-extra-semi': ["off"],
-    '@typescript-eslint/no-extra-semi': ["off"]
+    '@typescript-eslint/no-extra-semi': ["off"],
+
+    // Updated 2023-02-04 - let prettier handle indentation
+    "indent": ["off"],
+    "@typescript-eslint/indent": ["off"]
   },
 }

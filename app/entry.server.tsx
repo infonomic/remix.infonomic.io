@@ -8,7 +8,7 @@ import isbot from 'isbot'
 import { renderToPipeableStream, renderToString } from 'react-dom/server'
 import { Head } from '~/root'
 
-import { ThemeProvider, Theme } from '~/ui/theme/theme-provider'
+import { Theme } from '~/ui/theme/theme-provider'
 
 const ABORT_DELAY = 5000
 
@@ -22,17 +22,13 @@ export default function handleRequest(
 
   // get root loader data to set theme in SSR html
   const rootLoaderData = remixContext.staticHandlerContext.loaderData.root
-  const theme = rootLoaderData.theme ?? Theme.DARK
+  const theme = rootLoaderData.theme
 
   // swap out default component with <Head>
   const defaultRoot = remixContext.routeModules.root
   remixContext.routeModules.root = {
     ...defaultRoot,
-    default: () => (
-      <ThemeProvider theme={theme}>
-        <Head />
-      </ThemeProvider>
-    ),
+    default: () => <Head />,
   }
 
   let head = renderToString(<RemixServer context={remixContext} url={request.url} />)
@@ -59,7 +55,11 @@ export default function handleRequest(
           )
           body.write(
             `<!DOCTYPE html>
-              <html lang="en" class="${theme}">
+              <html 
+                lang="en" 
+                class="${theme ?? Theme.LIGHT}"
+                ${theme ? '' : 'data-theme-noprefs="true"'} 
+              >
                 <head><!--start head-->${head}<!--end head--></head>
                 <body class="bg-white selection:bg-amber-400 dark:bg-gray-900 dark:selection:text-black">
                 <div id="root">`

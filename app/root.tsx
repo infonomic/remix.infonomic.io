@@ -1,4 +1,4 @@
-import * as React from 'react'
+import type * as React from 'react'
 import { createPortal } from 'react-dom'
 
 import type {
@@ -7,6 +7,7 @@ import type {
   LoaderFunction,
   V2_MetaFunction,
   V2_HtmlMetaDescriptor,
+  HtmlLinkDescriptor,
 } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
@@ -29,7 +30,7 @@ import { getThemeSession } from './theme.server'
 import ErrorLayout from './ui/layouts/error-layout'
 import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/utils'
 
-import { NonFlashOfWrongThemeEls, ThemeProvider } from '~/ui/theme/theme-provider'
+import { ThemeMetaAndPrefs, ThemeProvider } from '~/ui/theme/theme-provider'
 import type { Theme } from '~/ui/theme/theme-provider'
 
 import appStyles from '~/styles/shared/css/app.css'
@@ -47,15 +48,15 @@ export type LoaderData = {
 
 /**
  * links
- * @returns LinksFunction
+ * @returns {HtmlLinkDescriptor []}
  */
-export const links: LinksFunction = () => {
+export const links: LinksFunction = (): HtmlLinkDescriptor[] => {
   return [
-    { rel: 'apple-touch-icon', sized: '180x180', href: '/apple-touch-icon.png?v=10' },
-    { rel: 'icon', type: 'image/png', sized: '96x96', href: '/favicon-96x96.png?v=10' },
-    { rel: 'icon', type: 'image/png', sized: '48x38', href: '/favicon-48x48.png?v=10' },
-    { rel: 'icon', type: 'image/png', sized: '32x32', href: '/favicon-32x32.png?v=10' },
-    { rel: 'icon', type: 'image/png', sized: '16x16', href: '/favicon-16x16.png?v=10' },
+    { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png?v=10' },
+    { rel: 'icon', type: 'image/png', sizes: '96x96', href: '/favicon-96x96.png?v=10' },
+    { rel: 'icon', type: 'image/png', sizes: '48x38', href: '/favicon-48x48.png?v=10' },
+    { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png?v=10' },
+    { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png?v=10' },
     { rel: 'icon', href: '/favicon.ico?v=10' },
     { rel: 'manifest', href: '/manifest.webmanifest?v=10', crossOrigin: 'use-credentials' },
     { rel: 'mask-icon', href: '/safari-pinned-tab.svg?v=10', color: '#501c76' },
@@ -127,16 +128,9 @@ export function Head({ title }: HeadProps) {
   // for all route changes (unlike the og:url meta tag above)
   const { pathname } = useLocation()
   const canonicalUrl = removeTrailingSlash(`${data?.origin}${pathname}`)
-  // Add useEffect to manually set the theme class on the html element
-  // since we no longer render the full document from Remix
-  React.useEffect(() => {
-    let html = document.documentElement
-    html.classList.toggle('dark', data.theme === 'dark')
-    html.classList.toggle('light', data.theme === 'light')
-  }, [data.theme])
   return (
     <>
-      <NonFlashOfWrongThemeEls ssrTheme={Boolean(data.theme)} />
+      <ThemeMetaAndPrefs ssrTheme={data.theme} />
       {title ? <title>{title}</title> : null}
       <Meta />
       <link rel="canonical" href={canonicalUrl} />
