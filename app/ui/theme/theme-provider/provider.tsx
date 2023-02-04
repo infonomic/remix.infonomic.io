@@ -5,7 +5,7 @@ import type { Dispatch, ReactNode, SetStateAction } from 'react'
 import type { FetcherWithComponents } from '@remix-run/react'
 import { useFetcher } from '@remix-run/react'
 
-import { Theme, prefersDarkMQ, getPrefers, setPrefersSystem, isTheme } from './utils'
+import { Theme, prefersDarkMQ, getPrefers, isTheme } from './utils'
 
 // ThemeContext
 type ThemeContextType = {
