@@ -57,7 +57,8 @@ function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme 
   useEffect(() => {
     const mediaQuery = window.matchMedia(prefersDarkMQ)
     const handleChange = () => {
-      setPrefersSystem()
+      const prefers = getPrefers()
+      setThemeInState(prefers)
     }
     mediaQuery.addEventListener('change', handleChange)
     return () => mediaQuery.removeEventListener('change', handleChange)
