@@ -60,6 +60,7 @@ function setPrefersColorScheme() {
           meta.content = 'light dark'
         }
       } else {
+        // eslint-disable-next-line no-console
         console.warn('meta tag name="color-scheme" not found')
       }
   }
@@ -82,6 +83,7 @@ function setPrefersSystem() {
           meta.content = 'light dark'
         }
       } else {
+        // eslint-disable-next-line no-console
         console.warn('meta tag name="color-scheme" not found')
       }
     }

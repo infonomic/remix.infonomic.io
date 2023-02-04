@@ -22,7 +22,6 @@ import {
 } from '@remix-run/react'
 
 import * as ToastPrimitive from '@radix-ui/react-toast'
-import cx from 'classnames'
 
 import { getUser } from './session.server'
 import { getThemeSession } from './theme.server'
