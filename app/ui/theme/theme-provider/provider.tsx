@@ -1,4 +1,4 @@
-// Based Matt on Matt Stobbs' excellent article https://www.mattstobbs.com/remix-dark-mode/
+// Based on Matt Stobbs' excellent article https://www.mattstobbs.com/remix-dark-mode/
 import { createContext, useContext, useState, useEffect, useRef, useMemo } from 'react'
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 

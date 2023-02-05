@@ -1,4 +1,4 @@
-// Based Matt on Matt Stobbs' excellent article https://www.mattstobbs.com/remix-dark-mode/
+// Based on Matt Stobbs' excellent article https://www.mattstobbs.com/remix-dark-mode/
 
 enum Theme {
   DARK = 'dark',
