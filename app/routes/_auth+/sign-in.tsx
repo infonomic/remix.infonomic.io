@@ -145,7 +145,7 @@ export default function SignInPage() {
   }, [serverErrors, setFocus])
 
   return (
-    <div className="form mx-auto mt-[10vh] max-w-[460px] rounded-lg border border-gray-400 p-5 dark:border-gray-700 sm:mt-[14vh] md:p-7">
+    <div className="form mx-auto mt-[6vh] max-w-[460px] rounded-lg border border-gray-400 p-5 dark:border-gray-700 sm:mt-[14vh] md:p-7">
       <div className="form-header prose dark:prose-invert">
         <h1 className="mb-5 text-[2.25rem]">Sign In</h1>
       </div>
