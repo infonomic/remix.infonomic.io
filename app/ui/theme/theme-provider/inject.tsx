@@ -8,7 +8,6 @@ import { prefersDarkMQ, getPrefersColorScheme } from './utils'
 // full page load or reload.
 const clientThemeCode = `
 ;(() => {
-  console.log('clientThemCode executed');
   const head = document.documentElement;
   if(head.dataset.themeNoprefs === "true") {
     const theme = window.matchMedia(${JSON.stringify(prefersDarkMQ)}).matches
@@ -34,7 +33,7 @@ const clientThemeCode = `
 })();
 `
 
-function PrerenderPrefersSystem({ ssrTheme }: { ssrTheme: string | null }) {
+function InjectPrefersTheme({ ssrTheme }: { ssrTheme: string | null }) {
   const colorScheme = getPrefersColorScheme(ssrTheme)
   return (
     <>
@@ -44,4 +43,4 @@ function PrerenderPrefersSystem({ ssrTheme }: { ssrTheme: string | null }) {
   )
 }
 
-export { PrerenderPrefersSystem }
+export { InjectPrefersTheme }

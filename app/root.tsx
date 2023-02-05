@@ -30,7 +30,7 @@ import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/utils'
 
 import {
   Theme,
-  PrerenderPrefersSystem,
+  InjectPrefersTheme,
   ThemeProvider,
   setPrefersTheme,
 } from '~/ui/theme/theme-provider'
@@ -136,7 +136,7 @@ const Document = ({ children, title }: DocumentProps) => {
   return (
     <html lang="en" data-theme-noprefs={!data.theme} className={theme}>
       <head>
-        <PrerenderPrefersSystem ssrTheme={data.theme} />
+        <InjectPrefersTheme ssrTheme={data.theme} />
         {title ? <title>{title}</title> : null}
         <Meta />
         <link rel="canonical" href={canonicalUrl} />
@@ -177,7 +177,7 @@ const ErrorDocument = ({ children, title }: DocumentProps) => {
   return (
     <html lang="en" data-theme-noprefs={true} className={theme}>
       <head>
-        <PrerenderPrefersSystem ssrTheme={theme} />
+        <InjectPrefersTheme ssrTheme={theme} />
         {title ? <title>{title}</title> : null}
         <Meta />
         <Links />

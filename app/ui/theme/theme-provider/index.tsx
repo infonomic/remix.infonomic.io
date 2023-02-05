@@ -1,4 +1,4 @@
 export * from './utils'
 export * from './provider'
-export * from './prerender'
+export * from './inject'
 export * from './switch'
