@@ -50,8 +50,13 @@ function getPrefersColorScheme(theme: string | null) {
   return prefers === 'dark' ? 'dark light' : 'light dark'
 }
 
-function setPrefersColorScheme() {
-  const prefers = getPrefers()
+function setPrefersColorScheme(theme: string | null) {
+  let prefers
+  if (theme) {
+    prefers = theme
+  } else {
+    prefers = getPrefers()
+  }
   if (typeof document !== 'undefined') {
     const meta: any = document.querySelector('meta[name=color-scheme]')
       if (meta) {

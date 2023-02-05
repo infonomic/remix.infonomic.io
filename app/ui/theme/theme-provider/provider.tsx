@@ -1,16 +1,23 @@
 // Based on Matt Stobbs' excellent article https://www.mattstobbs.com/remix-dark-mode/
 import { createContext, useContext, useState, useEffect, useRef, useMemo } from 'react'
-import type { Dispatch, ReactNode, SetStateAction } from 'react'
+import type { ReactNode } from 'react'
 
 import type { FetcherWithComponents } from '@remix-run/react'
 import { useFetcher } from '@remix-run/react'
 
-import { Theme, prefersDarkMQ, getPrefers, isTheme } from './utils'
+import {
+  Theme,
+  prefersDarkMQ,
+  getPrefers,
+  isTheme,
+  setPrefersTheme,
+  setPrefersColorScheme,
+} from './utils'
 
 // ThemeContext
 type ThemeContextType = {
   theme: Theme | null
-  setTheme: Dispatch<SetStateAction<Theme | null>>
+  setTheme: (theme: Theme) => void
 }
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
@@ -58,6 +65,10 @@ function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme 
     const mediaQuery = window.matchMedia(prefersDarkMQ)
     const handleChange = () => {
       const prefers = getPrefers()
+      // Optimistically set the UI first so there is no delay in theme change
+      setPrefersTheme(prefers)
+      setPrefersColorScheme(prefers)
+      // Then trigger the state change and theme session cookie change via fetcher
       setThemeInState(prefers)
     }
     mediaQuery.addEventListener('change', handleChange)
@@ -65,7 +76,14 @@ function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme 
   }, [])
 
   const contextValue = useMemo(() => {
-    return { theme: themeInState, setTheme: setThemeInState }
+    const setTheme = (prefers: Theme) => {
+      // Optimistically set the UI first so there is no delay in theme change
+      setPrefersTheme(prefers)
+      setPrefersColorScheme(prefers)
+      // Then trigger the state change and theme session cookie change via fetcher
+      setThemeInState(prefers)
+    }
+    return { theme: themeInState, setTheme }
   }, [themeInState])
 
   return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>

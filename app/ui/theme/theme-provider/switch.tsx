@@ -17,7 +17,7 @@ const ThemeSwitch = React.forwardRef<HTMLDivElement, ThemeSwitchProps>(
     const isDark = themeContext.theme == Theme.DARK
 
     const handleThemeChange = () => {
-      themeContext.setTheme(previous => (previous === Theme.LIGHT ? Theme.DARK : Theme.LIGHT))
+      themeContext.setTheme(isDark ? Theme.LIGHT : Theme.DARK)
     }
 
     const classes = cx('theme-switch', className)
