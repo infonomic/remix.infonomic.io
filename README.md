@@ -35,11 +35,12 @@ The quick-start [Indie stack example](https://github.com/remix-run/indie-stack) 
 
 Remix is pretty cool, and we've tried to do things the Remix way - but, obviously we're new to Remix and so suggestions are welcome. There are a few good example Remix projects out there - including (but not limited to)...
 
-[https://github.com/jacob-ebey/remix-dashboard-template](https://github.com/jacob-ebey/remix-dashboard-template)<br>
-[https://github.com/jacob-ebey/remix-ecommerce](https://github.com/jacob-ebey/remix-ecommerce)<br>
-[https://github.com/kentcdodds/kentcdodds.com](https://github.com/kentcdodds/kentcdodds.com)<br>
-[https://github.com/epicweb-dev/rocket-rental](https://github.com/epicweb-dev/rocket-rental)<br>
-[https://github.com/mcansh/mcan.sh](https://github.com/mcansh/mcan.sh)<br>
+[https://github.com/remix-run/react-router-website](https://github.com/remix-run/react-router-website)  
+[https://github.com/jacob-ebey/remix-dashboard-template](https://github.com/jacob-ebey/remix-dashboard-template)  
+[https://github.com/jacob-ebey/remix-ecommerce](https://github.com/jacob-ebey/remix-ecommerce)  
+[https://github.com/kentcdodds/kentcdodds.com](https://github.com/kentcdodds/kentcdodds.com)  
+[https://github.com/epicweb-dev/rocket-rental](https://github.com/epicweb-dev/rocket-rental)  
+[https://github.com/mcansh/mcan.sh](https://github.com/mcansh/mcan.sh)
 
 ### Directory Structure
 
@@ -121,7 +122,7 @@ The entire system can be illustrated as follows:
    └── tailwind.css
 ```
 
-This means of course that you will need to import stylesheets from the `/app/styles` directory, and not the source route, module or shared CSS directories. In order to 'surface' module-level stylesheets in a route, we followed the [styling guide](https://remix.run/docs/en/v1/guides/styling#surfacing-styles) at Remix. It's not a perfect 'co-located' setup - but it works, and it was the best we could come up with for now. Again - suggestions welcome. You can see an example that combines the `Hero.css` stylesheet with the `index.css` stylesheet here in the [index.tsx route](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/routes/index.tsx).
+This means of course that you will need to import stylesheets from the `/app/styles` directory, and not the source route, module or shared CSS directories. In order to 'surface' module-level stylesheets in a route, we followed the [styling guide](https://remix.run/docs/en/v1/guides/styling#surfacing-styles) at Remix. It's not a perfect 'co-located' setup - but it works, and it was the best we could come up with for now. Again - suggestions welcome. You can see an example that combines the `Hero.css` stylesheet with the `index.css` stylesheet here in the [index.tsx route](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/routes/_landing%2B/index.tsx).
 
 ### Components and Design System
 
@@ -170,7 +171,7 @@ As mentioned in the introduction to this section, we've intentionally removed an
 
 [Table](https://github.com/infonomic/remix.infonomic.io/tree/develop/app/ui/components/table) - components include all styled table elements and a TablePager component. The TablePager component is dependent on the excellent [TanStack Table](https://tanstack.com/table/v8) component (formerly React Table), however, this probably isn't the 'Remix way'. A better implementation might be to surround all of the pager controls in a form element with a 'get' method and action that simply submits updated url search params (aka query string parameters). Initial TablePager styling courtesy of [Flowbite Pager](https://flowbite.com/docs/components/pagination/).
 
-[ThemeSwitch](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/ui/components/theme-switch.tsx) - is our component for changing between light and dark themes via [ThemeProvider](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/ui/theme/theme-provider.tsx) - all based on Matt Stobbs' excellent blog post - [The Complete Guide to Dark Mode with Remix](https://www.mattstobbs.com/remix-dark-mode/).
+[ThemeSwitch](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/ui/theme/theme-provider/switch.tsx) - is our component for changing between light and dark themes via [ThemeProvider](https://github.com/infonomic/remix.infonomic.io/blob/develop/app/ui/theme/theme-provider/provider.tsx) - all based on Matt Stobbs' excellent blog post - [The Complete Guide to Dark Mode with Remix](https://www.mattstobbs.com/remix-dark-mode/).
 
 [Toast](https://github.com/infonomic/remix.infonomic.io/tree/develop/app/ui/components/notifications) - is an 'intent'-enabled functional component wrapper around the [Radix Tailwind project Toast](https://github.com/ecklf/tailwindcss-radix/blob/main/demo/components/toast.tsx) component.
 
