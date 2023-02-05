@@ -65,9 +65,8 @@ function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme 
     const mediaQuery = window.matchMedia(prefersDarkMQ)
     const handleChange = () => {
       const prefers = getPrefers()
-      // Optimistically set the UI first so there is no delay in theme change
+      // Optimistically set here so there is no delay in theme change
       setPrefersTheme(prefers)
-      setPrefersColorScheme(prefers)
       // Then trigger the state change and theme session cookie change via fetcher
       setThemeInState(prefers)
     }
@@ -77,9 +76,8 @@ function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme 
 
   const contextValue = useMemo(() => {
     const setTheme = (prefers: Theme) => {
-      // Optimistically set the UI first so there is no delay in theme change
+      // Optimistically set here so there is no delay in theme change
       setPrefersTheme(prefers)
-      setPrefersColorScheme(prefers)
       // Then trigger the state change and theme session cookie change via fetcher
       setThemeInState(prefers)
     }
