@@ -10,7 +10,7 @@ const defaultTheme = Theme.LIGHT
 const defaultColorScheme = 'light dark'
 
 function getPrefers() {
-  if (typeof window === 'object') {
+  if (typeof document !== 'undefined') {
     const prefers = window.matchMedia(prefersDarkMQ).matches ? Theme.DARK : Theme.LIGHT
     if (prefers) {
       return prefers 
@@ -32,7 +32,7 @@ function getPrefersTheme(theme: string | null) {
 
 function setPrefersTheme(theme: string | null) {
   const prefers = getPrefersTheme(theme)
-  if (typeof window === 'object') {
+  if (typeof document !== 'undefined') {
     const head = document.documentElement
     head.classList.toggle('dark', prefers === 'dark')
     head.classList.toggle('light', prefers === 'light')
@@ -52,7 +52,7 @@ function getPrefersColorScheme(theme: string | null) {
 
 function setPrefersColorScheme() {
   const prefers = getPrefers()
-  if (typeof window === 'object') {
+  if (typeof document !== 'undefined') {
     const meta: any = document.querySelector('meta[name=color-scheme]')
       if (meta) {
         if (prefers === 'dark') {
@@ -69,7 +69,7 @@ function setPrefersColorScheme() {
 
 
 function setPrefersSystem() {
-  if (typeof window === 'object') {
+  if (typeof document !== 'undefined') {
     const head = document.documentElement
     if (head.dataset.themeNoprefs === 'true') {
       const prefers = getPrefers()

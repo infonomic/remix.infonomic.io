@@ -26,7 +26,7 @@ function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme 
     }
     // there's no way for us to know what the theme should be in this context
     // the client will have to figure it out before hydration.
-    if (typeof window !== 'object') {
+    if (typeof document === 'undefined') {
       return null
     }
     return getPrefers()
