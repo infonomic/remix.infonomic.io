@@ -28,6 +28,8 @@ export default function handleRequest(
 
           responseHeaders.set('Content-Type', 'text/html')
 
+          // https://wicg.github.io/user-preference-media-features-headers/
+          // https://caniuse.com/mdn-http_headers_sec-ch-prefers-color-scheme
           // These headers, set on every page response, instruct the browser to
           // send the sec-ch-prefers-color-scheme header (if it supports it). If
           // the browser didn't send that header on its initial request to the
