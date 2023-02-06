@@ -32,7 +32,7 @@ export default function handleRequest(
           // send the sec-ch-prefers-color-scheme header (if it supports it). If
           // the browser didn't send that header on its initial request to the
           // site, it will see these response headers, and _resubmit_ its
-          // intitial request with that header included.  The browser will then
+          // initial request with that header included.  The browser will then
           // remember that the sec-ch-prefers-color-scheme header has been
           // requested, and send it on subsequent page requests as well (i.e. it
           // will not have to double-submit further page requests).  Browsers
