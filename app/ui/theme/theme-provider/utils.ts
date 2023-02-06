@@ -5,6 +5,12 @@ enum Theme {
   LIGHT = 'light',
 }
 
+enum ThemeSource {
+  SESSION = 'session',
+  HEADER = 'header',
+  DEFAULT = 'default',
+}
+
 const PREFERS_DARK_MQ = '(prefers-color-scheme: dark)'
 const DEFAULT_THEME = Theme.LIGHT
 const DEFAULT_COLOR_SCHEME = 'light dark'
@@ -13,7 +19,7 @@ function getPrefers() {
   if (typeof document !== 'undefined') {
     const prefers = window.matchMedia(PREFERS_DARK_MQ).matches ? Theme.DARK : Theme.LIGHT
     if (prefers) {
-      return prefers 
+      return prefers
     } else {
       return DEFAULT_THEME
     }
@@ -59,19 +65,18 @@ function setPrefersColorScheme(theme: Theme | null) {
   }
   if (typeof document !== 'undefined') {
     const meta: any = document.querySelector('meta[name=color-scheme]')
-      if (meta) {
-        if (prefers === 'dark') {
-          meta.content = 'dark light'
-        } else if (prefers === 'light') {
-          meta.content = 'light dark'
-        }
-      } else {
-        // eslint-disable-next-line no-console
-        console.warn('meta tag name="color-scheme" not found')
+    if (meta) {
+      if (prefers === 'dark') {
+        meta.content = 'dark light'
+      } else if (prefers === 'light') {
+        meta.content = 'light dark'
       }
+    } else {
+      // eslint-disable-next-line no-console
+      console.warn('meta tag name="color-scheme" not found')
+    }
   }
 }
-
 
 function setPrefersSystem() {
   if (typeof document !== 'undefined') {
@@ -102,17 +107,17 @@ function isTheme(value: unknown): value is Theme {
   return typeof value === 'string' && themes.includes(value as Theme)
 }
 
-
-export { 
-  Theme, 
-  DEFAULT_THEME, 
-  DEFAULT_COLOR_SCHEME, 
-  PREFERS_DARK_MQ, 
+export {
+  Theme,
+  ThemeSource,
+  DEFAULT_THEME,
+  DEFAULT_COLOR_SCHEME,
+  PREFERS_DARK_MQ,
   getPrefers,
-  getPrefersTheme, 
+  getPrefersTheme,
   setPrefersTheme,
   getPrefersColorScheme,
   setPrefersColorScheme,
   setPrefersSystem,
-  isTheme
- }
+  isTheme,
+}

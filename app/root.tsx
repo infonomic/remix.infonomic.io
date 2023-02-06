@@ -1,5 +1,3 @@
-import type * as React from 'react'
-
 import type {
   LinksFunction,
   LoaderArgs,
@@ -29,12 +27,8 @@ import ErrorLayout from './ui/layouts/error-layout'
 import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/utils'
 
 import type { Theme } from '~/ui/theme/theme-provider'
-import {
-  InjectPrefersTheme,
-  ThemeProvider,
-  setPrefersTheme,
-  getPrefersTheme,
-} from '~/ui/theme/theme-provider'
+import { DEFAULT_THEME, isTheme, ThemeSource } from '~/ui/theme/theme-provider'
+import { InjectPrefersTheme, ThemeProvider } from '~/ui/theme/theme-provider'
 
 import appStyles from '~/styles/shared/css/app.css'
 import tailwindStyles from '~/styles/shared/css/tailwind.css'
@@ -42,7 +36,8 @@ import tailwindStyles from '~/styles/shared/css/tailwind.css'
 import type { User } from '~/models/user.server'
 
 export type LoaderData = {
-  theme: Theme | null
+  theme: Theme
+  themeSource: ThemeSource
   user: User | null
   origin: string
   path: string
@@ -97,17 +92,51 @@ export const meta: V2_MetaFunction = ({ data }): V2_HtmlMetaDescriptor[] => {
   ]
 }
 
+// Helper to extract theme from session or header; returns the theme value and
+// its source.  TODO:  Move this elsewhere?  Better typing?
+async function getTheme(request: Request): Promise<{
+  theme: Theme
+  source: ThemeSource
+}> {
+  // First, try to get the theme from the session.
+  const themeSession = await getThemeSession(request)
+  const theme = themeSession.getTheme()
+  if (theme) {
+    return {
+      theme: theme,
+      source: ThemeSource.SESSION,
+    }
+  }
+
+  // If there's no theme in the session, look for the prefers-color-scheme
+  // header.
+  const headerVal = request.headers.get('sec-ch-prefers-color-scheme')
+  if (isTheme(headerVal)) {
+    return {
+      theme: headerVal,
+      source: ThemeSource.HEADER,
+    }
+  }
+
+  // Fall back to the default theme.
+  return {
+    theme: DEFAULT_THEME,
+    source: ThemeSource.DEFAULT,
+  }
+}
+
 /**
  * loader
  * @param LoaderArgs
  * @returns LoaderFunction
  */
 export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
-  const themeSession = await getThemeSession(request)
+  const { theme, source } = await getTheme(request)
   const user = await getUser(request)
 
   const data: LoaderData = {
-    theme: themeSession.getTheme(),
+    theme,
+    themeSource: source,
     user: user,
     origin: getDomainUrl(request),
     path: new URL(request.url).pathname,
@@ -129,29 +158,21 @@ export default function App() {
   const canonicalUrl = removeTrailingSlash(`${data?.origin}${pathname}`)
 
   // 1. Detector
-  // We have to perform our theme check here, so that the html
-  // className is correct at the time of client hydration
-  // and will correctly match the 'faux' server className injected
-  // by the InjectPrefersTheme script below (assuming JavaScript is enabled)
-  //
-  // Returns either:
-  // 1. data.theme if present (immediately returns)
-  // 2. prefers-color-scheme on client and detected otherwise default theme
-  // 3. default theme on server
-  const theme = getPrefersTheme(data.theme)
+  // Simply use the theme from the loader
+  const { theme, themeSource } = data
 
   return (
-    <html lang="en" data-theme={!!data.theme} data-server-theme={theme} className={theme}>
+    <html lang="en" className={theme}>
       <head>
         {/* 2. Injector - still pass data.theme. If present no script will inject  */}
-        <InjectPrefersTheme ssrTheme={data.theme} />
+        <InjectPrefersTheme ssrTheme={theme} />
         <Meta />
         <link rel="canonical" href={canonicalUrl} />
         <Links />
       </head>
       <body className="bg-white selection:bg-amber-400 dark:bg-gray-900 dark:selection:text-black">
         {/* 3. Provider - theme here can now never be null */}
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme} themeSource={themeSource}>
           <ToastPrimitive.Provider swipeDirection="right">
             <Outlet />
             <ToastPrimitive.Viewport />
@@ -175,7 +196,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
   console.error(error)
 
   // we're in an error state, so no loader data
-  const theme = getPrefersTheme(null)
+  const theme = DEFAULT_THEME // getPrefersTheme(null)
 
   return (
     <html lang="en" data-theme={false} className={theme}>
@@ -218,7 +239,7 @@ export function CatchBoundary() {
   }
 
   // we're in an error state, so no loader data
-  const theme = getPrefersTheme(null)
+  const theme = DEFAULT_THEME //getPrefersTheme(null)
 
   return (
     <html lang="en" data-theme={false} className={theme}>

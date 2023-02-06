@@ -28,6 +28,19 @@ export default function handleRequest(
 
           responseHeaders.set('Content-Type', 'text/html')
 
+          // These headers, set on every page response, instruct the browser to
+          // send the sec-ch-prefers-color-scheme header (if it supports it). If
+          // the browser didn't send that header on its initial request to the
+          // site, it will see these response headers, and _resubmit_ its
+          // intitial request with that header included.  The browser will then
+          // remember that the sec-ch-prefers-color-scheme header has been
+          // requested, and send it on subsequent page requests as well (i.e. it
+          // will not have to double-submit further page requests).  Browsers
+          // that don't support this standard will obviously ignore the headers.
+          responseHeaders.set('Accept-CH', 'Sec-CH-Prefers-Color-Scheme')
+          responseHeaders.set('Vary', 'Sec-CH-Prefers-Color-Scheme')
+          responseHeaders.set('Critical-CH', 'Sec-CH-Prefers-Color-Scheme')
+
           resolve(
             new Response(body, {
               headers: responseHeaders,

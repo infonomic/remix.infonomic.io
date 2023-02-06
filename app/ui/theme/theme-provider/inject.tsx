@@ -1,5 +1,5 @@
 // Based on Matt Stobbs' excellent article https://www.mattstobbs.com/remix-dark-mode/
-import { PREFERS_DARK_MQ, getPrefersColorScheme } from './utils'
+import { getPrefersColorScheme } from './utils'
 
 import type { Theme } from './utils'
 
@@ -8,40 +8,40 @@ import type { Theme } from './utils'
 // has been set. Note that this will only execute once - before
 // entry.client.tsx hydrate - and so will only execute on a
 // full page load or reload.
-const clientThemeCode = `
-;(() => {
-  const head = document.documentElement;
-  if(head.dataset.theme === "false") {
-    const theme = window.matchMedia(${JSON.stringify(PREFERS_DARK_MQ)}).matches
-      ? 'dark'
-      : 'light';
-    
-    head.classList.toggle('dark', theme === 'dark');
-    head.classList.toggle('light', theme === 'light');
+// const clientThemeCode = `
+// ;(() => {
+//   const head = document.documentElement;
+//   if(head.dataset.theme === "false") {
+//     const theme = window.matchMedia(${JSON.stringify(PREFERS_DARK_MQ)}).matches
+//       ? 'dark'
+//       : 'light';
 
-    const meta = document.querySelector('meta[name=color-scheme]');
-    if (meta) {
-      if (theme === 'dark') {
-        meta.content = 'dark light';
-      } else if (theme === 'light') {
-        meta.content = 'light dark';
-      }
-    } else {
-      console.warn(
-        "meta tag name='color-scheme' not found",
-      );
-    }
-  }
-})();
-`
+//     head.classList.toggle('dark', theme === 'dark');
+//     head.classList.toggle('light', theme === 'light');
+
+//     const meta = document.querySelector('meta[name=color-scheme]');
+//     if (meta) {
+//       if (theme === 'dark') {
+//         meta.content = 'dark light';
+//       } else if (theme === 'light') {
+//         meta.content = 'light dark';
+//       }
+//     } else {
+//       console.warn(
+//         "meta tag name='color-scheme' not found",
+//       );
+//     }
+//   }
+// })();
+// `
 
 function InjectPrefersTheme({ ssrTheme }: { ssrTheme: Theme | null }) {
   const colorScheme = getPrefersColorScheme(ssrTheme)
   return (
-    <>
-      <meta name="color-scheme" content={colorScheme} />
-      {ssrTheme ? null : <script dangerouslySetInnerHTML={{ __html: clientThemeCode }} />}
-    </>
+    // <>
+    <meta name="color-scheme" content={colorScheme} />
+    // {ssrTheme ? null : <script dangerouslySetInnerHTML={{ __html: clientThemeCode }} />}
+    // </>
   )
 }
 
