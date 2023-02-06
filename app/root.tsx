@@ -27,8 +27,7 @@ import ErrorLayout from './ui/layouts/error-layout'
 import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/utils'
 
 import type { Theme } from '~/ui/theme/theme-provider'
-import { DEFAULT_THEME, isTheme, ThemeSource } from '~/ui/theme/theme-provider'
-import { InjectPrefersTheme, ThemeProvider } from '~/ui/theme/theme-provider'
+import { DEFAULT_THEME, isTheme, ThemeSource, ThemeProvider } from '~/ui/theme/theme-provider'
 
 import appStyles from '~/styles/shared/css/app.css'
 import tailwindStyles from '~/styles/shared/css/tailwind.css'
@@ -78,6 +77,7 @@ export const meta: V2_MetaFunction = ({ data }): V2_HtmlMetaDescriptor[] => {
     },
     { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { name: 'theme-color', content: '#f59e0b' },
+    { name: 'color-scheme', content: `${data.theme === 'dark' ? 'dark light' : 'light dark'}` },
     { name: 'msapplication-TileColor', content: '#f59e0b' },
     { property: 'og:title', content: 'Infonomic Remix Workbench App' },
     {
@@ -156,22 +156,16 @@ export default function App() {
   // for all route changes (unlike the og:url meta tag above)
   const { pathname } = useLocation()
   const canonicalUrl = removeTrailingSlash(`${data?.origin}${pathname}`)
-
-  // 1. Detector
-  // Simply use the theme from the loader
   const { theme, themeSource } = data
 
   return (
     <html lang="en" className={theme}>
       <head>
-        {/* 2. Injector - still pass data.theme. If present no script will inject  */}
-        <InjectPrefersTheme ssrTheme={theme} />
         <Meta />
         <link rel="canonical" href={canonicalUrl} />
         <Links />
       </head>
       <body className="bg-white selection:bg-amber-400 dark:bg-gray-900 dark:selection:text-black">
-        {/* 3. Provider - theme here can now never be null */}
         <ThemeProvider theme={theme} themeSource={themeSource}>
           <ToastPrimitive.Provider swipeDirection="right">
             <Outlet />
@@ -201,7 +195,6 @@ export function ErrorBoundary({ error }: { error: Error }) {
   return (
     <html lang="en" data-theme={false} className={theme}>
       <head>
-        <InjectPrefersTheme ssrTheme={null} />
         <Meta />
         <Links />
       </head>
@@ -244,7 +237,6 @@ export function CatchBoundary() {
   return (
     <html lang="en" data-theme={false} className={theme}>
       <head>
-        <InjectPrefersTheme ssrTheme={null} />
         <Meta />
         <Links />
       </head>
