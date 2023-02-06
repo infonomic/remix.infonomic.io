@@ -1,5 +1,5 @@
 // Based on Matt Stobbs' excellent article https://www.mattstobbs.com/remix-dark-mode/
-import { createContext, useContext, useState, useEffect, useMemo } from 'react'
+import { createContext, useContext, useState, useEffect, useMemo, useRef } from 'react'
 import type { ReactNode } from 'react'
 
 import type { FetcherWithComponents } from '@remix-run/react'
@@ -32,6 +32,12 @@ function ThemeProvider({ children, theme }: { children: ReactNode; theme: Theme 
     mediaQuery.addEventListener('change', handleChange)
     return () => mediaQuery.removeEventListener('change', handleChange)
   }, [])
+
+  // useEffect(() => {
+  //   // get server theme
+  //   // does equal current theme? no,
+  //   // setThemeInState(theme)
+  // })
 
   const contextValue = useMemo(() => {
     const setTheme = (prefers: Theme) => {

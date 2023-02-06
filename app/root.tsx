@@ -141,7 +141,7 @@ export default function App() {
   const theme = getPrefersTheme(data.theme)
 
   return (
-    <html lang="en" data-theme={!!data.theme} className={theme}>
+    <html lang="en" data-theme={!!data.theme} data-server-theme={theme} className={theme}>
       <head>
         {/* 2. Injector - still pass data.theme. If present no script will inject  */}
         <InjectPrefersTheme ssrTheme={data.theme} />
