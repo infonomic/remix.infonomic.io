@@ -1,5 +1,7 @@
 // Based on Matt Stobbs' excellent article https://www.mattstobbs.com/remix-dark-mode/
-import { prefersDarkMQ, getPrefersColorScheme } from './utils'
+import { PREFERS_DARK_MQ, getPrefersColorScheme } from './utils'
+
+import type { Theme } from './utils'
 
 // JavaScript - needs to be run BEFORE React. See root.tsx
 // Sets the system preference theme if no SSR theme / cookie
@@ -9,8 +11,8 @@ import { prefersDarkMQ, getPrefersColorScheme } from './utils'
 const clientThemeCode = `
 ;(() => {
   const head = document.documentElement;
-  if(head.dataset.themeNoprefs === "true") {
-    const theme = window.matchMedia(${JSON.stringify(prefersDarkMQ)}).matches
+  if(head.dataset.theme === "false") {
+    const theme = window.matchMedia(${JSON.stringify(PREFERS_DARK_MQ)}).matches
       ? 'dark'
       : 'light';
     
@@ -33,7 +35,7 @@ const clientThemeCode = `
 })();
 `
 
-function InjectPrefersTheme({ ssrTheme }: { ssrTheme: string | null }) {
+function InjectPrefersTheme({ ssrTheme }: { ssrTheme: Theme | null }) {
   const colorScheme = getPrefersColorScheme(ssrTheme)
   return (
     <>

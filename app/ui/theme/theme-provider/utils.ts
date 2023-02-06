@@ -5,24 +5,24 @@ enum Theme {
   LIGHT = 'light',
 }
 
-const prefersDarkMQ = '(prefers-color-scheme: dark)'
-const defaultTheme = Theme.LIGHT
-const defaultColorScheme = 'light dark'
+const PREFERS_DARK_MQ = '(prefers-color-scheme: dark)'
+const DEFAULT_THEME = Theme.LIGHT
+const DEFAULT_COLOR_SCHEME = 'light dark'
 
 function getPrefers() {
   if (typeof document !== 'undefined') {
-    const prefers = window.matchMedia(prefersDarkMQ).matches ? Theme.DARK : Theme.LIGHT
+    const prefers = window.matchMedia(PREFERS_DARK_MQ).matches ? Theme.DARK : Theme.LIGHT
     if (prefers) {
       return prefers 
     } else {
-      return defaultTheme
+      return DEFAULT_THEME
     }
   } else {
-    return defaultTheme
+    return DEFAULT_THEME
   }
 }
 
-function getPrefersTheme(theme: string | null) {
+function getPrefersTheme(theme: Theme | null) {
   if (theme) {
     return theme
   } else {
@@ -30,7 +30,7 @@ function getPrefersTheme(theme: string | null) {
   }
 }
 
-function setPrefersTheme(theme: string | null) {
+function setPrefersTheme(theme: Theme | null) {
   const prefers = getPrefersTheme(theme)
   if (typeof document !== 'undefined') {
     const head = document.documentElement
@@ -40,7 +40,7 @@ function setPrefersTheme(theme: string | null) {
   return prefers
 }
 
-function getPrefersColorScheme(theme: string | null) {
+function getPrefersColorScheme(theme: Theme | null) {
   let prefers
   if (theme) {
     prefers = theme
@@ -50,7 +50,7 @@ function getPrefersColorScheme(theme: string | null) {
   return prefers === 'dark' ? 'dark light' : 'light dark'
 }
 
-function setPrefersColorScheme(theme: string | null) {
+function setPrefersColorScheme(theme: Theme | null) {
   let prefers
   if (theme) {
     prefers = theme
@@ -105,9 +105,9 @@ function isTheme(value: unknown): value is Theme {
 
 export { 
   Theme, 
-  defaultTheme, 
-  defaultColorScheme, 
-  prefersDarkMQ, 
+  DEFAULT_THEME, 
+  DEFAULT_COLOR_SCHEME, 
+  PREFERS_DARK_MQ, 
   getPrefers,
   getPrefersTheme, 
   setPrefersTheme,

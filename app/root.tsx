@@ -28,11 +28,12 @@ import { getThemeSession } from './theme.server'
 import ErrorLayout from './ui/layouts/error-layout'
 import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/utils'
 
+import type { Theme } from '~/ui/theme/theme-provider'
 import {
-  Theme,
   InjectPrefersTheme,
   ThemeProvider,
   setPrefersTheme,
+  getPrefersTheme,
 } from '~/ui/theme/theme-provider'
 
 import appStyles from '~/styles/shared/css/app.css'
@@ -120,30 +121,42 @@ export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
   return json(data)
 }
 
-interface DocumentProps {
-  children: React.ReactNode
-  title?: string
-}
-
-const Document = ({ children, title }: DocumentProps) => {
+export default function App() {
   const data = useLoaderData<LoaderData>()
   // Note: useLocation will force the canonical URL to update
   // for all route changes (unlike the og:url meta tag above)
   const { pathname } = useLocation()
   const canonicalUrl = removeTrailingSlash(`${data?.origin}${pathname}`)
-  const theme = setPrefersTheme(data.theme)
+
+  // 1. Detector
+  // We have to perform our theme check here, so that the html
+  // className is correct at the time of client hydration
+  // and will correctly match the 'faux' server className injected
+  // by the InjectPrefersTheme script below (assuming JavaScript is enabled)
+  //
+  // Returns either:
+  // 1. data.theme if present (immediately returns)
+  // 2. prefers-color-scheme on client and detected otherwise default theme
+  // 3. default theme on server
+  const theme = getPrefersTheme(data.theme)
 
   return (
-    <html lang="en" data-theme-noprefs={!data.theme} className={theme}>
+    <html lang="en" data-theme={!!data.theme} className={theme}>
       <head>
+        {/* 2. Injector - still pass data.theme. If present no script will inject  */}
         <InjectPrefersTheme ssrTheme={data.theme} />
-        {title ? <title>{title}</title> : null}
         <Meta />
         <link rel="canonical" href={canonicalUrl} />
         <Links />
       </head>
       <body className="bg-white selection:bg-amber-400 dark:bg-gray-900 dark:selection:text-black">
-        {children}
+        {/* 3. Provider - theme here can now never be null */}
+        <ThemeProvider theme={theme}>
+          <ToastPrimitive.Provider swipeDirection="right">
+            <Outlet />
+            <ToastPrimitive.Viewport />
+          </ToastPrimitive.Provider>
+        </ThemeProvider>
         <ScrollRestoration />
         <script
           dangerouslySetInnerHTML={{
@@ -157,55 +170,34 @@ const Document = ({ children, title }: DocumentProps) => {
   )
 }
 
-export default function App() {
-  const data = useLoaderData<LoaderData>()
+export function ErrorBoundary({ error }: { error: Error }) {
+  // eslint-disable-next-line no-console
+  console.error(error)
+
+  // we're in an error state, so no loader data
+  const theme = getPrefersTheme(null)
 
   return (
-    <Document>
-      <ThemeProvider theme={data.theme}>
-        <ToastPrimitive.Provider swipeDirection="right">
-          <Outlet />
-          <ToastPrimitive.Viewport />
-        </ToastPrimitive.Provider>
-      </ThemeProvider>
-    </Document>
-  )
-}
-
-const ErrorDocument = ({ children, title }: DocumentProps) => {
-  const theme = setPrefersTheme(Theme.DARK)
-  return (
-    <html lang="en" data-theme-noprefs={true} className={theme}>
+    <html lang="en" data-theme={false} className={theme}>
       <head>
-        <InjectPrefersTheme ssrTheme={theme} />
-        {title ? <title>{title}</title> : null}
+        <InjectPrefersTheme ssrTheme={null} />
         <Meta />
         <Links />
       </head>
       <body className="bg-white dark:bg-gray-900">
-        {children}
+        <ThemeProvider theme={theme}>
+          <ErrorLayout>
+            <div>
+              <h1>There was an error</h1>
+              <p>{error.message}</p>
+              <p>Oops. Something went wrong. We&apos;re looking into it.</p>
+            </div>
+          </ErrorLayout>
+        </ThemeProvider>
         <Scripts />
         <LiveReload />
       </body>
     </html>
-  )
-}
-
-export function ErrorBoundary({ error }: { error: Error }) {
-  // eslint-disable-next-line no-console
-  console.error(error)
-  return (
-    <ErrorDocument title="Error! - Infonomic Remix Workbench App">
-      <ThemeProvider theme={null}>
-        <ErrorLayout>
-          <div>
-            <h1>There was an error</h1>
-            <p>{error.message}</p>
-            <p>Oops. Something went wrong. We&apos;re looking into it.</p>
-          </div>
-        </ErrorLayout>
-      </ThemeProvider>
-    </ErrorDocument>
   )
 }
 
@@ -225,16 +217,28 @@ export function CatchBoundary() {
       throw new Error(caught.data || caught.statusText)
   }
 
+  // we're in an error state, so no loader data
+  const theme = getPrefersTheme(null)
+
   return (
-    <ErrorDocument title={`${caught.status} ${caught.statusText}`}>
-      <ThemeProvider theme={null}>
-        <ErrorLayout>
-          <h1>
-            {caught.status}: {caught.statusText}
-          </h1>
-          {message}
-        </ErrorLayout>
-      </ThemeProvider>
-    </ErrorDocument>
+    <html lang="en" data-theme={false} className={theme}>
+      <head>
+        <InjectPrefersTheme ssrTheme={null} />
+        <Meta />
+        <Links />
+      </head>
+      <body className="bg-white dark:bg-gray-900">
+        <ThemeProvider theme={theme}>
+          <ErrorLayout>
+            <h1>
+              {caught.status}: {caught.statusText}
+            </h1>
+            {message}
+          </ErrorLayout>
+        </ThemeProvider>
+        <Scripts />
+        <LiveReload />
+      </body>
+    </html>
   )
 }
