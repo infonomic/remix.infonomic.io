@@ -160,7 +160,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
   const theme = DEFAULT_THEME // getPrefersTheme(null)
 
   return (
-    <html lang="en" data-theme={false} className={theme}>
+    <html lang="en" className={theme}>
       <head>
         <Meta />
         <Links />
@@ -202,7 +202,7 @@ export function CatchBoundary() {
   const theme = DEFAULT_THEME //getPrefersTheme(null)
 
   return (
-    <html lang="en" data-theme={false} className={theme}>
+    <html lang="en" className={theme}>
       <head>
         <Meta />
         <Links />
