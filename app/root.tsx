@@ -22,12 +22,12 @@ import {
 import * as ToastPrimitive from '@radix-ui/react-toast'
 
 import { getUser } from './session.server'
-import { getThemeSession } from './theme.server'
+import { getTheme } from './theme.server'
 import ErrorLayout from './ui/layouts/error-layout'
 import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/utils'
 
-import type { Theme } from '~/ui/theme/theme-provider'
-import { DEFAULT_THEME, isTheme, ThemeSource, ThemeProvider } from '~/ui/theme/theme-provider'
+import { DEFAULT_THEME, ThemeProvider } from '~/ui/theme/theme-provider'
+import type { Theme, ThemeSource } from '~/ui/theme/theme-provider'
 
 import appStyles from '~/styles/shared/css/app.css'
 import tailwindStyles from '~/styles/shared/css/tailwind.css'
@@ -90,39 +90,6 @@ export const meta: V2_MetaFunction = ({ data }): V2_HtmlMetaDescriptor[] => {
     { property: 'og:type', content: 'website' },
     { property: 'og:image', content: 'https://remix.infonomic.io/og.png' },
   ]
-}
-
-// Helper to extract theme from session or header; returns the theme value and
-// its source.  TODO:  Move this elsewhere?  Better typing?
-async function getTheme(request: Request): Promise<{
-  theme: Theme
-  source: ThemeSource
-}> {
-  // First, try to get the theme from the session.
-  const themeSession = await getThemeSession(request)
-  const theme = themeSession.getTheme()
-  if (theme) {
-    return {
-      theme: theme,
-      source: ThemeSource.SESSION,
-    }
-  }
-
-  // If there's no theme in the session, look for the prefers-color-scheme
-  // header.
-  const headerVal = request.headers.get('sec-ch-prefers-color-scheme')
-  if (isTheme(headerVal)) {
-    return {
-      theme: headerVal,
-      source: ThemeSource.HEADER,
-    }
-  }
-
-  // Fall back to the default theme.
-  return {
-    theme: DEFAULT_THEME,
-    source: ThemeSource.DEFAULT,
-  }
 }
 
 /**
