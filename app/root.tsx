@@ -77,7 +77,7 @@ export const meta: V2_MetaFunction = ({ data }): V2_HtmlMetaDescriptor[] => {
     },
     { name: 'viewport', content: 'width=device-width,initial-scale=1' },
     { name: 'theme-color', content: '#f59e0b' },
-    { name: 'color-scheme', content: `${data.theme === 'dark' ? 'dark light' : 'light dark'}` },
+    { name: 'color-scheme', content: `${data?.theme === 'dark' ? 'dark light' : 'light dark'}` },
     { name: 'msapplication-TileColor', content: '#f59e0b' },
     { property: 'og:title', content: 'Infonomic Remix Workbench App' },
     {
