@@ -108,6 +108,7 @@ export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
     origin: getDomainUrl(request),
     path: new URL(request.url).pathname,
     ENV: {
+      SITE_TITLE: process?.env?.SITE_TITLE || 'Site Title',
       RECAPTCHA_ENABLED:
         process.env.NODE_ENV === 'development' ? 'false' : process.env.RECAPTCHA_ENABLED,
       RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY,

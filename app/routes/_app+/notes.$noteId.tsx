@@ -22,8 +22,8 @@ import ErrorLayout from '~/ui/layouts/error-layout'
  * @returns {V2_HtmlMetaDescriptor[]}
  */
 export const meta: V2_MetaFunction = ({ data, matches }): V2_HtmlMetaDescriptor[] => {
-  const title = `Note - ${truncate(data?.note?.title, 50, true)} - Infonomic Remix Workbench App`
-  return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
+  const title = `Note - ${truncate(data?.note?.title, 50, true)} App`
+  return mergeMeta(data, matches, [{ title }, { property: 'og:title', content: title }])
 }
 
 /**
