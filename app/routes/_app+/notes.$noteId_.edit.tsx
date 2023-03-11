@@ -38,7 +38,7 @@ import ErrorLayout from '~/ui/layouts/error-layout'
  */
 export const meta: V2_MetaFunction = ({ data, matches }): V2_HtmlMetaDescriptor[] => {
   const title = `Edit Note - ${truncate(data?.note?.title, 50, true)}`
-  return mergeMeta(data, matches, [{ title }, { property: 'og:title', content: title }])
+  return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
 
 /**

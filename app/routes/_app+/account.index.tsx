@@ -15,9 +15,9 @@ import { Toast } from '~/ui/components/notifications'
  * meta
  * @returns {V2_HtmlMetaDescriptor[]}
  */
-export const meta: V2_MetaFunction = ({ data, matches }): V2_HtmlMetaDescriptor[] => {
+export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
   const title = 'Account'
-  return mergeMeta(data, matches, [{ title }, { property: 'og:title', content: title }])
+  return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
 
 /**

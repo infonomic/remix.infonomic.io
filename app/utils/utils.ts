@@ -104,19 +104,23 @@ export function getUrl(origin: string, path: string) {
   return removeTrailingSlash(`${origin ?? 'https://remix.infonomic.io'}${path ?? ''}`)
 }
 
-export function appendSiteTitle(data: any, tags: V2_HtmlMetaDescriptor[]) {
-  const siteTitle = data?.ENV?.SITE_TITLE
+export function appendSiteTitle(tags: V2_HtmlMetaDescriptor[]) {
+  let siteTitle
+  if (typeof window !== 'undefined') {
+    siteTitle = window.ENV.SITE_TITLE  
+  } else {
+    siteTitle = process.env.SITE_TITLE
+  }
+
   for (const tag of tags as any) {
     if (tag.title) {
       tag.title = `${tag.title} - ${siteTitle}`
     }
-
     if (tag.property === 'og:title') {
       tag.content = `${tag.content} - ${siteTitle}`
     }
   }
 }
-
 
 /**
  * A utility function for the v2 meta API. It will
@@ -128,7 +132,7 @@ export function appendSiteTitle(data: any, tags: V2_HtmlMetaDescriptor[]) {
  * 
  * @returns {V2_HtmlMetaDescriptor[]} Merged metatags
  */
-export function mergeMeta(data: any, matches: any, tags: V2_HtmlMetaDescriptor[] = []): V2_HtmlMetaDescriptor[] {
+export function mergeMeta(matches: any, tags: V2_HtmlMetaDescriptor[] = []): V2_HtmlMetaDescriptor[] {
   const rootModule = matches.find((match: any) => match.route.id === 'root')
   const rootMeta = rootModule.meta 
 
@@ -149,7 +153,7 @@ export function mergeMeta(data: any, matches: any, tags: V2_HtmlMetaDescriptor[]
     return false
   }
 
-  appendSiteTitle(data, tags)
+  appendSiteTitle(tags)
 
   if (rootMeta) {
     const filteredRootMeta = rootMeta
