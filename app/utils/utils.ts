@@ -105,19 +105,15 @@ export function getUrl(origin: string, path: string) {
 }
 
 export function appendSiteTitle(tags: V2_HtmlMetaDescriptor[]) {
-  let siteTitle
-  if (typeof window !== 'undefined') {
-    siteTitle = window.ENV.SITE_TITLE  
-  } else {
-    siteTitle = process.env.SITE_TITLE
-  }
+  const { SITE_TITLE } =
+    typeof document === 'undefined' ? process.env : window.ENV
 
   for (const tag of tags as any) {
     if (tag.title) {
-      tag.title = `${tag.title} - ${siteTitle}`
+      tag.title = `${tag.title} - ${SITE_TITLE}`
     }
     if (tag.property === 'og:title') {
-      tag.content = `${tag.content} - ${siteTitle}`
+      tag.content = `${tag.content} - ${SITE_TITLE}`
     }
   }
 }
