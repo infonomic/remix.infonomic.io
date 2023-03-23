@@ -30,7 +30,7 @@ export const Checkbox = React.forwardRef<HTMLButtonElement, Props>(
           ref={ref}
           id={id}
           name={name}
-          defaultChecked={checked}
+          checked={checked}
           className={classes}
           {...rest}
         >
