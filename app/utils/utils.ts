@@ -105,8 +105,7 @@ export function getUrl(origin: string, path: string) {
 }
 
 export function appendSiteTitle(tags: V2_HtmlMetaDescriptor[]) {
-  const { SITE_TITLE } =
-    typeof document === 'undefined' ? process.env : window.ENV
+  const { SITE_TITLE } = typeof document === 'undefined' ? process.env : window.ENV
 
   for (const tag of tags as any) {
     if (tag.title) {
@@ -121,16 +120,19 @@ export function appendSiteTitle(tags: V2_HtmlMetaDescriptor[]) {
 /**
  * A utility function for the v2 meta API. It will
  * merge (filter) root metatags - replacing any that match
- * the supplied route module meta tags. It may not be complete 
+ * the supplied route module meta tags. It may not be complete
  * or the best way to do this but it works for the moment.
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462
- * 
+ *
  * @returns {V2_HtmlMetaDescriptor[]} Merged metatags
  */
-export function mergeMeta(matches: any, tags: V2_HtmlMetaDescriptor[] = []): V2_HtmlMetaDescriptor[] {
+export function mergeMeta(
+  matches: any,
+  tags: V2_HtmlMetaDescriptor[] = []
+): V2_HtmlMetaDescriptor[] {
   const rootModule = matches.find((match: any) => match.route.id === 'root')
-  const rootMeta = rootModule.meta 
+  const rootMeta = rootModule.meta
 
   function findMatch(rootTag: any, tag: any) {
     const rules = [
@@ -152,17 +154,16 @@ export function mergeMeta(matches: any, tags: V2_HtmlMetaDescriptor[] = []): V2_
   appendSiteTitle(tags)
 
   if (rootMeta) {
-    const filteredRootMeta = rootMeta
-      .filter((rootTag: V2_HtmlMetaDescriptor) => {
-        for (const tag of tags) {
-          if (findMatch(rootTag, tag)) {
-            return false
-          }
+    const filteredRootMeta = rootMeta.filter((rootTag: V2_HtmlMetaDescriptor) => {
+      for (const tag of tags) {
+        if (findMatch(rootTag, tag)) {
+          return false
         }
-        return true
-      })
+      }
+      return true
+    })
 
-    return [...filteredRootMeta, tags]
+    return [...filteredRootMeta, ...tags]
   } else {
     return tags
   }
