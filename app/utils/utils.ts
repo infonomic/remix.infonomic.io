@@ -105,14 +105,23 @@ export function getUrl(origin: string, path: string) {
 }
 
 export function appendSiteTitle(tags: V2_HtmlMetaDescriptor[]) {
-  const { SITE_TITLE } = typeof document === 'undefined' ? process.env : window.ENV
+  let SITE_TITLE
+  if (typeof document === 'undefined') {
+    SITE_TITLE = process?.env.SITE_TITLE
+  } else {
+    SITE_TITLE = window?.ENV?.SITE_TITLE
+  }
+  // Would love to use this instead - but - when Remix crashes elsewhere, this will also
+  // fail with a "Cannot destructure property 'SITE_TITLE' of '(intermediate value)(intermediate value)
+  // (intermediate value)' as it is undefined."
+  // const { SITE_TITLE } = typeof document === 'undefined' ? process.env : window.ENV
 
   for (const tag of tags as any) {
     if (tag.title) {
-      tag.title = `${tag.title} - ${SITE_TITLE}`
+      tag.title = `${tag.title} ${SITE_TITLE ? ' - ' + SITE_TITLE : ''}`
     }
     if (tag.property === 'og:title') {
-      tag.content = `${tag.content} - ${SITE_TITLE}`
+      tag.content = `${tag.content} ${SITE_TITLE ? ' - ' + SITE_TITLE : ''}`
     }
   }
 }
