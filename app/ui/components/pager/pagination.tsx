@@ -138,6 +138,8 @@ const FirstButton = React.forwardRef<ButtonElement, ButtonProps>(
           className={classes}
           onClick={eventsEnabled ? onClick : undefined}
           disabled={disabled}
+          title="First"
+          aria-label="First"
           data-testid="first-page-button"
           {...rest}
         >
@@ -176,6 +178,8 @@ const PreviousButton = React.forwardRef<ButtonElement, ButtonProps>(
           className={classes}
           onClick={eventsEnabled ? onClick : undefined}
           disabled={disabled}
+          title="Previous"
+          aria-label="Previous"
           data-testid="prev-page-button"
           {...rest}
         >
@@ -296,6 +300,8 @@ const NextButton = React.forwardRef<ButtonElement, NextButtonProps>(
           className={classes}
           onClick={eventsEnabled ? onClick : undefined}
           disabled={disabled}
+          title="Next"
+          aria-label="Next"
           data-testid="next-page-button"
           {...rest}
         >
@@ -336,6 +342,8 @@ const LastButton = React.forwardRef<ButtonElement, LastButtonProps>(
           className={classes}
           onClick={eventsEnabled ? onClick : undefined}
           disabled={disabled}
+          title="Last"
+          aria-label="Last"
           data-testid="last-page-button"
           {...rest}
         >
