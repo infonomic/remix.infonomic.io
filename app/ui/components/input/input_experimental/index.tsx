@@ -13,9 +13,9 @@ import React from 'react'
 import classnames from 'classnames'
 
 // utils
+import { input } from './styles'
 import objectsToString from '../../../utils/objectsToString'
 // context
-import { input } from './styles'
 
 import type { InputVariantStylesType, InputSizeStylesType } from './styles'
 // types

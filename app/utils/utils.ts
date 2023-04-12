@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import type { V2_HtmlMetaDescriptor } from '@remix-run/node'
+import type { V2_MetaDescriptor } from '@remix-run/react'
 import { useMatches } from '@remix-run/react'
 import type { Navigation } from '@remix-run/router'
 

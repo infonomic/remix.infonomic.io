@@ -55,6 +55,7 @@
     "@types/react-transition-group": "^4.4.5",
     "bcryptjs": "^2.4.3",
     "classnames": "^2.3.2",
+    "deepmerge": "^4.3.1",
     "dotenv": "^16.0.3",
     "escape-string-regexp": "^5.0.0",
     "is-plain-obj": "^4.1.0",
