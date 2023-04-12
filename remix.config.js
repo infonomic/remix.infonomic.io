@@ -10,7 +10,6 @@ module.exports = {
   ignoredRouteFiles: ['**/*'],
   publicPath: "/build/",
   serverBuildPath: "build/index.js",
-  serverBuildTarget: "node-cjs",
   future: {
     v2_meta: true,
   },
@@ -70,11 +69,11 @@ module.exports = {
     /^is-plain-obj.*/,
     /^react-is.*/,
     /^escape-string-regexp.*/
-   
+
   ],
   routes: async defineRoutes => {
-		return flatRoutes('routes', defineRoutes, {
-			ignoredRouteFiles: ['.*', '**/*.css', "**/*.scss", "**/*.css.map", '**/*.test.{js,jsx,ts,tsx}'],
-		})
-	},
+    return flatRoutes('routes', defineRoutes, {
+      ignoredRouteFiles: ['.*', '**/*.css', "**/*.scss", "**/*.css.map", '**/*.test.{js,jsx,ts,tsx}'],
+    })
+  },
 }
