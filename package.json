@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "@headlessui/react": "^1.7.4",
-    "@hookform/resolvers": "^2.9.10",
+    "@hookform/resolvers": "^3.0.1",
     "@prisma/client": "^4.8.0",
     "@radix-ui/react-avatar": "^1.0.1",
     "@radix-ui/react-checkbox": "^1.0.1",
@@ -78,7 +78,7 @@
     "tiny-invariant": "^1.2.0",
     "undici": "^5.13.0",
     "zod": "^3.19.1",
-    "zod-form-data": "^1.2.4"
+    "zod-form-data": "^2.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
@@ -87,9 +87,9 @@
     "@playwright/test": "^1.29.0",
     "@remix-run/dev": "^1.7.4",
     "@remix-run/eslint-config": "^1.7.4",
-    "@testing-library/dom": "^8.18.1",
+    "@testing-library/dom": "^9.2.0",
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/bcryptjs": "^2.4.2",
     "@types/eslint": "^8.4.6",
@@ -97,13 +97,13 @@
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^3.0.0",
-    "@vitest/coverage-c8": "^0.26.2",
+    "@vitest/coverage-c8": "^0.30.1",
     "autoprefixer": "^10.4.13",
     "binode": "^1.0.5",
     "c8": "^7.12.0",
     "cookie": "^0.5.0",
     "cross-env": "^7.0.3",
-    "cssnano": "^5.1.14",
+    "cssnano": "^6.0.0",
     "eslint": "^8.23.1",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-plugin-import": "^2.25.3",
@@ -111,9 +111,9 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "happy-dom": "^8.1.1",
+    "happy-dom": "^9.2.1",
     "husky": "^8.0.2",
-    "msw": "^0.49.1",
+    "msw": "^1.2.1",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.19",
     "postcss-advanced-variables": "^3.0.1",
@@ -124,7 +124,7 @@
     "postcss-nested": "^6.0.0",
     "postcss-scss": "^4.0.5",
     "postcss-sort-media-queries": "^4.3.0",
-    "prettier": "2.8.1",
+    "prettier": "^2.8.7",
     "prettier-plugin-tailwindcss": "^0.2.1",
     "tailwindcss": "^3.2.4",
     "ts-node": "^10.9.1",
@@ -132,7 +132,7 @@
     "typescript": "^4.8.3",
     "vite": "^4.0.3",
     "vite-tsconfig-paths": "^4.0.3",
-    "vitest": "^0.26.2"
+    "vitest": "^0.30.1"
   },
   "engines": {
     "node": ">=14"
