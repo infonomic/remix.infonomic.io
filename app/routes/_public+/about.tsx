@@ -1,13 +1,8 @@
 import ReactMarkdown from 'react-markdown'
 
-import type {
-  HeadersFunction,
-  LoaderFunction,
-  LoaderArgs,
-  V2_MetaFunction,
-  V2_HtmlMetaDescriptor,
-} from '@remix-run/node'
+import type { HeadersFunction, LoaderFunction, LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
+import type { V2_MetaFunction, V2_MetaDescriptor } from '@remix-run/react'
 import { useCatch, useLoaderData } from '@remix-run/react'
 
 import cx from 'classnames'
@@ -18,9 +13,9 @@ import ErrorLayout from '~/ui/layouts/error-layout'
 
 /**
  * meta
- * @returns {V2_HtmlMetaDescriptor[]}
+ * @returns {V2_MetaDescriptor[]}
  */
-export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
+export const meta: V2_MetaFunction = ({ matches }): V2_MetaDescriptor[] => {
   const title = 'About'
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
@@ -66,7 +61,7 @@ export default function AboutPage() {
       className={cx(
         'mx-auto mt-[2.5rem] max-w-[960px]',
         'prose prose-lg prose-slate dark:prose-invert',
-        'md:mt-[3rem] md:prose-lg'
+        'md:prose-lg md:mt-[3rem]'
       )}
     >
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{data.text}</ReactMarkdown>

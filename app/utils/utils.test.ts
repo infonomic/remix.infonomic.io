@@ -32,9 +32,7 @@ test('mergeMeta returns a valid title and og:title', () => {
           content: 'Mock og:title',
         },
       ],
-      route: {
-        id: 'root',
-      },
+      id: 'root',
     },
   ]
 

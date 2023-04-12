@@ -1,7 +1,8 @@
 import * as React from 'react'
 
-import type { LoaderArgs, V2_MetaFunction, V2_HtmlMetaDescriptor } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
+import type { V2_MetaFunction, V2_MetaDescriptor } from '@remix-run/react'
 import { Link, useLoaderData } from '@remix-run/react'
 
 import { getNoteListItems } from '~/models/note.server'
@@ -15,9 +16,9 @@ import { Toast } from '~/ui/components/notifications'
 
 /**
  * meta
- * @returns {V2_HtmlMetaDescriptor[]}
+ * @returns {V2_MetaDescriptor[]}
  */
-export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
+export const meta: V2_MetaFunction = ({ matches }): V2_MetaDescriptor[] => {
   const title = 'Notes'
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
@@ -77,7 +78,7 @@ export default function NotesPage() {
         open={toast}
         onOpenChange={setToast}
       />
-      <div className="mt-1 mb-3">
+      <div className="mb-3 mt-1">
         <Button asChild>
           <Link to="/notes/new">New Note</Link>
         </Button>

@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
 
-import type {
-  LoaderArgs,
-  ActionArgs,
-  V2_MetaFunction,
-  V2_HtmlMetaDescriptor,
-} from '@remix-run/node'
+import type { LoaderArgs, ActionArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
+import type { V2_MetaFunction, V2_MetaDescriptor } from '@remix-run/react'
 import { Form, Link, useCatch, useLoaderData } from '@remix-run/react'
 
 import invariant from 'tiny-invariant'
@@ -23,9 +19,9 @@ import ErrorLayout from '~/ui/layouts/error-layout'
 
 /**
  * meta
- * @returns {V2_HtmlMetaDescriptor[]}
+ * @returns {V2_MetaDescriptor[]}
  */
-export const meta: V2_MetaFunction = ({ data, matches }): V2_HtmlMetaDescriptor[] => {
+export const meta: V2_MetaFunction = ({ data, matches }): V2_MetaDescriptor[] => {
   const title = `Delete Note - ${truncate(data?.note?.title, 50, true)}`
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }

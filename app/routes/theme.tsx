@@ -1,7 +1,8 @@
 import * as React from 'react'
 
-import type { LoaderArgs, V2_MetaFunction, V2_HtmlMetaDescriptor } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
+import type { V2_MetaFunction, V2_MetaDescriptor } from '@remix-run/react'
 import { useLoaderData } from '@remix-run/react'
 
 // import { requireUserId } from '~/session.server'
@@ -18,9 +19,9 @@ import PublicLayout from '~/ui/layouts/public-layout'
 
 /**
  * meta
- * @returns {V2_HtmlMetaDescriptor[]}
+ * @returns {V2_MetaDescriptor[]}
  */
-export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
+export const meta: V2_MetaFunction = ({ matches }): V2_MetaDescriptor[] => {
   const title = 'Theme'
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }

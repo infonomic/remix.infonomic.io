@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import type { V2_MetaFunction, V2_HtmlMetaDescriptor } from '@remix-run/node'
+import type { V2_MetaFunction, V2_MetaDescriptor } from '@remix-run/react'
 
 import { mergeMeta } from '~/utils/utils'
 
@@ -9,9 +9,9 @@ import PublicLayout from '~/ui/layouts/public-layout'
 
 /**
  * meta
- * @returns {V2_HtmlMetaDescriptor[]}
+ * @returns {V2_MetaDescriptor[]}
  */
-export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
+export const meta: V2_MetaFunction = ({ matches }): V2_MetaDescriptor[] => {
   const title = 'Tailwind Forms'
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
@@ -94,7 +94,7 @@ export default function ThemeTailWindForms() {
                           </span>
                           <button
                             type="button"
-                            className="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            className="ml-5 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                           >
                             Change
                           </button>
@@ -105,7 +105,7 @@ export default function ThemeTailWindForms() {
                         <label className="block text-sm font-medium text-gray-700">
                           Cover photo
                         </label>
-                        <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+                        <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pb-6 pt-5">
                           <div className="space-y-1 text-center">
                             <svg
                               className="mx-auto h-12 w-12 text-gray-400"
@@ -144,7 +144,7 @@ export default function ThemeTailWindForms() {
                     <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
                       <button
                         type="submit"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                       >
                         Save
                       </button>
@@ -237,7 +237,7 @@ export default function ThemeTailWindForms() {
                             id="country"
                             name="country"
                             autoComplete="country-name"
-                            className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                           >
                             <option>United States</option>
                             <option>Canada</option>
@@ -310,7 +310,7 @@ export default function ThemeTailWindForms() {
                     <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
                       <button
                         type="submit"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                       >
                         Save
                       </button>
@@ -459,7 +459,7 @@ export default function ThemeTailWindForms() {
                     <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
                       <button
                         type="submit"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                       >
                         Save
                       </button>

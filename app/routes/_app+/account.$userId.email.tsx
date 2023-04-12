@@ -1,13 +1,9 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import type {
-  LoaderArgs,
-  ActionArgs,
-  V2_MetaFunction,
-  V2_HtmlMetaDescriptor,
-} from '@remix-run/node'
+import type { LoaderArgs, ActionArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
+import type { V2_MetaFunction, V2_MetaDescriptor } from '@remix-run/react'
 import { Link } from '@remix-run/react'
 import {
   Form,
@@ -35,9 +31,9 @@ import ErrorLayout from '~/ui/layouts/error-layout'
 
 /**
  * meta
- * @returns {V2_HtmlMetaDescriptor[]}
+ * @returns {V2_MetaDescriptor[]}
  */
-export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
+export const meta: V2_MetaFunction = ({ matches }): V2_MetaDescriptor[] => {
   const title = 'Update Email'
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }

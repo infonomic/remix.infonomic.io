@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import type { V2_MetaFunction, V2_HtmlMetaDescriptor } from '@remix-run/node'
+import type { V2_MetaFunction, V2_MetaDescriptor } from '@remix-run/react'
 
 import * as ToastPrimitive from '@radix-ui/react-toast'
 import cx from 'classnames'
@@ -13,9 +13,9 @@ import PublicLayout from '~/ui/layouts/public-layout'
 
 /**
  * meta
- * @returns {V2_HtmlMetaDescriptor[]}
+ * @returns {V2_MetaDescriptor[]}
  */
-export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
+export const meta: V2_MetaFunction = ({ matches }): V2_MetaDescriptor[] => {
   const title = 'Radix Toast'
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }
@@ -49,7 +49,7 @@ export default function ThemeRadixToast() {
             open={toast}
             onOpenChange={setToast}
             className={cx(
-              'fixed inset-x-4 bottom-4 z-50 w-auto rounded-lg shadow-lg md:top-[62px] md:right-4 md:left-auto md:bottom-auto md:w-full md:max-w-sm',
+              'fixed inset-x-4 bottom-4 z-50 w-auto rounded-lg shadow-lg md:bottom-auto md:left-auto md:right-4 md:top-[62px] md:w-full md:max-w-sm',
               'bg-white dark:bg-gray-800',
               'radix-state-open:animate-toast-slide-in-bottom md:radix-state-open:animate-toast-slide-in-right',
               'radix-state-closed:animate-toast-hide',

@@ -1,4 +1,4 @@
-import type { V2_MetaFunction, V2_HtmlMetaDescriptor } from '@remix-run/node'
+import type { V2_MetaFunction, V2_MetaDescriptor } from '@remix-run/react'
 
 import { mergeMeta } from '~/utils/utils'
 
@@ -8,9 +8,9 @@ import styles from '~/styles/app/routes/_landing+/index.css'
 
 /**
  * meta
- * @returns {V2_HtmlMetaDescriptor[]}
+ * @returns {V2_MetaDescriptor[]}
  */
-export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
+export const meta: V2_MetaFunction = ({ matches }): V2_MetaDescriptor[] => {
   const title = 'Home'
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }

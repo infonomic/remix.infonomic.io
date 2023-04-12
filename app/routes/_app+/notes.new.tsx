@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import type { ActionArgs, V2_HtmlMetaDescriptor, V2_MetaFunction } from '@remix-run/node'
+import type { ActionArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
+import type { V2_MetaFunction, V2_MetaDescriptor } from '@remix-run/react'
 import { Form, Link, useActionData, useSubmit, useNavigation } from '@remix-run/react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -18,9 +19,9 @@ import { Input, TextArea, hasErrors, getErrorText } from '~/ui/components/input'
 
 /**
  * meta
- * @returns {V2_HtmlMetaDescriptor[]}
+ * @returns {V2_MetaDescriptor[]}
  */
-export const meta: V2_MetaFunction = ({ matches }): V2_HtmlMetaDescriptor[] => {
+export const meta: V2_MetaFunction = ({ matches }): V2_MetaDescriptor[] => {
   const title = 'New Note App'
   return mergeMeta(matches, [{ title }, { property: 'og:title', content: title }])
 }

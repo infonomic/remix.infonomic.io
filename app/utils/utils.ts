@@ -104,7 +104,7 @@ export function getUrl(origin: string, path: string) {
   return removeTrailingSlash(`${origin ?? 'https://remix.infonomic.io'}${path ?? ''}`)
 }
 
-export function appendSiteTitle(tags: V2_HtmlMetaDescriptor[]) {
+export function appendSiteTitle(tags: V2_MetaDescriptor[]) {
   let SITE_TITLE
   if (typeof document === 'undefined') {
     SITE_TITLE = process?.env.SITE_TITLE
@@ -118,10 +118,10 @@ export function appendSiteTitle(tags: V2_HtmlMetaDescriptor[]) {
 
   for (const tag of tags as any) {
     if (tag.title) {
-      tag.title = `${tag.title} ${SITE_TITLE ? ' - ' + SITE_TITLE : ''}`
+      tag.title = `${tag.title} ${SITE_TITLE ? '- ' + SITE_TITLE : ''}`
     }
     if (tag.property === 'og:title') {
-      tag.content = `${tag.content} ${SITE_TITLE ? ' - ' + SITE_TITLE : ''}`
+      tag.content = `${tag.content} ${SITE_TITLE ? '- ' + SITE_TITLE : ''}`
     }
   }
 }
@@ -133,15 +133,14 @@ export function appendSiteTitle(tags: V2_HtmlMetaDescriptor[]) {
  * or the best way to do this but it works for the moment.
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462
+ * NOTE: 2023-04-12 - see https://remix.run/docs/en/main/route/meta-v2
  *
- * @returns {V2_HtmlMetaDescriptor[]} Merged metatags
+ * @returns {V2_MetaDescriptor[]} Merged metatags
  */
-export function mergeMeta(
-  matches: any,
-  tags: V2_HtmlMetaDescriptor[] = []
-): V2_HtmlMetaDescriptor[] {
-  const rootModule = matches.find((match: any) => match.route.id === 'root')
+export function mergeMeta(matches: any, tags: V2_MetaDescriptor[] = []): V2_MetaDescriptor[] {
+  const rootModule = matches.find((match: any) => match.id === 'root')
   const rootMeta = rootModule.meta
+  appendSiteTitle(tags)
 
   function findMatch(rootTag: any, tag: any) {
     const rules = [
@@ -160,10 +159,8 @@ export function mergeMeta(
     return false
   }
 
-  appendSiteTitle(tags)
-
   if (rootMeta) {
-    const filteredRootMeta = rootMeta.filter((rootTag: V2_HtmlMetaDescriptor) => {
+    const filteredRootMeta = rootMeta.filter((rootTag: V2_MetaDescriptor) => {
       for (const tag of tags) {
         if (findMatch(rootTag, tag)) {
           return false
