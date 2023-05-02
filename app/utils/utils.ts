@@ -104,7 +104,7 @@ export function getUrl(origin: string, path: string) {
   return removeTrailingSlash(`${origin ?? 'https://remix.infonomic.io'}${path ?? ''}`)
 }
 
-export function appendSiteTitle(tags: V2_MetaDescriptor[]) {
+export function appendSiteTitle(tags: V2_MetaDescriptor[]): void {
   let SITE_TITLE
   if (typeof document === 'undefined') {
     SITE_TITLE = process?.env.SITE_TITLE
@@ -116,12 +116,13 @@ export function appendSiteTitle(tags: V2_MetaDescriptor[]) {
   // (intermediate value)' as it is undefined."
   // const { SITE_TITLE } = typeof document === 'undefined' ? process.env : window.ENV
 
+  const siteTitle = SITE_TITLE != null ? `- ${SITE_TITLE}` : ''
   for (const tag of tags as any) {
-    if (tag.title) {
-      tag.title = `${tag.title} ${SITE_TITLE ? '- ' + SITE_TITLE : ''}`
+    if (tag.title != null) {
+      tag.title = `${tag.title} ${siteTitle}`
     }
     if (tag.property === 'og:title') {
-      tag.content = `${tag.content} ${SITE_TITLE ? '- ' + SITE_TITLE : ''}`
+      tag.content = `${tag.content} ${siteTitle}`
     }
   }
 }
@@ -133,7 +134,7 @@ export function appendSiteTitle(tags: V2_MetaDescriptor[]) {
  * or the best way to do this but it works for the moment.
  * https://github.com/remix-run/remix/releases/tag/remix%401.8.0
  * https://github.com/remix-run/remix/discussions/4462
- * NOTE: 2023-04-12 - see https://remix.run/docs/en/main/route/meta-v2
+ * https://gist.github.com/ryanflorence/ec1849c6d690cfbffcb408ecd633e069
  *
  * @returns {V2_MetaDescriptor[]} Merged metatags
  */
@@ -142,10 +143,10 @@ export function mergeMeta(matches: any, tags: V2_MetaDescriptor[] = []): V2_Meta
   const rootMeta = rootModule.meta
   appendSiteTitle(tags)
 
-  function findMatch(rootTag: any, tag: any) {
+  function findMatch(rootTag: any, tag: any): boolean {
     const rules = [
-      { k: 'charSet', f: () => !!tag.charSet },
-      { k: 'title', f: () => !!tag.title },
+      { k: 'charSet', f: () => tag.charSet != null },
+      { k: 'title', f: () => tag.title != null },
       { k: 'name', f: () => rootTag.name === tag.name },
       { k: 'property', f: () => rootTag.property === tag.property },
       { k: 'httpEquiv', f: () => rootTag.httpEquiv === tag.httpEquiv },
@@ -159,7 +160,7 @@ export function mergeMeta(matches: any, tags: V2_MetaDescriptor[] = []): V2_Meta
     return false
   }
 
-  if (rootMeta) {
+  if (rootMeta != null) {
     const filteredRootMeta = rootMeta.filter((rootTag: V2_MetaDescriptor) => {
       for (const tag of tags) {
         if (findMatch(rootTag, tag)) {
