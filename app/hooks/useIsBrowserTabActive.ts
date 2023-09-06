@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react'
 
 // Check if the tab is active in the user browser
-const useIsBrowserTabActive = () => {
-  const isBrowserTabActiveRef = useRef(true)
+const useIsBrowserTabActive = (): boolean => {
+  const isBrowserTabActiveRef = useRef<boolean>(true)
 
   useEffect(() => {
-    const onVisibilityChange = () => {
+    const onVisibilityChange = (): void => {
       isBrowserTabActiveRef.current = document.visibilityState === 'visible'
     }
 
@@ -16,7 +16,7 @@ const useIsBrowserTabActive = () => {
     }
   }, [])
 
-  return isBrowserTabActiveRef
+  return isBrowserTabActiveRef.current
 }
 
 export default useIsBrowserTabActive

@@ -9,7 +9,15 @@ import { useEffect, useState, useRef } from 'react'
  * @param {*} options - { always: bool, running: bool}
  * @returns
  */
-const useInterval = (duration, options = {}) => {
+const useInterval = (
+  duration: number,
+  options = {}
+): {
+  count: number
+  stop: () => void
+  start: () => void
+  running: boolean
+} => {
   const defaults = { always: false, running: true }
   const settings = { ...defaults, ...options }
   const isBrowserTabActiveRef = useRef(true)
@@ -17,17 +25,17 @@ const useInterval = (duration, options = {}) => {
   const [count, setCount] = useState(0)
   const [running, setRunning] = useState(settings.running)
 
-  const stop = () => {
+  const stop = (): void => {
     setRunning(false)
     setCount(0)
   }
 
-  const start = () => {
+  const start = (): void => {
     setRunning(true)
   }
 
   useEffect(() => {
-    const onVisibilityChange = () => {
+    const onVisibilityChange = (): void => {
       isBrowserTabActiveRef.current = document.visibilityState === 'visible'
     }
 
@@ -37,8 +45,6 @@ const useInterval = (duration, options = {}) => {
 
     if (duration > 0 && running) {
       const interval = setInterval(() => {
-        // will always be true if the always option is true but add the check here
-        // for readability
         if (isBrowserTabActiveRef.current || settings.always) {
           setCount(prev => prev + 1)
         }
@@ -52,8 +58,8 @@ const useInterval = (duration, options = {}) => {
         }
       }
     } else {
-      // Return no 'unmount' callback
-      return null
+      // Return empty 'unmount' callback
+      return () => {}
     }
   }, [duration, isBrowserTabActiveRef, settings.always, running])
 
